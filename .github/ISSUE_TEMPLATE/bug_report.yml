@@ -1,0 +1,41 @@
+name: Bug report
+description: Something isn't working as expected
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect, and what did you see instead?
+    validations:
+      required: true
+  - type: input
+    id: team
+    attributes:
+      label: Team and competition
+      placeholder: Olympiacos, EuroLeague
+    validations:
+      required: true
+  - type: dropdown
+    id: state
+    attributes:
+      label: Game sensor state when it happened
+      options: [PRE, IN, POST, NOT_FOUND, Not sure]
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      placeholder: "EuroLeague Tracker 0.1.0, Home Assistant 2026.11.2"
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics
+      description: Settings → Devices & services → EuroLeague Tracker → ⋮ → Download diagnostics. Attach the file here.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Anything from Settings → System → Logs mentioning euroleague_tracker.
+      render: text

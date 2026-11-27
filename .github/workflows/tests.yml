@@ -1,0 +1,68 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Ruff
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - run: pip install ruff
+      - run: ruff check .
+      - run: ruff format --check .
+
+  homeassistant:
+    name: Home Assistant ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # The oldest Home Assistant the integration supports (the version in hacs.json).
+          # pycares 4.9 and later start a thread that this Home Assistant's test checks do not expect.
+          - name: oldest (2025.1)
+            python: "3.12"
+            install: pytest-homeassistant-custom-component==0.13.205 "pycares<4.9"
+          - name: newest
+            python: "3.14"
+            install: pytest-homeassistant-custom-component
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install ${{ matrix.install }}
+      - name: The frontend package matching that Home Assistant (the card registration needs it)
+        run: pip install "$(python scripts/frontend_requirement.py)"
+      - run: python -m pytest --timeout=60
+
+  card:
+    name: Dashboard card
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - name: Built card is committed and up to date
+        run: |
+          git diff --exit-code -- custom_components/euroleague_tracker/frontend/ || {
+            echo "::error::Run 'npm run build' and commit custom_components/euroleague_tracker/frontend/";
+            exit 1;
+          }

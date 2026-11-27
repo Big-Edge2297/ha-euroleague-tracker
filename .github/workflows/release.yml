@@ -1,0 +1,53 @@
+name: Release
+
+# Attaches euroleague_tracker.zip to a GitHub release. HACS downloads this file
+# (zip_release in hacs.json), and GitHub counts the downloads of release files,
+# which is what the download badges show.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing release tag to attach euroleague_tracker.zip to (for example v0.1.0)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
+
+      - name: The manifest version matches the release tag
+        run: |
+          version=$(python3 -c "import json; print(json.load(open('custom_components/euroleague_tracker/manifest.json'))['version'])")
+          if [ "$version" != "${TAG#v}" ]; then
+            echo "::error::manifest.json says $version but the release tag is $TAG"
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          cache: npm
+      - name: Build the card from the tagged source
+        run: npm ci && npm run build
+
+      - name: Zip the integration
+        # HACS unpacks the zip into custom_components/euroleague_tracker, so the files sit at the top of the zip
+        run: |
+          cd custom_components/euroleague_tracker
+          zip -r -X ../../euroleague_tracker.zip . -x "__pycache__/*" "*.pyc"
+          cd ../..
+          unzip -l euroleague_tracker.zip
+
+      - name: Attach it to the release
+        run: gh release upload "$TAG" euroleague_tracker.zip --clobber
