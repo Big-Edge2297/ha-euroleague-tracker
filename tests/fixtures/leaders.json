@@ -1,0 +1,252 @@
+{
+ "points": [
+  {
+   "details": {
+    "code": "000000",
+    "name": "HIFI, NADIR",
+    "team": {
+     "code": "PRS"
+    }
+   },
+   "rank": 1,
+   "gamesPlayed": 14,
+   "average": 20.4
+  },
+  {
+   "details": {
+    "code": "000001",
+    "name": "VEZENKOV, SASHA",
+    "team": {
+     "code": "OLY"
+    }
+   },
+   "rank": 2,
+   "gamesPlayed": 14,
+   "average": 20.2
+  },
+  {
+   "details": {
+    "code": "000002",
+    "name": "NUNN, KENDRICK",
+    "team": {
+     "code": "PAN"
+    }
+   },
+   "rank": 3,
+   "gamesPlayed": 14,
+   "average": 19.0
+  },
+  {
+   "details": {
+    "code": "000003",
+    "name": "MALEDON, THEO",
+    "team": {
+     "code": "MAD"
+    }
+   },
+   "rank": 4,
+   "gamesPlayed": 14,
+   "average": 16.8
+  },
+  {
+   "details": {
+    "code": "000004",
+    "name": "WASHINGTON, DUANE",
+    "team": {
+     "code": "MUN"
+    }
+   },
+   "rank": 5,
+   "gamesPlayed": 14,
+   "average": 16.5
+  }
+ ],
+ "rebounds": [
+  {
+   "details": {
+    "code": "000000",
+    "name": "KABENGELE, MFIONDU",
+    "team": {
+     "code": "DUB"
+    }
+   },
+   "rank": 1,
+   "gamesPlayed": 14,
+   "average": 8.9
+  },
+  {
+   "details": {
+    "code": "000001",
+    "name": "VALANCIUNAS, JONAS",
+    "team": {
+     "code": "ZAL"
+    }
+   },
+   "rank": 2,
+   "gamesPlayed": 14,
+   "average": 8.8
+  },
+  {
+   "details": {
+    "code": "000002",
+    "name": "NEBO, JOSH",
+    "team": {
+     "code": "BAR"
+    }
+   },
+   "rank": 3,
+   "gamesPlayed": 14,
+   "average": 7.7
+  },
+  {
+   "details": {
+    "code": "000003",
+    "name": "DIARRA, ALIOU",
+    "team": {
+     "code": "VIR"
+    }
+   },
+   "rank": 4,
+   "gamesPlayed": 14,
+   "average": 7.2
+  },
+  {
+   "details": {
+    "code": "000004",
+    "name": "FARIED, KENNETH",
+    "team": {
+     "code": "BAS"
+    }
+   },
+   "rank": 5,
+   "gamesPlayed": 14,
+   "average": 6.9
+  }
+ ],
+ "assists": [
+  {
+   "details": {
+    "code": "000000",
+    "name": "SHORTS, TJ",
+    "team": {
+     "code": "PAM"
+    }
+   },
+   "rank": 1,
+   "gamesPlayed": 14,
+   "average": 5.9
+  },
+  {
+   "details": {
+    "code": "000001",
+    "name": "JONES, CARLIK",
+    "team": {
+     "code": "PAR"
+    }
+   },
+   "rank": 2,
+   "gamesPlayed": 14,
+   "average": 5.8
+  },
+  {
+   "details": {
+    "code": "000002",
+    "name": "PAYNE, CAMERON",
+    "team": {
+     "code": "IST"
+    }
+   },
+   "rank": 3,
+   "gamesPlayed": 14,
+   "average": 5.2
+  },
+  {
+   "details": {
+    "code": "000003",
+    "name": "MILLER-MCINTYRE, CODI",
+    "team": {
+     "code": "OLY"
+    }
+   },
+   "rank": 4,
+   "gamesPlayed": 14,
+   "average": 5.1
+  },
+  {
+   "details": {
+    "code": "000004",
+    "name": "JONES, CHRIS",
+    "team": {
+     "code": "RED"
+    }
+   },
+   "rank": 5,
+   "gamesPlayed": 14,
+   "average": 5.1
+  }
+ ],
+ "pir": [
+  {
+   "details": {
+    "code": "000000",
+    "name": "VEZENKOV, SASHA",
+    "team": {
+     "code": "OLY"
+    }
+   },
+   "rank": 1,
+   "gamesPlayed": 14,
+   "average": 23.9
+  },
+  {
+   "details": {
+    "code": "000001",
+    "name": "MALEDON, THEO",
+    "team": {
+     "code": "MAD"
+    }
+   },
+   "rank": 2,
+   "gamesPlayed": 14,
+   "average": 20.9
+  },
+  {
+   "details": {
+    "code": "000002",
+    "name": "SHORTS, TJ",
+    "team": {
+     "code": "PAM"
+    }
+   },
+   "rank": 3,
+   "gamesPlayed": 14,
+   "average": 19.8
+  },
+  {
+   "details": {
+    "code": "000003",
+    "name": "BRYANT, ELIJAH",
+    "team": {
+     "code": "HTA"
+    }
+   },
+   "rank": 4,
+   "gamesPlayed": 14,
+   "average": 19.6
+  },
+  {
+   "details": {
+    "code": "000004",
+    "name": "HIFI, NADIR",
+    "team": {
+     "code": "PRS"
+    }
+   },
+   "rank": 5,
+   "gamesPlayed": 14,
+   "average": 19.6
+  }
+ ],
+ "steals": [],
+ "blocks": []
+}

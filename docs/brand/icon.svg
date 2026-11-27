@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- EuroLeague Tracker icon: a full court from above with the ball at centre court. Original artwork. -->
+  <rect width="256" height="256" rx="56" fill="#D9602A"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="30" y="30" width="196" height="196" rx="18"/>
+    <line x1="30" y1="128" x2="226" y2="128"/>
+    <path d="M104 30 L104 74 L152 74 L152 30"/>
+    <path d="M76 30 L76 58 A58 58 0 0 0 180 58 L180 30"/>
+    <path d="M104 226 L104 182 L152 182 L152 226"/>
+    <path d="M76 226 L76 198 A58 58 0 0 1 180 198 L180 226"/>
+  </g>
+  <circle cx="128" cy="128" r="27" fill="#FFFFFF"/>
+  <g fill="none" stroke="#D9602A" stroke-width="4.5" stroke-linecap="round">
+    <line x1="128" y1="101" x2="128" y2="155"/>
+    <line x1="101" y1="128" x2="155" y2="128"/>
+    <path d="M108 109 C 119 119 119 137 108 147"/>
+    <path d="M148 109 C 137 119 137 137 148 147"/>
+  </g>
+</svg>

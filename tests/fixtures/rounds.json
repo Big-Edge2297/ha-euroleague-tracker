@@ -1,0 +1,40 @@
+{
+ "data": [
+  {
+   "seasonCode": "E2026",
+   "phaseTypeCode": "RS",
+   "round": 13,
+   "index": 13,
+   "name": "Round 13",
+   "minGameStartDate": "2026-11-17T00:00:00",
+   "maxGameStartDate": "2026-11-21T23:59:59"
+  },
+  {
+   "seasonCode": "E2026",
+   "phaseTypeCode": "RS",
+   "round": 14,
+   "index": 14,
+   "name": "Round 14",
+   "minGameStartDate": "2026-11-24T00:00:00",
+   "maxGameStartDate": "2026-11-26T23:59:59"
+  },
+  {
+   "seasonCode": "E2026",
+   "phaseTypeCode": "RS",
+   "round": 15,
+   "index": 15,
+   "name": "Round 15",
+   "minGameStartDate": "2026-12-01T00:00:00",
+   "maxGameStartDate": "2026-12-05T23:59:59"
+  },
+  {
+   "seasonCode": "E2026",
+   "phaseTypeCode": "RS",
+   "round": 16,
+   "index": 16,
+   "name": "Round 16",
+   "minGameStartDate": "2026-12-08T00:00:00",
+   "maxGameStartDate": "2026-12-12T23:59:59"
+  }
+ ]
+}

@@ -1,0 +1,510 @@
+{
+ "data": [
+  {
+   "id": "fixture-98",
+   "identifier": "E2026_98",
+   "gameCode": 98,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 10,
+   "roundAlias": "Round 10",
+   "roundName": "Round 10",
+   "played": true,
+   "date": "2026-10-30T18:15:00",
+   "utcDate": "2026-10-30T18:15:00Z",
+   "local": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 57,
+    "standingsScore": 57,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "RED",
+     "name": "Crvena Zvezda",
+     "abbreviatedName": "Crvena Zvezda",
+     "editorialName": "Crvena Zvezda",
+     "tvCode": "RED",
+     "isVirtual": false,
+     "images": {
+      "crest": null
+     }
+    },
+    "score": 62,
+    "standingsScore": 62,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "SUNEL ARENA",
+    "code": "AVT1",
+    "capacity": 8300,
+    "address": "Konstantinoupoleos 59, Ano Liosia, 13342 Athens, Greece"
+   },
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-105",
+   "identifier": "E2026_105",
+   "gameCode": 105,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 11,
+   "roundAlias": "Round 11",
+   "roundName": "Round 11",
+   "played": true,
+   "date": "2026-11-04T18:15:00",
+   "utcDate": "2026-11-04T18:15:00Z",
+   "local": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 101,
+    "standingsScore": 101,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "DUB",
+     "name": "Dubai",
+     "abbreviatedName": "Dubai",
+     "editorialName": "Dubai",
+     "tvCode": "DUB",
+     "isVirtual": false,
+     "images": {
+      "crest": null
+     }
+    },
+    "score": 72,
+    "standingsScore": 72,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "SUNEL ARENA",
+    "code": "AVT1",
+    "capacity": 8300,
+    "address": "Konstantinoupoleos 59, Ano Liosia, 13342 Athens, Greece"
+   },
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-117",
+   "identifier": "E2026_117",
+   "gameCode": 117,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 12,
+   "roundAlias": "Round 12",
+   "roundName": "Round 12",
+   "played": true,
+   "date": "2026-11-06T18:30:00",
+   "utcDate": "2026-11-06T18:30:00Z",
+   "local": {
+    "club": {
+     "code": "TEL",
+     "name": "Maccabi",
+     "abbreviatedName": "Maccabi",
+     "editorialName": "Maccabi",
+     "tvCode": "TEL",
+     "isVirtual": false,
+     "images": {
+      "crest": null
+     }
+    },
+    "score": 95,
+    "standingsScore": 95,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 97,
+    "standingsScore": 97,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "ARENA",
+    "capacity": 10000
+   },
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-126",
+   "identifier": "E2026_126",
+   "gameCode": 126,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 13,
+   "roundAlias": "Round 13",
+   "roundName": "Round 13",
+   "played": true,
+   "date": "2026-11-19T19:15:00",
+   "utcDate": "2026-11-19T19:15:00Z",
+   "local": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 92,
+    "standingsScore": 92,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "MAD",
+     "name": "Real Madrid",
+     "abbreviatedName": "Real Madrid",
+     "editorialName": "Real Madrid",
+     "tvCode": "MAD",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png"
+     }
+    },
+    "score": 76,
+    "standingsScore": 76,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "SUNEL ARENA",
+    "code": "AVT1",
+    "capacity": 8300,
+    "address": "Konstantinoupoleos 59, Ano Liosia, 13342 Athens, Greece"
+   },
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-140",
+   "identifier": "E2026_140",
+   "gameCode": 140,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 14,
+   "roundAlias": "Round 14",
+   "roundName": "Round 14",
+   "played": true,
+   "date": "2026-11-25T18:15:00",
+   "utcDate": "2026-11-25T18:15:00Z",
+   "local": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 104,
+    "standingsScore": 104,
+    "partials": {
+     "partials1": 32,
+     "partials2": 17,
+     "partials3": 23,
+     "partials4": 32,
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "HTA",
+     "name": "Hapoel IBI Tel Aviv",
+     "abbreviatedName": "Hapoel TLV",
+     "editorialName": "Hapoel TLV",
+     "tvCode": "HTA",
+     "isVirtual": false,
+     "images": {
+      "crest": null
+     }
+    },
+    "score": 79,
+    "standingsScore": 79,
+    "partials": {
+     "partials1": 29,
+     "partials2": 15,
+     "partials3": 22,
+     "partials4": 13,
+     "extraPeriods": {}
+    }
+   },
+   "audience": 6337,
+   "venue": {
+    "name": "SUNEL ARENA",
+    "code": "AVT1",
+    "capacity": 8300,
+    "address": "Konstantinoupoleos 59, Ano Liosia, 13342 Athens, Greece"
+   },
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-139",
+   "identifier": "E2026_139",
+   "gameCode": 139,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 14,
+   "roundAlias": "Round 14",
+   "roundName": "Round 14",
+   "played": true,
+   "date": "2026-11-25T19:45:00",
+   "utcDate": "2026-11-25T19:45:00Z",
+   "local": {
+    "club": {
+     "code": "MAD",
+     "name": "Real Madrid",
+     "abbreviatedName": "Real Madrid",
+     "editorialName": "Real Madrid",
+     "tvCode": "MAD",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png"
+     }
+    },
+    "score": 108,
+    "standingsScore": 108,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "ZAL",
+     "name": "Zalgiris",
+     "abbreviatedName": "Zalgiris",
+     "editorialName": "Zalgiris",
+     "tvCode": "ZAL",
+     "isVirtual": false,
+     "images": {
+      "crest": null
+     }
+    },
+    "score": 93,
+    "standingsScore": 93,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "ARENA",
+    "capacity": 10000
+   },
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-150",
+   "identifier": "E2026_150",
+   "gameCode": 150,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 15,
+   "roundAlias": "Round 15",
+   "roundName": "Round 15",
+   "played": false,
+   "date": "2026-12-04T19:15:00",
+   "utcDate": "2026-12-04T19:15:00Z",
+   "local": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "ASV",
+     "name": "LDLC ASVEL Villeurbanne",
+     "abbreviatedName": "LDLC ASVEL",
+     "editorialName": "LDLC ASVEL",
+     "tvCode": "ASV",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/e33c6d1a-95ca-4dbc-b8cb-0201812104cc.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "SUNEL ARENA",
+    "code": "AVT1",
+    "capacity": 8300,
+    "address": "Konstantinoupoleos 59, Ano Liosia, 13342 Athens, Greece"
+   },
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-145",
+   "identifier": "E2026_145",
+   "gameCode": 145,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 15,
+   "roundAlias": "Round 15",
+   "roundName": "Round 15",
+   "played": false,
+   "date": "2026-12-03T19:45:00",
+   "utcDate": "2026-12-03T19:45:00Z",
+   "local": {
+    "club": {
+     "code": "MAD",
+     "name": "Real Madrid",
+     "abbreviatedName": "Real Madrid",
+     "editorialName": "Real Madrid",
+     "tvCode": "MAD",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "BAR",
+     "name": "FC Barcelona",
+     "abbreviatedName": "FC Barcelona",
+     "editorialName": "FC Barcelona",
+     "tvCode": "BAR",
+     "isVirtual": false,
+     "images": {
+      "crest": null
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "ARENA",
+    "capacity": 10000
+   },
+   "gameStatus": "Confirmed"
+  }
+ ]
+}

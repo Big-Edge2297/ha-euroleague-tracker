@@ -1,0 +1,42 @@
+[
+ {
+  "accumulated": {
+   "timePlayed": 34500.0,
+   "valuation": 1498.0,
+   "points": 1266.0,
+   "fieldGoalsMade2": 336.0,
+   "fieldGoalsAttempted2": 558.0,
+   "fieldGoalsMade3": 128.0,
+   "fieldGoalsAttempted3": 376.0,
+   "freeThrowsMade": 210.0,
+   "freeThrowsAttempted": 274.0,
+   "totalRebounds": 512.0,
+   "defensiveRebounds": 338.0,
+   "offensiveRebounds": 174.0,
+   "assistances": 288.0,
+   "steals": 103.0
+  },
+  "averagePerGame": {
+   "timePlayed": 2464.285714285714,
+   "valuation": 107.0,
+   "points": 90.42857142857143,
+   "fieldGoalsMade2": 24.0,
+   "fieldGoalsAttempted2": 39.857142857142854,
+   "fieldGoalsMade3": 9.142857142857142,
+   "fieldGoalsAttempted3": 26.857142857142858,
+   "freeThrowsMade": 15.0,
+   "freeThrowsAttempted": 19.571428571428573,
+   "totalRebounds": 36.57142857142857,
+   "defensiveRebounds": 24.142857142857142,
+   "offensiveRebounds": 12.428571428571429,
+   "assistances": 20.571428571428573,
+   "steals": 7.357142857142857,
+   "turnovers": 12.928571428571429,
+   "blocksFavour": 2.357142857142857,
+   "blocksAgainst": 1.4285714285714286,
+   "foulsCommited": 18.428571428571427,
+   "foulsReceived": 20.5,
+   "gamesPlayed": 14
+  }
+ }
+]

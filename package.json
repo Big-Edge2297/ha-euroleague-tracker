@@ -1,0 +1,25 @@
+{
+  "name": "euroleague-tracker-card",
+  "private": true,
+  "description": "Lovelace card bundled with the EuroLeague Tracker integration",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-card.mjs",
+    "watch": "node scripts/build-card.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "node scripts/test-card.mjs",
+    "states": "python3 scripts/make_demo_states.py",
+    "screenshots": "python3 scripts/screenshots.py"
+  },
+  "dependencies": {
+    "lit": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^30.0.0",
+    "@types/node": "^26.6.11",
+    "esbuild": "^0.28.2",
+    "jsdom": "^31.0.1",
+    "typescript": "^5.7.3"
+  },
+  "license": "MIT"
+}

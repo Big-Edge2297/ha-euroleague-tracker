@@ -1,0 +1,1802 @@
+{
+ "pre": {
+  "state": "PRE",
+  "attributes": {
+   "attribution": "Data provided by the EuroLeague API (unofficial integration)",
+   "friendly_name": "Olympiacos Game",
+   "sport": "basketball",
+   "league": "EUROLEAGUE",
+   "league_logo": null,
+   "season": "E2026",
+   "api_message": null,
+   "last_update": "2026-11-27T15:00:00+00:00",
+   "event_name": "LDLC ASVEL @ Olympiacos",
+   "date": "2026-12-04T19:15:00+00:00",
+   "kickoff_in": "in 7 days",
+   "venue": "SUNEL ARENA",
+   "location": "Konstantinoupoleos 59, Ano Liosia, 13342 Athens, Greece",
+   "tv_network": null,
+   "odds": null,
+   "overunder": null,
+   "team_abbr": "OLY",
+   "team_id": "OLY",
+   "team_name": "Olympiacos",
+   "team_long_name": "Olympiacos Piraeus",
+   "team_record": "11-3",
+   "team_rank": null,
+   "team_position": 1,
+   "team_homeaway": "home",
+   "team_logo": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png",
+   "team_colors": [
+    "#C62828",
+    "#FFFFFF"
+   ],
+   "team_form": [
+    "L",
+    "W",
+    "W",
+    "W",
+    "W"
+   ],
+   "team_score": null,
+   "team_win_probability": null,
+   "team_winner": null,
+   "team_timeouts": null,
+   "team_fouls": null,
+   "opponent_abbr": "ASV",
+   "opponent_id": "ASV",
+   "opponent_name": "LDLC ASVEL",
+   "opponent_long_name": "LDLC ASVEL Villeurbanne",
+   "opponent_record": "4-10",
+   "opponent_rank": null,
+   "opponent_position": 19,
+   "opponent_homeaway": "away",
+   "opponent_logo": "https://media-cdn.incrowdsports.com/e33c6d1a-95ca-4dbc-b8cb-0201812104cc.png",
+   "opponent_colors": [
+    "#00843D",
+    "#FFFFFF"
+   ],
+   "opponent_form": [
+    "L",
+    "L",
+    "L",
+    "L",
+    "L"
+   ],
+   "opponent_score": null,
+   "opponent_win_probability": null,
+   "opponent_winner": null,
+   "opponent_timeouts": null,
+   "opponent_fouls": null,
+   "quarter": null,
+   "clock": null,
+   "possession": null,
+   "last_play": null,
+   "competition": "EuroLeague",
+   "round": 15,
+   "round_name": "Round 15",
+   "phase": "Regular Season",
+   "game_code": 150,
+   "attendance": null,
+   "capacity": 8300,
+   "quarter_scores": null,
+   "top_players": null,
+   "game_stats": null,
+   "play_by_play": null,
+   "shots": null,
+   "coach": null,
+   "previous_game": {
+    "game_code": 140,
+    "round": 14,
+    "date": "2026-11-25T18:15:00+00:00",
+    "homeaway": "home",
+    "opponent_abbr": "HTA",
+    "opponent_name": "Hapoel TLV",
+    "opponent_logo": null,
+    "venue": "SUNEL ARENA",
+    "team_score": 104,
+    "opponent_score": 79,
+    "won": true
+   },
+   "next_game": null,
+   "team_color": "#C62828"
+  }
+ },
+ "live": {
+  "state": "IN",
+  "attributes": {
+   "attribution": "Data provided by the EuroLeague API (unofficial integration)",
+   "friendly_name": "Olympiacos Game",
+   "sport": "basketball",
+   "league": "EUROLEAGUE",
+   "league_logo": null,
+   "season": "E2026",
+   "api_message": null,
+   "last_update": "2026-11-25T19:05:00+00:00",
+   "event_name": "Hapoel TLV @ Olympiacos",
+   "date": "2026-11-25T18:15:00+00:00",
+   "kickoff_in": "50 minutes ago",
+   "venue": "SUNEL ARENA",
+   "location": "Konstantinoupoleos 59, Ano Liosia, 13342 Athens, Greece",
+   "tv_network": null,
+   "odds": null,
+   "overunder": null,
+   "team_abbr": "OLY",
+   "team_id": "OLY",
+   "team_name": "Olympiacos",
+   "team_long_name": "Olympiacos Piraeus",
+   "team_record": "11-3",
+   "team_rank": null,
+   "team_position": 1,
+   "team_homeaway": "home",
+   "team_logo": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png",
+   "team_colors": [
+    "#C62828",
+    "#FFFFFF"
+   ],
+   "team_form": [
+    "L",
+    "W",
+    "W",
+    "W",
+    "W"
+   ],
+   "team_score": 63,
+   "team_win_probability": null,
+   "team_winner": null,
+   "team_timeouts": null,
+   "team_fouls": null,
+   "opponent_abbr": "HTA",
+   "opponent_id": "HTA",
+   "opponent_name": "Hapoel TLV",
+   "opponent_long_name": "Hapoel IBI Tel Aviv",
+   "opponent_record": "7-7",
+   "opponent_rank": null,
+   "opponent_position": 12,
+   "opponent_homeaway": "away",
+   "opponent_logo": null,
+   "opponent_colors": [
+    "#C8102E",
+    "#FFFFFF"
+   ],
+   "opponent_form": [
+    "L",
+    "L",
+    "W",
+    "L",
+    "L"
+   ],
+   "opponent_score": 58,
+   "opponent_win_probability": null,
+   "opponent_winner": null,
+   "opponent_timeouts": null,
+   "opponent_fouls": null,
+   "quarter": 3,
+   "clock": "Q3 04:21",
+   "possession": null,
+   "last_play": "Sasha Vezenkov: Two Pointer (11 pt)",
+   "competition": "EuroLeague",
+   "round": 14,
+   "round_name": "Round 14",
+   "phase": "Regular Season",
+   "game_code": 140,
+   "attendance": 6337,
+   "capacity": 8300,
+   "quarter_scores": {
+    "team": [
+     32,
+     17,
+     14
+    ],
+    "opponent": [
+     29,
+     15,
+     14
+    ]
+   },
+   "top_players": null,
+   "game_stats": null,
+   "play_by_play": [
+    {
+     "quarter": 3,
+     "clock": "04:21",
+     "team": "OLY",
+     "is_team": true,
+     "type": "2FGM",
+     "scoring": true,
+     "text": "Sasha Vezenkov: Two Pointer (11 pt)",
+     "score": "63-58"
+    },
+    {
+     "quarter": 3,
+     "clock": "04:30",
+     "team": "OLY",
+     "is_team": true,
+     "type": "D",
+     "scoring": false,
+     "text": "Evan Fournier: Def Rebound",
+     "score": null
+    },
+    {
+     "quarter": 3,
+     "clock": "04:32",
+     "team": "HTA",
+     "is_team": false,
+     "type": "3FGA",
+     "scoring": false,
+     "text": "Elijah Bryant: Missed Three Pointer (9 pt)",
+     "score": null
+    },
+    {
+     "quarter": 3,
+     "clock": "04:45",
+     "team": null,
+     "is_team": null,
+     "type": "TOUT_TV",
+     "scoring": false,
+     "text": "TV timeout",
+     "score": null
+    },
+    {
+     "quarter": 3,
+     "clock": "04:45",
+     "team": "OLY",
+     "is_team": true,
+     "type": "CM",
+     "scoring": false,
+     "text": "Sasha Vezenkov: Foul",
+     "score": null
+    },
+    {
+     "quarter": 3,
+     "clock": "05:00",
+     "team": "OLY",
+     "is_team": true,
+     "type": "FTM",
+     "scoring": true,
+     "text": "Evan Fournier: Free Throw In (13 pt)",
+     "score": "61-58"
+    }
+   ],
+   "shots": null,
+   "coach": null,
+   "previous_game": {
+    "game_code": 126,
+    "round": 13,
+    "date": "2026-11-19T19:15:00+00:00",
+    "homeaway": "home",
+    "opponent_abbr": "MAD",
+    "opponent_name": "Real Madrid",
+    "opponent_logo": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png",
+    "venue": "SUNEL ARENA",
+    "team_score": 92,
+    "opponent_score": 76,
+    "won": true
+   },
+   "next_game": {
+    "game_code": 150,
+    "round": 15,
+    "date": "2026-12-04T19:15:00+00:00",
+    "homeaway": "home",
+    "opponent_abbr": "ASV",
+    "opponent_name": "LDLC ASVEL",
+    "opponent_logo": "https://media-cdn.incrowdsports.com/e33c6d1a-95ca-4dbc-b8cb-0201812104cc.png",
+    "venue": "SUNEL ARENA"
+   },
+   "team_color": "#C62828"
+  }
+ },
+ "final": {
+  "state": "POST",
+  "attributes": {
+   "attribution": "Data provided by the EuroLeague API (unofficial integration)",
+   "friendly_name": "Olympiacos Game",
+   "sport": "basketball",
+   "league": "EUROLEAGUE",
+   "league_logo": null,
+   "season": "E2026",
+   "api_message": null,
+   "last_update": "2026-11-26T08:00:00+00:00",
+   "event_name": "Hapoel TLV @ Olympiacos",
+   "date": "2026-11-25T18:15:00+00:00",
+   "kickoff_in": "14 hours ago",
+   "venue": "SUNEL ARENA",
+   "location": "Konstantinoupoleos 59, Ano Liosia, 13342 Athens, Greece",
+   "tv_network": null,
+   "odds": null,
+   "overunder": null,
+   "team_abbr": "OLY",
+   "team_id": "OLY",
+   "team_name": "Olympiacos",
+   "team_long_name": "Olympiacos Piraeus",
+   "team_record": "11-3",
+   "team_rank": null,
+   "team_position": 1,
+   "team_homeaway": "home",
+   "team_logo": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png",
+   "team_colors": [
+    "#C62828",
+    "#FFFFFF"
+   ],
+   "team_form": [
+    "L",
+    "W",
+    "W",
+    "W",
+    "W"
+   ],
+   "team_score": 104,
+   "team_win_probability": null,
+   "team_winner": true,
+   "team_timeouts": 1,
+   "team_fouls": 18,
+   "opponent_abbr": "HTA",
+   "opponent_id": "HTA",
+   "opponent_name": "Hapoel TLV",
+   "opponent_long_name": "Hapoel IBI Tel Aviv",
+   "opponent_record": "7-7",
+   "opponent_rank": null,
+   "opponent_position": 12,
+   "opponent_homeaway": "away",
+   "opponent_logo": null,
+   "opponent_colors": [
+    "#C8102E",
+    "#FFFFFF"
+   ],
+   "opponent_form": [
+    "L",
+    "L",
+    "W",
+    "L",
+    "L"
+   ],
+   "opponent_score": 79,
+   "opponent_win_probability": null,
+   "opponent_winner": false,
+   "opponent_timeouts": 5,
+   "opponent_fouls": 20,
+   "quarter": 4,
+   "clock": "Final",
+   "possession": null,
+   "last_play": "End Game",
+   "competition": "EuroLeague",
+   "round": 14,
+   "round_name": "Round 14",
+   "phase": "Regular Season",
+   "game_code": 140,
+   "attendance": 6337,
+   "capacity": 8300,
+   "quarter_scores": {
+    "team": [
+     32,
+     17,
+     23,
+     32
+    ],
+    "opponent": [
+     29,
+     15,
+     22,
+     13
+    ]
+   },
+   "top_players": {
+    "team": [
+     {
+      "name": "Cory Joseph",
+      "number": "34",
+      "minutes": "37:49",
+      "points": 27,
+      "rebounds": 1,
+      "assists": 3,
+      "pir": 31
+     },
+     {
+      "name": "Evan Fournier",
+      "number": "94",
+      "minutes": "31:48",
+      "points": 23,
+      "rebounds": 1,
+      "assists": 11,
+      "pir": 27
+     },
+     {
+      "name": "Sasha Vezenkov",
+      "number": "14",
+      "minutes": "30:58",
+      "points": 21,
+      "rebounds": 6,
+      "assists": 3,
+      "pir": 23
+     },
+     {
+      "name": "Donta Hall",
+      "number": "45",
+      "minutes": "17:30",
+      "points": 7,
+      "rebounds": 9,
+      "assists": 0,
+      "pir": 19
+     },
+     {
+      "name": "Tyrique Jones",
+      "number": "88",
+      "minutes": "14:05",
+      "points": 8,
+      "rebounds": 5,
+      "assists": 2,
+      "pir": 7
+     }
+    ],
+    "opponent": [
+     {
+      "name": "Antonio Blakeney",
+      "number": "2",
+      "minutes": "25:47",
+      "points": 15,
+      "rebounds": 3,
+      "assists": 3,
+      "pir": 17
+     },
+     {
+      "name": "Vasilije Micic",
+      "number": "22",
+      "minutes": "29:49",
+      "points": 16,
+      "rebounds": 2,
+      "assists": 3,
+      "pir": 16
+     },
+     {
+      "name": "Ish Wainright",
+      "number": "12",
+      "minutes": "25:19",
+      "points": 17,
+      "rebounds": 3,
+      "assists": 0,
+      "pir": 12
+     },
+     {
+      "name": "Tomas Satoransky",
+      "number": "13",
+      "minutes": "18:28",
+      "points": 7,
+      "rebounds": 2,
+      "assists": 4,
+      "pir": 12
+     }
+    ]
+   },
+   "game_stats": {
+    "team": {
+     "points": 104,
+     "fg2": "26/40",
+     "fg2_pct": 65.0,
+     "fg3": "12/30",
+     "fg3_pct": 40.0,
+     "ft": "16/22",
+     "ft_pct": 72.7,
+     "rebounds": 36,
+     "assists": 23,
+     "steals": 10,
+     "turnovers": 11,
+     "blocks": 0,
+     "fouls": 18,
+     "pir": 121
+    },
+    "opponent": {
+     "points": 79,
+     "fg2": "14/23",
+     "fg2_pct": 60.9,
+     "fg3": "12/30",
+     "fg3_pct": 40.0,
+     "ft": "15/19",
+     "ft_pct": 78.9,
+     "rebounds": 24,
+     "assists": 17,
+     "steals": 5,
+     "turnovers": 20,
+     "blocks": null,
+     "fouls": 20,
+     "pir": null
+    }
+   },
+   "play_by_play": [
+    {
+     "quarter": 4,
+     "clock": null,
+     "team": null,
+     "is_team": null,
+     "type": "EG",
+     "scoring": false,
+     "text": "End Game",
+     "score": null
+    },
+    {
+     "quarter": 4,
+     "clock": "00:00",
+     "team": "HTA",
+     "is_team": false,
+     "type": "3FGA",
+     "scoring": false,
+     "text": "Ish Wainright: Missed Three Pointer (17 pt)",
+     "score": null
+    },
+    {
+     "quarter": 4,
+     "clock": "00:02",
+     "team": "OLY",
+     "is_team": true,
+     "type": "2FGM",
+     "scoring": true,
+     "text": "Cory Joseph: Two Pointer (27 pt)",
+     "score": "104-79"
+    },
+    {
+     "quarter": 4,
+     "clock": "00:38",
+     "team": "OLY",
+     "is_team": true,
+     "type": "AS",
+     "scoring": false,
+     "text": "Tyson Ward: Assist",
+     "score": null
+    },
+    {
+     "quarter": 4,
+     "clock": "00:39",
+     "team": "OLY",
+     "is_team": true,
+     "type": "3FGM",
+     "scoring": true,
+     "text": "Evan Fournier: Three Pointer (23 pt)",
+     "score": "102-79"
+    },
+    {
+     "quarter": 4,
+     "clock": "00:50",
+     "team": "HTA",
+     "is_team": false,
+     "type": "TO",
+     "scoring": false,
+     "text": "Jacob Toppin: Turnover",
+     "score": null
+    },
+    {
+     "quarter": 4,
+     "clock": "00:52",
+     "team": "OLY",
+     "is_team": true,
+     "type": "2FGM",
+     "scoring": true,
+     "text": "Evan Fournier: Two Pointer (20 pt)",
+     "score": "99-79"
+    },
+    {
+     "quarter": 3,
+     "clock": "04:21",
+     "team": "OLY",
+     "is_team": true,
+     "type": "2FGM",
+     "scoring": true,
+     "text": "Sasha Vezenkov: Two Pointer (11 pt)",
+     "score": "63-58"
+    }
+   ],
+   "shots": {
+    "team": [
+     [
+      -6,
+      238,
+      1,
+      2
+     ],
+     [
+      -621,
+      376,
+      1,
+      3
+     ],
+     [
+      520,
+      520,
+      0,
+      3
+     ],
+     [
+      -671,
+      18,
+      1,
+      3
+     ],
+     [
+      81,
+      112,
+      1,
+      2
+     ],
+     [
+      100,
+      119,
+      0,
+      2
+     ],
+     [
+      -119,
+      50,
+      0,
+      2
+     ],
+     [
+      81,
+      69,
+      0,
+      2
+     ],
+     [
+      520,
+      533,
+      1,
+      3
+     ],
+     [
+      696,
+      -12,
+      0,
+      3
+     ],
+     [
+      12,
+      12,
+      1,
+      2
+     ],
+     [
+      445,
+      583,
+      0,
+      3
+     ],
+     [
+      -87,
+      43,
+      1,
+      2
+     ],
+     [
+      31,
+      244,
+      0,
+      2
+     ],
+     [
+      81,
+      69,
+      1,
+      2
+     ],
+     [
+      219,
+      683,
+      1,
+      3
+     ],
+     [
+      696,
+      0,
+      1,
+      3
+     ],
+     [
+      62,
+      87,
+      1,
+      2
+     ],
+     [
+      200,
+      671,
+      1,
+      3
+     ],
+     [
+      577,
+      1097,
+      0,
+      3
+     ],
+     [
+      163,
+      87,
+      0,
+      2
+     ],
+     [
+      -577,
+      470,
+      0,
+      3
+     ],
+     [
+      439,
+      50,
+      0,
+      2
+     ],
+     [
+      426,
+      577,
+      0,
+      3
+     ],
+     [
+      -18,
+      257,
+      0,
+      2
+     ],
+     [
+      -106,
+      43,
+      1,
+      2
+     ],
+     [
+      -69,
+      31,
+      1,
+      2
+     ],
+     [
+      -25,
+      94,
+      1,
+      2
+     ],
+     [
+      -319,
+      169,
+      1,
+      2
+     ],
+     [
+      683,
+      -25,
+      0,
+      3
+     ],
+     [
+      87,
+      69,
+      1,
+      2
+     ],
+     [
+      0,
+      445,
+      0,
+      2
+     ],
+     [
+      -43,
+      150,
+      1,
+      2
+     ],
+     [
+      100,
+      100,
+      1,
+      2
+     ],
+     [
+      -106,
+      213,
+      0,
+      2
+     ],
+     [
+      401,
+      602,
+      0,
+      3
+     ],
+     [
+      -520,
+      508,
+      1,
+      3
+     ],
+     [
+      -81,
+      94,
+      0,
+      2
+     ],
+     [
+      87,
+      43,
+      1,
+      2
+     ],
+     [
+      457,
+      652,
+      0,
+      3
+     ],
+     [
+      213,
+      75,
+      0,
+      2
+     ],
+     [
+      -69,
+      100,
+      1,
+      2
+     ],
+     [
+      -94,
+      81,
+      1,
+      2
+     ],
+     [
+      6,
+      -6,
+      1,
+      2
+     ],
+     [
+      18,
+      163,
+      1,
+      2
+     ],
+     [
+      0,
+      18,
+      0,
+      2
+     ],
+     [
+      -56,
+      75,
+      1,
+      2
+     ],
+     [
+      608,
+      345,
+      0,
+      3
+     ],
+     [
+      -483,
+      608,
+      1,
+      3
+     ],
+     [
+      12,
+      1122,
+      0,
+      3
+     ],
+     [
+      -508,
+      169,
+      0,
+      2
+     ],
+     [
+      94,
+      31,
+      0,
+      2
+     ],
+     [
+      -288,
+      671,
+      1,
+      3
+     ],
+     [
+      464,
+      671,
+      0,
+      3
+     ],
+     [
+      250,
+      727,
+      0,
+      3
+     ],
+     [
+      495,
+      508,
+      0,
+      3
+     ],
+     [
+      -483,
+      526,
+      0,
+      3
+     ],
+     [
+      -81,
+      87,
+      1,
+      2
+     ],
+     [
+      87,
+      200,
+      1,
+      2
+     ],
+     [
+      -6,
+      18,
+      1,
+      2
+     ],
+     [
+      -119,
+      721,
+      1,
+      3
+     ],
+     [
+      -6,
+      6,
+      1,
+      2
+     ],
+     [
+      -81,
+      62,
+      1,
+      2
+     ],
+     [
+      6,
+      878,
+      1,
+      3
+     ],
+     [
+      81,
+      796,
+      0,
+      3
+     ],
+     [
+      81,
+      50,
+      1,
+      2
+     ],
+     [
+      708,
+      -31,
+      0,
+      3
+     ],
+     [
+      -194,
+      696,
+      0,
+      3
+     ],
+     [
+      501,
+      583,
+      1,
+      3
+     ],
+     [
+      382,
+      225,
+      1,
+      2
+     ]
+    ],
+    "opponent": []
+   },
+   "coach": {
+    "team": "Georgios Bartzokas",
+    "opponent": "Dimitris Itoudis"
+   },
+   "previous_game": {
+    "game_code": 126,
+    "round": 13,
+    "date": "2026-11-19T19:15:00+00:00",
+    "homeaway": "home",
+    "opponent_abbr": "MAD",
+    "opponent_name": "Real Madrid",
+    "opponent_logo": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png",
+    "venue": "SUNEL ARENA",
+    "team_score": 92,
+    "opponent_score": 76,
+    "won": true
+   },
+   "next_game": {
+    "game_code": 150,
+    "round": 15,
+    "date": "2026-12-04T19:15:00+00:00",
+    "homeaway": "home",
+    "opponent_abbr": "ASV",
+    "opponent_name": "LDLC ASVEL",
+    "opponent_logo": "https://media-cdn.incrowdsports.com/e33c6d1a-95ca-4dbc-b8cb-0201812104cc.png",
+    "venue": "SUNEL ARENA"
+   },
+   "team_color": "#C62828"
+  }
+ },
+ "standings": {
+  "state": "1",
+  "attributes": {
+   "attribution": "Data provided by the EuroLeague API (unofficial integration)",
+   "team_abbr": "OLY",
+   "competition": "EuroLeague",
+   "season": "E2026",
+   "round": 14,
+   "table": [
+    {
+     "position": 1,
+     "position_change": "up",
+     "code": "OLY",
+     "name": "Olympiacos",
+     "full_name": "Olympiacos Piraeus",
+     "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png",
+     "played": 14,
+     "wins": 11,
+     "losses": 3,
+     "win_pct": "78.6%",
+     "points_for": 1226,
+     "points_against": 1110,
+     "point_diff": 116,
+     "home_record": "5-2",
+     "away_record": "6-1",
+     "last10": "8-2",
+     "last5": [
+      "L",
+      "W",
+      "W",
+      "W",
+      "W"
+     ],
+     "zone": "playoffs"
+    },
+    {
+     "position": 2,
+     "position_change": "down",
+     "code": "PAM",
+     "name": "Valencia",
+     "full_name": "Valencia Basket",
+     "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHL/bc3e00b2-fea4-40be-a7ec-1e633129bde3.png",
+     "played": 14,
+     "wins": 10,
+     "losses": 4,
+     "win_pct": "71.4%",
+     "points_for": 1304,
+     "points_against": 1203,
+     "point_diff": 101,
+     "home_record": "5-3",
+     "away_record": "5-1",
+     "last10": "6-4",
+     "last5": [
+      "W",
+      "W",
+      "W",
+      "W",
+      "L"
+     ],
+     "zone": "playoffs"
+    },
+    {
+     "position": 3,
+     "position_change": "equal",
+     "code": "PAN",
+     "name": "Panathinaikos",
+     "full_name": "Panathinaikos",
+     "crest": "https://media-cdn.incrowdsports.com/e3dff28a-9ec6-4faf-9d96-ecbc68f75780.png",
+     "played": 14,
+     "wins": 10,
+     "losses": 4,
+     "win_pct": "71.4%",
+     "points_for": 1188,
+     "points_against": 1091,
+     "point_diff": 97,
+     "home_record": "6-2",
+     "away_record": "4-2",
+     "last10": "6-4",
+     "last5": [
+      "W",
+      "L",
+      "L",
+      "W",
+      "W"
+     ],
+     "zone": "playoffs"
+    },
+    {
+     "position": 4,
+     "position_change": "up",
+     "code": "ULK",
+     "name": "Fenerbahce",
+     "full_name": "Fenerbahce",
+     "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png",
+     "played": 14,
+     "wins": 9,
+     "losses": 5,
+     "win_pct": "64.3%",
+     "points_for": 1163,
+     "points_against": 1082,
+     "point_diff": 81,
+     "home_record": "7-0",
+     "away_record": "2-5",
+     "last10": "6-4",
+     "last5": [
+      "W",
+      "L",
+      "W",
+      "L",
+      "W"
+     ],
+     "zone": "playoffs"
+    },
+    {
+     "position": 5,
+     "position_change": "down",
+     "code": "DUB",
+     "name": "Dubai",
+     "full_name": "Dubai",
+     "crest": null,
+     "played": 14,
+     "wins": 9,
+     "losses": 5,
+     "win_pct": "64.3%",
+     "points_for": 1183,
+     "points_against": 1175,
+     "point_diff": 8,
+     "home_record": "4-3",
+     "away_record": "5-2",
+     "last10": "7-3",
+     "last5": [
+      "W",
+      "L",
+      "W",
+      "W",
+      "L"
+     ],
+     "zone": "playoffs"
+    },
+    {
+     "position": 6,
+     "position_change": "up",
+     "code": "MAD",
+     "name": "Real Madrid",
+     "full_name": "Real Madrid",
+     "crest": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png",
+     "played": 14,
+     "wins": 8,
+     "losses": 6,
+     "win_pct": "57.1%",
+     "points_for": 1335,
+     "points_against": 1245,
+     "point_diff": 90,
+     "home_record": "5-1",
+     "away_record": "3-5",
+     "last10": "7-3",
+     "last5": [
+      "L",
+      "W",
+      "L",
+      "L",
+      "W"
+     ],
+     "zone": "playoffs"
+    },
+    {
+     "position": 7,
+     "position_change": "down",
+     "code": "RED",
+     "name": "Crvena Zvezda",
+     "full_name": "Crvena Zvezda",
+     "crest": null,
+     "played": 14,
+     "wins": 8,
+     "losses": 6,
+     "win_pct": "57.1%",
+     "points_for": 1155,
+     "points_against": 1129,
+     "point_diff": 26,
+     "home_record": "4-3",
+     "away_record": "4-3",
+     "last10": "6-4",
+     "last5": [
+      "W",
+      "L",
+      "L",
+      "W",
+      "L"
+     ],
+     "zone": "play_in"
+    },
+    {
+     "position": 8,
+     "position_change": "down",
+     "code": "BAR",
+     "name": "FC Barcelona",
+     "full_name": "FC Barcelona",
+     "crest": null,
+     "played": 14,
+     "wins": 8,
+     "losses": 6,
+     "win_pct": "57.1%",
+     "points_for": 1226,
+     "points_against": 1205,
+     "point_diff": 21,
+     "home_record": "3-5",
+     "away_record": "5-1",
+     "last10": "6-4",
+     "last5": [
+      "W",
+      "W",
+      "L",
+      "L",
+      "L"
+     ],
+     "zone": "play_in"
+    },
+    {
+     "position": 9,
+     "position_change": "up",
+     "code": "PAR",
+     "name": "Partizan",
+     "full_name": "Partizan",
+     "crest": null,
+     "played": 14,
+     "wins": 8,
+     "losses": 6,
+     "win_pct": "57.1%",
+     "points_for": 1089,
+     "points_against": 1072,
+     "point_diff": 17,
+     "home_record": "5-2",
+     "away_record": "3-4",
+     "last10": "5-5",
+     "last5": [
+      "W",
+      "W",
+      "L",
+      "W",
+      "W"
+     ],
+     "zone": "play_in"
+    },
+    {
+     "position": 10,
+     "position_change": "down",
+     "code": "ZAL",
+     "name": "Zalgiris",
+     "full_name": "Zalgiris",
+     "crest": null,
+     "played": 14,
+     "wins": 8,
+     "losses": 6,
+     "win_pct": "57.1%",
+     "points_for": 1208,
+     "points_against": 1202,
+     "point_diff": 6,
+     "home_record": "3-3",
+     "away_record": "5-3",
+     "last10": "6-4",
+     "last5": [
+      "W",
+      "W",
+      "W",
+      "L",
+      "L"
+     ],
+     "zone": "play_in"
+    },
+    {
+     "position": 11,
+     "position_change": "up",
+     "code": "PRS",
+     "name": "Paris",
+     "full_name": "Paris Basketball",
+     "crest": "https://media-cdn.incrowdsports.com/a033e5b3-0de7-48a3-98d9-d9a4b9df1f39.png",
+     "played": 14,
+     "wins": 8,
+     "losses": 6,
+     "win_pct": "57.1%",
+     "points_for": 1256,
+     "points_against": 1276,
+     "point_diff": -20,
+     "home_record": "3-4",
+     "away_record": "5-2",
+     "last10": "7-3",
+     "last5": [
+      "W",
+      "W",
+      "W",
+      "W",
+      "W"
+     ],
+     "zone": null
+    },
+    {
+     "position": 12,
+     "position_change": "down",
+     "code": "HTA",
+     "name": "Hapoel TLV",
+     "full_name": "Hapoel IBI Tel Aviv",
+     "crest": null,
+     "played": 14,
+     "wins": 7,
+     "losses": 7,
+     "win_pct": "50.0%",
+     "points_for": 1254,
+     "points_against": 1242,
+     "point_diff": 12,
+     "home_record": "4-2",
+     "away_record": "3-5",
+     "last10": "5-5",
+     "last5": [
+      "L",
+      "L",
+      "W",
+      "L",
+      "L"
+     ],
+     "zone": null
+    },
+    {
+     "position": 13,
+     "position_change": "equal",
+     "code": "IST",
+     "name": "Anadolu Efes",
+     "full_name": "Anadolu Efes Istanbul",
+     "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCgOCxM/a844756c-a58d-4666-93b8-48f7337bc79d.png",
+     "played": 14,
+     "wins": 6,
+     "losses": 8,
+     "win_pct": "42.9%",
+     "points_for": 1208,
+     "points_against": 1209,
+     "point_diff": -1,
+     "home_record": "5-2",
+     "away_record": "1-6",
+     "last10": "5-5",
+     "last5": [
+      "L",
+      "W",
+      "L",
+      "W",
+      "L"
+     ],
+     "zone": null
+    },
+    {
+     "position": 14,
+     "position_change": "up",
+     "code": "VIR",
+     "name": "Virtus Bologna",
+     "full_name": "Virtus Bologna",
+     "crest": null,
+     "played": 14,
+     "wins": 6,
+     "losses": 8,
+     "win_pct": "42.9%",
+     "points_for": 1226,
+     "points_against": 1253,
+     "point_diff": -27,
+     "home_record": "3-3",
+     "away_record": "3-5",
+     "last10": "4-6",
+     "last5": [
+      "L",
+      "L",
+      "W",
+      "L",
+      "W"
+     ],
+     "zone": null
+    },
+    {
+     "position": 15,
+     "position_change": "down",
+     "code": "BES",
+     "name": "Besiktas",
+     "full_name": "Besiktas",
+     "crest": null,
+     "played": 14,
+     "wins": 6,
+     "losses": 8,
+     "win_pct": "42.9%",
+     "points_for": 1208,
+     "points_against": 1244,
+     "point_diff": -36,
+     "home_record": "2-5",
+     "away_record": "4-3",
+     "last10": "4-6",
+     "last5": [
+      "L",
+      "W",
+      "W",
+      "L",
+      "L"
+     ],
+     "zone": null
+    },
+    {
+     "position": 16,
+     "position_change": "up",
+     "code": "MIL",
+     "name": "Milan",
+     "full_name": "Milan",
+     "crest": null,
+     "played": 14,
+     "wins": 4,
+     "losses": 10,
+     "win_pct": "28.6%",
+     "points_for": 1158,
+     "points_against": 1220,
+     "point_diff": -62,
+     "home_record": "3-5",
+     "away_record": "1-5",
+     "last10": "3-7",
+     "last5": [
+      "L",
+      "L",
+      "W",
+      "W",
+      "W"
+     ],
+     "zone": null
+    },
+    {
+     "position": 17,
+     "position_change": "down",
+     "code": "MUN",
+     "name": "Bayern Munich",
+     "full_name": "Bayern Munich",
+     "crest": null,
+     "played": 14,
+     "wins": 4,
+     "losses": 10,
+     "win_pct": "28.6%",
+     "points_for": 1235,
+     "points_against": 1316,
+     "point_diff": -81,
+     "home_record": "1-5",
+     "away_record": "3-5",
+     "last10": "3-7",
+     "last5": [
+      "W",
+      "L",
+      "L",
+      "W",
+      "L"
+     ],
+     "zone": null
+    },
+    {
+     "position": 18,
+     "position_change": "up",
+     "code": "TEL",
+     "name": "Maccabi",
+     "full_name": "Maccabi",
+     "crest": null,
+     "played": 14,
+     "wins": 4,
+     "losses": 10,
+     "win_pct": "28.6%",
+     "points_for": 1170,
+     "points_against": 1254,
+     "point_diff": -84,
+     "home_record": "2-5",
+     "away_record": "2-5",
+     "last10": "3-7",
+     "last5": [
+      "L",
+      "W",
+      "L",
+      "L",
+      "W"
+     ],
+     "zone": null
+    },
+    {
+     "position": 19,
+     "position_change": "down",
+     "code": "ASV",
+     "name": "LDLC ASVEL",
+     "full_name": "LDLC ASVEL Villeurbanne",
+     "crest": "https://media-cdn.incrowdsports.com/e33c6d1a-95ca-4dbc-b8cb-0201812104cc.png",
+     "played": 14,
+     "wins": 4,
+     "losses": 10,
+     "win_pct": "28.6%",
+     "points_for": 1227,
+     "points_against": 1342,
+     "point_diff": -115,
+     "home_record": "3-5",
+     "away_record": "1-5",
+     "last10": "2-8",
+     "last5": [
+      "L",
+      "L",
+      "L",
+      "L",
+      "L"
+     ],
+     "zone": null
+    },
+    {
+     "position": 20,
+     "position_change": "equal",
+     "code": "BAS",
+     "name": "Baskonia",
+     "full_name": "Baskonia Vitoria-Gasteiz",
+     "crest": "https://media-cdn.cortextech.io/cbc49cb0-99ce-4462-bdb7-56983ee03cf4.png",
+     "played": 14,
+     "wins": 2,
+     "losses": 12,
+     "win_pct": "14.3%",
+     "points_for": 1128,
+     "points_against": 1277,
+     "point_diff": -149,
+     "home_record": "2-5",
+     "away_record": "0-7",
+     "last10": "1-9",
+     "last5": [
+      "L",
+      "L",
+      "L",
+      "L",
+      "W"
+     ],
+     "zone": null
+    }
+   ],
+   "friendly_name": "Olympiacos Standings position"
+  }
+ },
+ "stats": {
+  "state": "90.4",
+  "attributes": {
+   "attribution": "Data provided by the EuroLeague API (unofficial integration)",
+   "team_abbr": "OLY",
+   "competition": "EuroLeague",
+   "season": "E2026",
+   "per_game": {
+    "games_played": 14,
+    "points": 90.4,
+    "rebounds": 36.6,
+    "offensive_rebounds": 12.4,
+    "defensive_rebounds": 24.1,
+    "assists": 20.6,
+    "steals": 7.4,
+    "turnovers": 12.9,
+    "blocks": 2.4,
+    "fouls": 18.4,
+    "pir": 107.0,
+    "fg2_pct": 60.2,
+    "fg3_pct": 34.0,
+    "ft_pct": 76.6,
+    "total_points": 1266
+   },
+   "team_leader_ranks": [
+    {
+     "rank": 1,
+     "name": "Sasha Vezenkov",
+     "team": "OLY",
+     "value": 23.9,
+     "games": 14,
+     "image": null,
+     "category": "pir"
+    },
+    {
+     "rank": 2,
+     "name": "Sasha Vezenkov",
+     "team": "OLY",
+     "value": 20.2,
+     "games": 14,
+     "image": null,
+     "category": "points"
+    },
+    {
+     "rank": 4,
+     "name": "Codi Miller-McIntyre",
+     "team": "OLY",
+     "value": 5.1,
+     "games": 14,
+     "image": null,
+     "category": "assists"
+    }
+   ],
+   "league_leaders": {
+    "points": [
+     {
+      "rank": 1,
+      "name": "Nadir Hifi",
+      "team": "PRS",
+      "value": 20.4,
+      "games": 14,
+      "image": null
+     },
+     {
+      "rank": 2,
+      "name": "Sasha Vezenkov",
+      "team": "OLY",
+      "value": 20.2,
+      "games": 14,
+      "image": null
+     },
+     {
+      "rank": 3,
+      "name": "Kendrick Nunn",
+      "team": "PAN",
+      "value": 19.0,
+      "games": 14,
+      "image": null
+     },
+     {
+      "rank": 4,
+      "name": "Theo Maledon",
+      "team": "MAD",
+      "value": 16.8,
+      "games": 14,
+      "image": null
+     },
+     {
+      "rank": 5,
+      "name": "Duane Washington",
+      "team": "MUN",
+      "value": 16.5,
+      "games": 14,
+      "image": null
+     }
+    ],
+    "rebounds": [
+     {
+      "rank": 1,
+      "name": "Mfiondu Kabengele",
+      "team": "DUB",
+      "value": 8.9,
+      "games": 14,
+      "image": null
+     },
+     {
+      "rank": 2,
+      "name": "Jonas Valanciunas",
+      "team": "ZAL",
+      "value": 8.8,
+      "games": 14,
+      "image": null
+     },
+     {
+      "rank": 3,
+      "name": "Josh Nebo",
+      "team": "BAR",
+      "value": 7.7,
+      "games": 14,
+      "image": null
+     },
+     {
+      "rank": 4,
+      "name": "Aliou Diarra",
+      "team": "VIR",
+      "value": 7.2,
+      "games": 14,
+      "image": null
+     },
+     {
+      "rank": 5,
+      "name": "Kenneth Faried",
+      "team": "BAS",
+      "value": 6.9,
+      "games": 14,
+      "image": null
+     }
+    ],
+    "assists": [
+     {
+      "rank": 1,
+      "name": "TJ Shorts",
+      "team": "PAM",
+      "value": 5.9,
+      "games": 14,
+      "image": null
+     },
+     {
+      "rank": 2,
+      "name": "Carlik Jones",
+      "team": "PAR",
+      "value": 5.8,
+      "games": 14,
+      "image": null
+     },
+     {
+      "rank": 3,
+      "name": "Cameron Payne",
+      "team": "IST",
+      "value": 5.2,
+      "games": 14,
+      "image": null
+     },
+     {
+      "rank": 4,
+      "name": "Codi Miller-McIntyre",
+      "team": "OLY",
+      "value": 5.1,
+      "games": 14,
+      "image": null
+     },
+     {
+      "rank": 5,
+      "name": "Chris Jones",
+      "team": "RED",
+      "value": 5.1,
+      "games": 14,
+      "image": null
+     }
+    ],
+    "pir": [
+     {
+      "rank": 1,
+      "name": "Sasha Vezenkov",
+      "team": "OLY",
+      "value": 23.9,
+      "games": 14,
+      "image": null
+     },
+     {
+      "rank": 2,
+      "name": "Theo Maledon",
+      "team": "MAD",
+      "value": 20.9,
+      "games": 14,
+      "image": null
+     },
+     {
+      "rank": 3,
+      "name": "TJ Shorts",
+      "team": "PAM",
+      "value": 19.8,
+      "games": 14,
+      "image": null
+     },
+     {
+      "rank": 4,
+      "name": "Elijah Bryant",
+      "team": "HTA",
+      "value": 19.6,
+      "games": 14,
+      "image": null
+     },
+     {
+      "rank": 5,
+      "name": "Nadir Hifi",
+      "team": "PRS",
+      "value": 19.6,
+      "games": 14,
+      "image": null
+     }
+    ],
+    "steals": [],
+    "blocks": []
+   },
+   "friendly_name": "Olympiacos Season stats"
+  }
+ }
+}

@@ -1,0 +1,63 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Choose a competition",
+        "description": "EuroLeague Tracker is unofficial and uses EuroLeague's public data feeds.",
+        "data": {
+          "competition": "Competition"
+        }
+      },
+      "team": {
+        "title": "Choose your team",
+        "data": {
+          "team_code": "Team"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Couldn't reach the EuroLeague API. Check your internet connection and try again.",
+      "no_teams": "The API returned no teams for the current season."
+    },
+    "abort": {
+      "already_configured": "You're already following this team."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "EuroLeague Tracker options",
+        "data": {
+          "live_interval": "Update interval during live games",
+          "post_game_hours": "Keep showing the final result for",
+          "fetch_leaders": "Fetch league leaders (larger download, refreshed twice a day)"
+        }
+      }
+    }
+  },
+  "issues": {
+    "api_access_refused": {
+      "title": "EuroLeague API is refusing access",
+      "description": "EuroLeague's servers stopped accepting requests without an API key, so EuroLeague Tracker can't update. It will keep retrying and this message clears itself once access works again. Check the project's GitHub issues for an update."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "game": {
+        "name": "Game",
+        "state": {
+          "PRE": "Upcoming",
+          "IN": "Live",
+          "POST": "Final",
+          "NOT_FOUND": "No game"
+        }
+      },
+      "standings": {
+        "name": "Standings position"
+      },
+      "stats": {
+        "name": "Season stats"
+      }
+    }
+  }
+}
