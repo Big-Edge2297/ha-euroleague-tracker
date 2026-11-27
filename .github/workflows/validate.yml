@@ -20,9 +20,6 @@ jobs:
       - uses: hacs/action@main
         with:
           category: integration
-          # Brand images live in home-assistant/brands; drop this ignore once
-          # they are submitted (needed before applying to the HACS default list).
-          ignore: brands
 
   hassfest:
     name: Hassfest
