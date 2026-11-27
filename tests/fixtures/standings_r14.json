@@ -82,7 +82,7 @@
    "qualified": false,
    "club": {
     "code": "PAN",
-    "name": "Panathinaikos",
+    "name": "Panathinaikos AKTOR Athens",
     "abbreviatedName": "Panathinaikos",
     "editorialName": "Panathinaikos",
     "tvCode": "PAN",
@@ -118,7 +118,7 @@
    "qualified": false,
    "club": {
     "code": "ULK",
-    "name": "Fenerbahce",
+    "name": "Fenerbahce Tarfin Istanbul",
     "abbreviatedName": "Fenerbahce",
     "editorialName": "Fenerbahce",
     "tvCode": "ULK",
@@ -154,13 +154,13 @@
    "qualified": false,
    "club": {
     "code": "DUB",
-    "name": "Dubai",
+    "name": "Dubai Basketball",
     "abbreviatedName": "Dubai",
     "editorialName": "Dubai",
     "tvCode": "DUB",
     "isVirtual": false,
     "images": {
-     "crest": null
+     "crest": "https://media-cdn.incrowdsports.com/1efae090-16e2-4963-ae47-4b94f249c244.png"
     }
    },
    "winPercentage": "64.3%",
@@ -226,13 +226,13 @@
    "qualified": false,
    "club": {
     "code": "RED",
-    "name": "Crvena Zvezda",
+    "name": "Crvena Zvezda Meridianbet Belgrade",
     "abbreviatedName": "Crvena Zvezda",
     "editorialName": "Crvena Zvezda",
     "tvCode": "RED",
     "isVirtual": false,
     "images": {
-     "crest": null
+     "crest": "https://media-cdn.incrowdsports.com/d2eef4a8-62df-4fdd-9076-276004268515.png"
     }
    },
    "winPercentage": "57.1%",
@@ -268,7 +268,7 @@
     "tvCode": "BAR",
     "isVirtual": false,
     "images": {
-     "crest": null
+     "crest": "https://media-cdn.incrowdsports.com/35dfa503-e417-481f-963a-bdf6f013763e.png"
     }
    },
    "winPercentage": "57.1%",
@@ -298,13 +298,13 @@
    "qualified": false,
    "club": {
     "code": "PAR",
-    "name": "Partizan",
+    "name": "Partizan Mozzart Bet Belgrade",
     "abbreviatedName": "Partizan",
     "editorialName": "Partizan",
     "tvCode": "PAR",
     "isVirtual": false,
     "images": {
-     "crest": null
+     "crest": "https://media-cdn.incrowdsports.com/2681304e-77dd-4331-88b1-683078c0fb49.png"
     }
    },
    "winPercentage": "57.1%",
@@ -334,13 +334,13 @@
    "qualified": false,
    "club": {
     "code": "ZAL",
-    "name": "Zalgiris",
+    "name": "Zalgiris Kaunas",
     "abbreviatedName": "Zalgiris",
     "editorialName": "Zalgiris",
     "tvCode": "ZAL",
     "isVirtual": false,
     "images": {
-     "crest": null
+     "crest": "https://media-cdn.incrowdsports.com/0aa09358-3847-4c4e-b228-3582ee4e536d.png"
     }
    },
    "winPercentage": "57.1%",
@@ -412,7 +412,7 @@
     "tvCode": "HTA",
     "isVirtual": false,
     "images": {
-     "crest": null
+     "crest": "https://media-cdn.incrowdsports.com/cbb1c3ad-03d5-426a-b5ef-2832a4eee484.png"
     }
    },
    "winPercentage": "50.0%",
@@ -484,7 +484,7 @@
     "tvCode": "VIR",
     "isVirtual": false,
     "images": {
-     "crest": null
+     "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezvk/a92d4c3b-9f9c-4163-8a10-bcf8fc15893e.png"
     }
    },
    "winPercentage": "42.9%",
@@ -514,13 +514,13 @@
    "qualified": false,
    "club": {
     "code": "BES",
-    "name": "Besiktas",
+    "name": "Besiktas Fuzul Istanbul",
     "abbreviatedName": "Besiktas",
     "editorialName": "Besiktas",
     "tvCode": "BES",
     "isVirtual": false,
     "images": {
-     "crest": null
+     "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjHHNTU0/07707827-9461-400d-8acc-355150011194.png"
     }
    },
    "winPercentage": "42.9%",
@@ -550,13 +550,13 @@
    "qualified": false,
    "club": {
     "code": "MIL",
-    "name": "Milan",
+    "name": "Armani Olimpia Milan",
     "abbreviatedName": "Milan",
     "editorialName": "Milan",
     "tvCode": "MIL",
     "isVirtual": false,
     "images": {
-     "crest": null
+     "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHH/5c2f0ab6-f86a-4df0-b2f3-f9ab92f7267b.png"
     }
    },
    "winPercentage": "28.6%",
@@ -586,13 +586,13 @@
    "qualified": false,
    "club": {
     "code": "MUN",
-    "name": "Bayern Munich",
+    "name": "FC Bayern Munich",
     "abbreviatedName": "Bayern Munich",
     "editorialName": "Bayern Munich",
     "tvCode": "MUN",
     "isVirtual": false,
     "images": {
-     "crest": null
+     "crest": "https://media-cdn.incrowdsports.com/817b0e58-d595-4b09-ab0b-1e7cc26249ff.png"
     }
    },
    "winPercentage": "28.6%",
@@ -622,13 +622,13 @@
    "qualified": false,
    "club": {
     "code": "TEL",
-    "name": "Maccabi",
+    "name": "Maccabi Rapyd Tel Aviv",
     "abbreviatedName": "Maccabi",
     "editorialName": "Maccabi",
     "tvCode": "TEL",
     "isVirtual": false,
     "images": {
-     "crest": null
+     "crest": "https://media-cdn.cortextech.io/1b533342-78f5-4932-b714-a7d80b5826b5.png"
     }
    },
    "winPercentage": "28.6%",
@@ -694,7 +694,7 @@
    "qualified": false,
    "club": {
     "code": "BAS",
-    "name": "Baskonia Vitoria-Gasteiz",
+    "name": "Kosner Baskonia Vitoria-Gasteiz",
     "abbreviatedName": "Baskonia",
     "editorialName": "Baskonia",
     "tvCode": "BAS",

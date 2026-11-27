@@ -47,9 +47,10 @@ Dependabot opens grouped update pull requests every Monday for npm packages and 
 
 1. Bump `version` in `custom_components/euroleague_tracker/manifest.json` (for example `0.2.0`).
 2. Add a section for it at the top of `CHANGELOG.md`.
-3. Push to `main` and wait for the checks to pass.
-4. On GitHub, **Releases → Draft a new release**: tag `v0.2.0` (with the `v`), title `v0.2.0`, paste the changelog section as the notes, and publish.
-5. The **Release** workflow checks that the tag matches `manifest.json`, builds `euroleague_tracker.zip` and attaches it to the release. HACS installs that zip, and its downloads are what the download badges count.
+3. Update `README.md` for anything people see: new entities, options, card settings, events and automation examples.
+4. Push to `main` and wait for the checks to pass.
+5. On GitHub, **Releases → Draft a new release**: tag `v0.2.0` (with the `v`), title `v0.2.0`, paste the changelog section as the notes, and publish.
+6. The **Release** workflow checks that the tag matches `manifest.json`, builds `euroleague_tracker.zip` and attaches it to the release. HACS installs that zip, and its downloads are what the download badges count.
 
 If a release was published without the zip, run the **Release** workflow by hand from the Actions tab and give it the tag.
 

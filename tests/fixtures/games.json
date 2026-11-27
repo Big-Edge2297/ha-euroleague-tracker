@@ -39,13 +39,13 @@
    "road": {
     "club": {
      "code": "RED",
-     "name": "Crvena Zvezda",
+     "name": "Crvena Zvezda Meridianbet Belgrade",
      "abbreviatedName": "Crvena Zvezda",
      "editorialName": "Crvena Zvezda",
      "tvCode": "RED",
      "isVirtual": false,
      "images": {
-      "crest": null
+      "crest": "https://media-cdn.incrowdsports.com/d2eef4a8-62df-4fdd-9076-276004268515.png"
      }
     },
     "score": 62,
@@ -102,13 +102,13 @@
    "road": {
     "club": {
      "code": "DUB",
-     "name": "Dubai",
+     "name": "Dubai Basketball",
      "abbreviatedName": "Dubai",
      "editorialName": "Dubai",
      "tvCode": "DUB",
      "isVirtual": false,
      "images": {
-      "crest": null
+      "crest": "https://media-cdn.incrowdsports.com/1efae090-16e2-4963-ae47-4b94f249c244.png"
      }
     },
     "score": 72,
@@ -147,13 +147,13 @@
    "local": {
     "club": {
      "code": "TEL",
-     "name": "Maccabi",
+     "name": "Maccabi Rapyd Tel Aviv",
      "abbreviatedName": "Maccabi",
      "editorialName": "Maccabi",
      "tvCode": "TEL",
      "isVirtual": false,
      "images": {
-      "crest": null
+      "crest": "https://media-cdn.cortextech.io/1b533342-78f5-4932-b714-a7d80b5826b5.png"
      }
     },
     "score": 95,
@@ -299,7 +299,7 @@
      "tvCode": "HTA",
      "isVirtual": false,
      "images": {
-      "crest": null
+      "crest": "https://media-cdn.incrowdsports.com/cbb1c3ad-03d5-426a-b5ef-2832a4eee484.png"
      }
     },
     "score": 79,
@@ -360,13 +360,13 @@
    "road": {
     "club": {
      "code": "ZAL",
-     "name": "Zalgiris",
+     "name": "Zalgiris Kaunas",
      "abbreviatedName": "Zalgiris",
      "editorialName": "Zalgiris",
      "tvCode": "ZAL",
      "isVirtual": false,
      "images": {
-      "crest": null
+      "crest": "https://media-cdn.incrowdsports.com/0aa09358-3847-4c4e-b228-3582ee4e536d.png"
      }
     },
     "score": 93,
@@ -490,7 +490,7 @@
      "tvCode": "BAR",
      "isVirtual": false,
      "images": {
-      "crest": null
+      "crest": "https://media-cdn.incrowdsports.com/35dfa503-e417-481f-963a-bdf6f013763e.png"
      }
     },
     "score": 0,
