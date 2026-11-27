@@ -38,7 +38,7 @@ jobs:
       - run: pip install playwright && python -m playwright install --with-deps chromium
       - run: python scripts/make_demo_states.py
       - run: python scripts/screenshots.py
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "docs: update card screenshots"
           file_pattern: "docs/images/*.png"
