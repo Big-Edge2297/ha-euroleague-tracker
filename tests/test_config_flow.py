@@ -5,6 +5,7 @@ from __future__ import annotations
 from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
+import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.euroleague_tracker.const import (
@@ -53,6 +54,8 @@ async def test_duplicate_aborts(hass: HomeAssistant, aioclient_mock, freezer):
     assert result["reason"] == "already_configured"
 
 
+# Home Assistant 2025.1 can leave a delayed storage write behind after a failed flow.
+@pytest.mark.parametrize("expected_lingering_timers", [True])
 async def test_cannot_connect(hass: HomeAssistant, aioclient_mock):
     aioclient_mock.get("https://api-live.euroleague.net/v2/competitions/E/seasons", status=503)
     result = await _start(hass)

@@ -30,7 +30,11 @@
         "data": {
           "live_interval": "Update interval during live games",
           "post_game_hours": "Keep showing the final result for",
-          "fetch_leaders": "Fetch league leaders (larger download, refreshed twice a day)"
+          "fetch_leaders": "Fetch league leaders (larger download, refreshed twice a day)",
+          "event_delay": "Delay live events by"
+        },
+        "data_description": {
+          "event_delay": "Baskets, lead changes and other live events wait this long before firing, so lights and notifications match a TV or stream that runs behind the live data. Usually 20–60 s; 0 fires them straight away."
         }
       }
     }
@@ -51,6 +55,86 @@
       },
       "stats": {
         "name": "Season stats"
+      },
+      "next_game": {
+        "name": "Next game"
+      },
+      "game_status": {
+        "name": "Game status",
+        "state": {
+          "upcoming": "Upcoming",
+          "live": "Live",
+          "final": "Final",
+          "no_game": "No game"
+        }
+      },
+      "team_score": {
+        "name": "Team score"
+      },
+      "opponent_score": {
+        "name": "Opponent score"
+      },
+      "opponent": {
+        "name": "Opponent"
+      },
+      "last_result": {
+        "name": "Last result"
+      },
+      "record": {
+        "name": "Record"
+      },
+      "streak": {
+        "name": "Streak"
+      },
+      "point_diff": {
+        "name": "Point difference"
+      },
+      "games_behind_playoffs": {
+        "name": "Games behind playoffs"
+      }
+    },
+    "binary_sensor": {
+      "live": {
+        "name": "Live"
+      }
+    },
+    "event": {
+      "team_scored": {
+        "name": "Team scored",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "free_throw": "Free throw",
+              "two_pointer": "Two-pointer",
+              "three_pointer": "Three-pointer"
+            }
+          }
+        }
+      },
+      "opponent_scored": {
+        "name": "Opponent scored",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "free_throw": "Free throw",
+              "two_pointer": "Two-pointer",
+              "three_pointer": "Three-pointer"
+            }
+          }
+        }
+      },
+      "game_events": {
+        "name": "Game events",
+        "state_attributes": {
+          "event_type": {
+            "state": {
+              "game_started": "Game started",
+              "quarter_end": "Quarter ended",
+              "lead_change": "Lead change",
+              "game_final": "Final"
+            }
+          }
+        }
       }
     }
   }

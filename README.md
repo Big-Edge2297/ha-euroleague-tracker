@@ -24,7 +24,9 @@ Follow your **EuroLeague** or **EuroCup** basketball team in Home Assistant: liv
 - **Next game**: tip-off in your time zone, countdown, both teams' league position, last 5, home/away record, last 10 and point difference.
 - **Standings**: the full table, with your team's position as the sensor state and playoff/play-in zones.
 - **Season stats**: per-game averages, where your players rank among the league leaders, and a shot chart from the latest game.
-- **Events for automations**: `game_started`, `quarter_end`, `team_scored`, `opponent_scored`, `lead_change`, `game_final`.
+- **An event for every basket**: *Team scored* and *Opponent scored* fire once per free throw, two- or three-pointer, with the player and the score, ready to flash your lights. A delay option lines them up with a TV stream that runs behind.
+- **Game events** for tip-off, quarter ends, lead changes and the final buzzer.
+- **Entities for everything you'd automate on**: next game (a timestamp), game status, live on/off, both scores, the opponent, plus last result, record, streak, point difference and games behind the playoffs.
 - **Bundled card** with four themes (follow Home Assistant, dark, light, team colours) and a visual editor.
 - **Adaptive polling**: every 15 minutes between games, every minute before tip-off, every 15 seconds during a game (adjustable).
 - Follow several teams, in EuroLeague and EuroCup, by adding the integration once per team.
@@ -68,17 +70,33 @@ Open the integration and click **Configure**:
 |---|---|---|
 | Update interval during live games | 15 s | How often the score refreshes while a game is on (5–120 s). |
 | Keep showing the final result for | 24 h | How long the game sensor stays on `POST` before switching to the next game. |
+| Delay live events by | 0 s | Holds baskets, lead changes and other live events back, so lights and notifications match a TV or stream that runs behind the live data. Usually 20–60 s. |
 | Fetch league leaders | on | League leader rankings (a larger download, refreshed twice a day). |
 
 ## Entities
 
-Each team adds a device with three sensors. For Olympiacos in the EuroLeague:
+Each team adds a device. For Olympiacos in the EuroLeague (entity ids start with `olympiacos_piraeus_euroleague_`):
 
-| Entity | State | Main attributes |
+| Entity | Example state | Notes |
 |---|---|---|
-| `sensor.olympiacos_piraeus_euroleague_game` | `PRE` / `IN` / `POST` / `NOT_FOUND` | teams, logos, scores, `quarter`, `clock`, `quarter_scores`, `play_by_play`, `top_players`, `game_stats`, `shots`, `team_form`, `kickoff_in`, `venue`, `previous_game`, `next_game` |
-| `sensor.olympiacos_piraeus_euroleague_standings_position` | league position, e.g. `1` | `wins`, `losses`, `point_diff`, `home_record`, `away_record`, `last10`, `last5`, `zone`, `table` |
-| `sensor.olympiacos_piraeus_euroleague_season_stats` | points per game | `per_game`, `team_leader_ranks`, `league_leaders` |
+| `event.…_team_scored` | `three_pointer` | Fires once per basket: `free_throw`, `two_pointer` or `three_pointer`, with `player`, `points`, `team_score`, `opponent_score`, `quarter`, `clock` |
+| `event.…_opponent_scored` | `two_pointer` | The same for the other team |
+| `event.…_game_events` | `lead_change` | `game_started`, `quarter_end`, `lead_change`, `game_final` (with `won`) |
+| `sensor.…_game` | `PRE` / `IN` / `POST` / `NOT_FOUND` | teamtracker-compatible; every game detail as attributes |
+| `sensor.…_game_status` | Upcoming / Live / Final / No game | The same state, readable and translated |
+| `binary_sensor.…_live` | on | On while the game is being played |
+| `sensor.…_next_game` | 4 Dec, 21:15 | A timestamp: use it in time triggers |
+| `sensor.…_team_score`, `sensor.…_opponent_score` | 63, 58 | During and after a game |
+| `sensor.…_opponent` | LDLC ASVEL | With the opponent's crest as its picture |
+| `sensor.…_standings_position` | 1 | The full table as an attribute |
+| `sensor.…_season_stats` | 90.4 pts/game | Per-game averages and league leader ranks |
+| `sensor.…_last_result` * | W 104-79 vs HTA | |
+| `sensor.…_record` * | 11-3 | |
+| `sensor.…_streak` * | W4 | |
+| `sensor.…_point_difference` * | +116 | |
+| `sensor.…_games_behind_playoffs` * | 0 | Games behind 6th; `games_behind_play_in` (10th) as an attribute |
+
+\* Disabled at first, to keep your entity list short: enable them from the integration's entity list.
 
 <details>
 <summary>All game sensor attributes</summary>
@@ -125,22 +143,22 @@ These screenshots are generated automatically from real EuroLeague data every ti
 
 ## Automations
 
-Every game moment fires an `euroleague_tracker_event`. Its data has `type`, `team`, `opponent`, `team_score`, `opponent_score`, `quarter`, `clock`, `game_code`, plus `points` (on scoring events), `leader` (on `lead_change`) and `won` (on `game_final`).
+The event entities are the easiest trigger: pick *Olympiacos scored* in the automation editor and, if you like, a shot type. Each basket fires on its own, even when several land between two updates. With **Delay live events by** set, they fire that many seconds later, in step with your TV.
 
 <details>
-<summary>Flash the lights red when your team scores a three</summary>
+<summary>Flash the lights when your team scores (threes only)</summary>
 
 ```yaml
 alias: Olympiacos three-pointer
 triggers:
-  - trigger: event
-    event_type: euroleague_tracker_event
-    event_data:
-      type: team_scored
-      team: OLY
+  - trigger: state
+    entity_id: event.olympiacos_piraeus_euroleague_team_scored
+    not_from: unavailable
 conditions:
-  - condition: template
-    value_template: "{{ trigger.event.data.points == 3 }}"
+  - condition: state
+    entity_id: event.olympiacos_piraeus_euroleague_team_scored
+    attribute: event_type
+    state: three_pointer
 actions:
   - action: light.turn_on
     target:
@@ -150,6 +168,8 @@ actions:
       flash: short
 ```
 
+Remove the condition to flash on every basket.
+
 </details>
 
 <details>
@@ -158,17 +178,17 @@ actions:
 ```yaml
 alias: EuroLeague final score
 triggers:
-  - trigger: event
-    event_type: euroleague_tracker_event
-    event_data:
-      type: game_final
+  - trigger: state
+    entity_id: event.olympiacos_piraeus_euroleague_game_events
+    attribute: event_type
+    to: game_final
 actions:
   - action: notify.mobile_app_my_phone
     data:
-      title: "{{ 'Win!' if trigger.event.data.won else 'Loss' }}"
+      title: "{{ 'Win!' if trigger.to_state.attributes.won else 'Loss' }}"
       message: >
-        {{ trigger.event.data.team }} {{ trigger.event.data.team_score }} –
-        {{ trigger.event.data.opponent_score }} {{ trigger.event.data.opponent }}
+        {{ trigger.to_state.attributes.team }} {{ trigger.to_state.attributes.team_score }} –
+        {{ trigger.to_state.attributes.opponent_score }} {{ trigger.to_state.attributes.opponent }}
 ```
 
 </details>
@@ -179,20 +199,21 @@ actions:
 ```yaml
 alias: Game starting soon
 triggers:
-  - trigger: template
-    value_template: >
-      {% set d = state_attr('sensor.olympiacos_piraeus_euroleague_game', 'date') %}
-      {{ is_state('sensor.olympiacos_piraeus_euroleague_game', 'PRE') and d is not none
-         and 0 < (as_datetime(d) - now()).total_seconds() <= 1800 }}
+  - trigger: time
+    at:
+      entity_id: sensor.olympiacos_piraeus_euroleague_next_game
+      offset: "-00:30:00"
 actions:
   - action: notify.mobile_app_my_phone
     data:
       message: >
-        Tip-off in 30 minutes:
-        {{ state_attr('sensor.olympiacos_piraeus_euroleague_game', 'event_name') }}
+        Tip-off in 30 minutes against
+        {{ state_attr('sensor.olympiacos_piraeus_euroleague_next_game', 'opponent') }}
 ```
 
 </details>
+
+Every moment is also sent as an `euroleague_tracker_event` on the event bus, with a `type` of `game_started`, `quarter_end`, `team_scored`, `opponent_scored`, `lead_change` or `game_final`, and the same data as the entities (`points`, `shot` and `player` on baskets).
 
 ## FAQ
 

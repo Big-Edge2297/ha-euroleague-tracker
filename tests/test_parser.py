@@ -239,6 +239,63 @@ def test_shots_match_box_score():
     assert (sum(s[2] for s in threes), len(threes)) == (12, 30)
 
 
+def test_scoring_plays_in_order_with_scores():
+    plays = parser.scoring_plays(load("pbp_140_final.json"), "OLY")
+    # The fixture's Q3 excerpt and Q4 finish: Fournier FT, Vezenkov 2, then three in Q4.
+    assert [(p["quarter"], p["player"], p["type"], p["points"]) for p in plays] == [
+        (3, "Evan Fournier", "free_throw", 1),
+        (3, "Sasha Vezenkov", "two_pointer", 2),
+        (4, "Evan Fournier", "two_pointer", 2),
+        (4, "Evan Fournier", "three_pointer", 3),
+        (4, "Cory Joseph", "two_pointer", 2),
+    ]
+    last = plays[-1]
+    assert (last["team_score"], last["opponent_score"], last["clock"], last["side"]) == (
+        104,
+        79,
+        "00:02",
+        "team",
+    )
+    assert [p["seq"] for p in plays] == sorted(p["seq"] for p in plays)
+
+
+def test_scoring_plays_from_the_away_side():
+    plays = parser.scoring_plays(load("pbp_140_final.json"), "HTA")
+    assert all(p["side"] == "opponent" for p in plays)  # Hapoel didn't score in these excerpts
+    assert (plays[-1]["team_score"], plays[-1]["opponent_score"]) == (79, 104)
+
+
+def test_scoring_plays_reads_the_fourth_quarter_once():
+    pbp = load("pbp_140_final.json")
+    pbp["FourthQuarter"] = pbp["ForthQuarter"]  # both spellings present
+    assert len(parser.scoring_plays(pbp, "OLY")) == 5
+    assert (
+        len([p for p in parser.parse_play_by_play(pbp, "OLY", limit=99)["plays"] if p["quarter"] == 4]) == 7
+    )
+
+
+def test_streak_record_and_result_text():
+    games = _oly_games()
+    played = [g for g in games if g.get("played")]
+    # Real results, oldest first: L (R10), W, W, W, W (R14).
+    assert parser.streak(played, "OLY") == "W4"
+    assert parser.streak(played[:1], "OLY") == "L1"
+    assert parser.streak([], "OLY") is None
+    assert parser.result_text(parser.summarize_game(played[-1], "OLY")) == "W 104-79 vs HTA"
+    tel = next(g for g in played if g["gameCode"] == 117)
+    assert parser.result_text(parser.summarize_game(tel, "OLY")) == "W 97-95 @ TEL"
+    assert parser.result_text(None) is None
+
+
+def test_games_behind_playoff_and_play_in_spots():
+    rows = parser.parse_standings(load("standings_r14.json"))
+    assert parser.games_behind(rows, "OLY", 6) == 0.0  # 1st
+    assert parser.games_behind(rows, "RED", 6) == 0.0  # 8-6, level with 6th on record but 7th
+    assert parser.games_behind(rows, "HTA", 6) == 1.0  # 7-7 vs Real Madrid 8-6
+    assert parser.games_behind(rows, "BAS", 10) == 6.0  # 2-12 vs Zalgiris 8-6
+    assert parser.games_behind(rows, "XXX", 6) is None
+
+
 def test_summarize_game():
     games = _oly_games()
     tel = next(g for g in games if g["gameCode"] == 117)

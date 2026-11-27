@@ -1,13 +1,19 @@
-"""Sensors: game (teamtracker-compatible), standings and season stats."""
+"""Sensors: the game (teamtracker-compatible), standings, stats and smaller pieces."""
 
 from __future__ import annotations
 
+from collections.abc import Callable
+from dataclasses import dataclass
 from typing import Any
 
-from homeassistant.components.sensor import SensorEntity
+from homeassistant.components.sensor import SensorDeviceClass, SensorEntity, SensorEntityDescription
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
+
+from .const import COMPETITIONS, STATE_IN, STATE_NOT_FOUND, STATE_POST, STATE_PRE, TEAM_COLORS
+from .coordinator import EuroLeagueConfigEntry, EuroLeagueCoordinator, TrackerData
+from .entity import EuroLeagueEntityMixin
+from .parser import ordinal
 
 try:  # Home Assistant 2025.2+
     from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
@@ -16,9 +22,7 @@ except ImportError:  # 2025.1
         AddEntitiesCallback as AddConfigEntryEntitiesCallback,
     )
 
-from .const import ATTRIBUTION, COMPETITIONS, CONF_TEAM_NAME, DOMAIN, NAME, TEAM_COLORS
-from .coordinator import EuroLeagueConfigEntry, EuroLeagueCoordinator
-from .parser import ordinal
+GAME_STATUS = {STATE_PRE: "upcoming", STATE_IN: "live", STATE_POST: "final", STATE_NOT_FOUND: "no_game"}
 
 
 async def async_setup_entry(
@@ -32,28 +36,15 @@ async def async_setup_entry(
             GameSensor(coordinator),
             StandingsSensor(coordinator),
             StatsSensor(coordinator),
+            *(SimpleSensor(coordinator, description) for description in SIMPLE_SENSORS),
         ]
     )
 
 
-class _Base(CoordinatorEntity[EuroLeagueCoordinator], SensorEntity):
-    _attr_has_entity_name = True
-    _attr_attribution = ATTRIBUTION
-
+class _Base(EuroLeagueEntityMixin, CoordinatorEntity[EuroLeagueCoordinator], SensorEntity):
     def __init__(self, coordinator: EuroLeagueCoordinator, key: str) -> None:
         super().__init__(coordinator)
-        entry = coordinator.config_entry
-        self._attr_unique_id = f"{entry.unique_id}_{key}"
-        self._attr_translation_key = key
-        team = entry.data.get(CONF_TEAM_NAME, coordinator.team_code)
-        self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, entry.unique_id or entry.entry_id)},
-            name=f"{team} ({COMPETITIONS.get(coordinator.competition, coordinator.competition)})",
-            manufacturer=NAME,
-            model=coordinator.team_code,
-            entry_type=DeviceEntryType.SERVICE,
-            configuration_url="https://www.euroleaguebasketball.net/",
-        )
+        self._setup_identity(coordinator, key)
 
     @property
     def _common(self) -> dict[str, Any]:
@@ -63,6 +54,9 @@ class _Base(CoordinatorEntity[EuroLeagueCoordinator], SensorEntity):
             "competition": COMPETITIONS.get(self.coordinator.competition),
             "season": self.coordinator.data.season if self.coordinator.data else None,
         }
+
+
+# --------------------------------------------------------- the three originals
 
 
 class GameSensor(_Base):
@@ -109,10 +103,7 @@ class StandingsSensor(_Base):
 
     @property
     def _row(self) -> dict[str, Any] | None:
-        data = self.coordinator.data
-        if not data:
-            return None
-        return next((r for r in data.standings if r["code"] == self.coordinator.team_code), None)
+        return _standings_row(self.coordinator.data, self.coordinator.team_code)
 
     @property
     def native_value(self) -> int | None:
@@ -167,3 +158,139 @@ class StatsSensor(_Base):
             "team_leader_ranks": data.leaders.get("team", []),
             "league_leaders": data.leaders.get("league", {}),
         }
+
+
+# ------------------------------------------------------------ smaller sensors
+
+
+def _standings_row(data: TrackerData | None, code: str) -> dict[str, Any] | None:
+    if not data:
+        return None
+    return next((r for r in data.standings if r["code"] == code), None)
+
+
+def _in_game(data: TrackerData, key: str) -> Any:
+    """A live or final game value; nothing before tip-off."""
+    return data.game.get(key) if data.state in (STATE_IN, STATE_POST) else None
+
+
+@dataclass(frozen=True, kw_only=True)
+class TrackerSensorDescription(SensorEntityDescription):
+    value_fn: Callable[[TrackerData, str], Any]
+    picture_fn: Callable[[TrackerData], str | None] | None = None
+    attrs_fn: Callable[[TrackerData, str], dict[str, Any]] | None = None
+
+
+SIMPLE_SENSORS: tuple[TrackerSensorDescription, ...] = (
+    TrackerSensorDescription(
+        key="next_game",
+        device_class=SensorDeviceClass.TIMESTAMP,
+        icon="mdi:calendar-clock",
+        value_fn=lambda d, _: d.next_game_start,
+        attrs_fn=lambda d, _: (
+            {
+                "opponent": d.game.get("opponent_name"),
+                "opponent_abbr": d.game.get("opponent_abbr"),
+                "homeaway": d.game.get("team_homeaway"),
+                "venue": d.game.get("venue"),
+            }
+            if d.state == STATE_PRE
+            else {
+                "opponent": (d.game.get("next_game") or {}).get("opponent_name"),
+                "opponent_abbr": (d.game.get("next_game") or {}).get("opponent_abbr"),
+                "homeaway": (d.game.get("next_game") or {}).get("homeaway"),
+                "venue": (d.game.get("next_game") or {}).get("venue"),
+            }
+        ),
+    ),
+    TrackerSensorDescription(
+        key="game_status",
+        device_class=SensorDeviceClass.ENUM,
+        options=list(GAME_STATUS.values()),
+        icon="mdi:scoreboard",
+        value_fn=lambda d, _: GAME_STATUS.get(d.state),
+    ),
+    TrackerSensorDescription(
+        key="team_score",
+        icon="mdi:numeric",
+        value_fn=lambda d, _: _in_game(d, "team_score"),
+        picture_fn=lambda d: d.game.get("team_logo"),
+    ),
+    TrackerSensorDescription(
+        key="opponent_score",
+        icon="mdi:numeric",
+        value_fn=lambda d, _: _in_game(d, "opponent_score"),
+        picture_fn=lambda d: d.game.get("opponent_logo"),
+    ),
+    TrackerSensorDescription(
+        key="opponent",
+        icon="mdi:account-group",
+        value_fn=lambda d, _: d.game.get("opponent_name"),
+        picture_fn=lambda d: d.game.get("opponent_logo"),
+        attrs_fn=lambda d, _: {
+            "opponent_abbr": d.game.get("opponent_abbr"),
+            "homeaway": d.game.get("opponent_homeaway"),
+            "record": d.game.get("opponent_record"),
+            "position": d.game.get("opponent_position"),
+        },
+    ),
+    TrackerSensorDescription(
+        key="last_result",
+        icon="mdi:history",
+        entity_registry_enabled_default=False,
+        value_fn=lambda d, _: d.last_result,
+    ),
+    TrackerSensorDescription(
+        key="record",
+        icon="mdi:counter",
+        entity_registry_enabled_default=False,
+        value_fn=lambda d, code: (
+            f"{row['wins']}-{row['losses']}" if (row := _standings_row(d, code)) else None
+        ),
+    ),
+    TrackerSensorDescription(
+        key="streak",
+        icon="mdi:fire",
+        entity_registry_enabled_default=False,
+        value_fn=lambda d, _: d.streak,
+    ),
+    TrackerSensorDescription(
+        key="point_diff",
+        icon="mdi:plus-minus-variant",
+        entity_registry_enabled_default=False,
+        value_fn=lambda d, code: (row or {}).get("point_diff") if (row := _standings_row(d, code)) else None,
+    ),
+    TrackerSensorDescription(
+        key="games_behind_playoffs",
+        icon="mdi:trophy-outline",
+        entity_registry_enabled_default=False,
+        suggested_display_precision=1,
+        value_fn=lambda d, _: d.games_behind_playoffs,
+        attrs_fn=lambda d, _: {"games_behind_play_in": d.games_behind_play_in},
+    ),
+)
+
+
+class SimpleSensor(_Base):
+    entity_description: TrackerSensorDescription
+
+    def __init__(self, coordinator: EuroLeagueCoordinator, description: TrackerSensorDescription) -> None:
+        super().__init__(coordinator, description.key)
+        self.entity_description = description
+
+    @property
+    def native_value(self) -> Any:
+        data = self.coordinator.data
+        return self.entity_description.value_fn(data, self.coordinator.team_code) if data else None
+
+    @property
+    def entity_picture(self) -> str | None:
+        fn = self.entity_description.picture_fn
+        data = self.coordinator.data
+        return fn(data) if fn and data else None
+
+    @property
+    def extra_state_attributes(self) -> dict[str, Any] | None:
+        fn = self.entity_description.attrs_fn
+        data = self.coordinator.data
+        return fn(data, self.coordinator.team_code) if fn and data else None

@@ -373,43 +373,127 @@ def parse_play_by_play(pbp: dict[str, Any], team_code: str, limit: int = 8) -> d
     if not pbp:
         return {}
     plays: list[dict[str, Any]] = []
-    seen: set[str] = set()
-    for key, quarter in PBP_QUARTER_KEYS:
-        if key in seen:
+    for quarter, row in _pbp_rows(pbp):
+        ptype = (row.get("PLAYTYPE") or "").strip()
+        if ptype not in PBP_INTERESTING:
             continue
-        rows = pbp.get(key) or []
-        if rows:
-            seen.add(key)
-        for row in rows:
-            ptype = (row.get("PLAYTYPE") or "").strip()
-            if ptype not in PBP_INTERESTING:
-                continue
-            code = clean_code(row.get("CODETEAM"))
-            text = _play_text(row)
-            if not text:
-                continue
-            plays.append(
-                {
-                    "quarter": quarter,
-                    "clock": (row.get("MARKERTIME") or "").strip() or None,
-                    "team": code or None,
-                    "is_team": code == team_code if code else None,
-                    "type": ptype,
-                    "scoring": ptype in PBP_SCORING,
-                    "text": text,
-                    "score": (
-                        f"{row.get('POINTS_A')}-{row.get('POINTS_B')}"
-                        if row.get("POINTS_A") is not None
-                        else None
-                    ),
-                }
-            )
+        code = clean_code(row.get("CODETEAM"))
+        text = _play_text(row)
+        if not text:
+            continue
+        score = None
+        if row.get("POINTS_A") is not None:
+            score = f"{row.get('POINTS_A')}-{row.get('POINTS_B')}"
+        plays.append(
+            {
+                "quarter": quarter,
+                "clock": (row.get("MARKERTIME") or "").strip() or None,
+                "team": code or None,
+                "is_team": code == team_code if code else None,
+                "type": ptype,
+                "scoring": ptype in PBP_SCORING,
+                "text": text,
+                "score": score,
+            }
+        )
     plays.reverse()  # newest first
     return {
         "quarter": to_int(pbp.get("ActualQuarter")),
         "plays": plays[:limit],
         "last_play": plays[0]["text"] if plays else None,
     }
+
+
+SCORING_POINTS = {"FTM": 1, "2FGM": 2, "3FGM": 3}
+SCORING_KIND = {"FTM": "free_throw", "2FGM": "two_pointer", "3FGM": "three_pointer"}
+
+
+def _pbp_rows(pbp: dict[str, Any]):
+    """(quarter, row) for every play, oldest first; ForthQuarter/FourthQuarter read once."""
+    fourth_done = False
+    for key, quarter in PBP_QUARTER_KEYS:
+        rows = pbp.get(key) or []
+        if quarter == 4:
+            if fourth_done or not rows:
+                continue
+            fourth_done = True
+        for row in rows:
+            yield quarter, row
+
+
+def scoring_plays(pbp: dict[str, Any], team_code: str) -> list[dict[str, Any]]:
+    """Every made basket in the play-by-play, oldest first.
+
+    `seq` is the feed's play number, which only grows during a game, so the
+    coordinator can tell which baskets are new since its last update.
+    """
+    if not pbp:
+        return []
+    team_code = clean_code(team_code)
+    team_is_a = clean_code(pbp.get("CodeTeamA")) == team_code
+    plays = []
+    for quarter, row in _pbp_rows(pbp):
+        ptype = (row.get("PLAYTYPE") or "").strip()
+        if ptype not in SCORING_POINTS:
+            continue
+        seq = to_int(row.get("NUMBEROFPLAY"))
+        if seq is None:
+            continue
+        a, b = to_int(row.get("POINTS_A")), to_int(row.get("POINTS_B"))
+        plays.append(
+            {
+                "seq": seq,
+                "quarter": quarter,
+                "clock": (row.get("MARKERTIME") or "").strip() or None,
+                "side": "team" if clean_code(row.get("CODETEAM")) == team_code else "opponent",
+                "type": SCORING_KIND[ptype],
+                "points": SCORING_POINTS[ptype],
+                "player": pretty_name(row.get("PLAYER")) or None,
+                "team_score": a if team_is_a else b,
+                "opponent_score": b if team_is_a else a,
+            }
+        )
+    plays.sort(key=lambda p: (p["quarter"], p["seq"]))
+    return plays
+
+
+# ------------------------------------------------------------ team summary
+
+
+def streak(played_games: list[dict[str, Any]], team_code: str) -> str | None:
+    """'W4' / 'L2' from the run of results ending with the latest game."""
+    results = [summarize_game(g, team_code).get("won") for g in played_games if g.get("played")]
+    results = [r for r in results if r is not None]
+    if not results:
+        return None
+    last = results[-1]
+    count = 0
+    for result in reversed(results):
+        if result != last:
+            break
+        count += 1
+    return f"{'W' if last else 'L'}{count}"
+
+
+def games_behind(rows: list[dict[str, Any]], team_code: str, spot: int) -> float | None:
+    """Games behind the team in `spot` (0 when at or above it)."""
+    me = next((r for r in rows if r["code"] == clean_code(team_code)), None)
+    target = next((r for r in rows if r["position"] == spot), None)
+    if not me or not target or me["position"] is None:
+        return None
+    if me["position"] <= spot:
+        return 0.0
+    gap = ((target["wins"] - me["wins"]) + (me["losses"] - target["losses"])) / 2
+    return max(gap, 0.0)
+
+
+def result_text(summary: dict[str, Any] | None) -> str | None:
+    """'W 104-79 vs HTA' / 'W 97-95 @ TEL' from summarize_game()."""
+    if not summary or summary.get("team_score") is None:
+        return None
+    where = "vs" if summary["homeaway"] == "home" else "@"
+    letter = "W" if summary.get("won") else "L"
+    return f"{letter} {summary['team_score']}-{summary['opponent_score']} {where} {summary['opponent_abbr']}"
 
 
 def _play_text(row: dict[str, Any]) -> str | None:

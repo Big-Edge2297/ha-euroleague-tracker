@@ -126,9 +126,23 @@ export const styles = css`
     text-align: center;
     min-width: 0;
   }
+  .plate {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    border-radius: 50%;
+    background: var(--elt-crest-plate);
+    width: 72px;
+    height: 72px;
+  }
+  .plate.small {
+    width: 22px;
+    height: 22px;
+  }
   .crest {
-    width: 64px;
-    height: 64px;
+    width: 56px;
+    height: 56px;
     object-fit: contain;
   }
   .crest-fallback {
@@ -382,8 +396,8 @@ export const styles = css`
     white-space: nowrap;
   }
   .srow .tn img {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     object-fit: contain;
     flex: none;
   }

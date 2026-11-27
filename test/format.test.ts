@@ -60,3 +60,10 @@ test("auto theme follows Home Assistant's theme variables", () => {
   assert.match(auto["--elt-fg"], /var\(--primary-text-color/);
   assert.equal(auto["--elt-accent"], "#C62828");
 });
+
+test("crests get a light backing disc on dark backgrounds, none on the light theme", () => {
+  for (const theme of ["dark", "team", "auto"] as const) {
+    assert.equal(themeVars(theme, "#C62828")["--elt-crest-plate"], "rgba(255, 255, 255, 0.92)", theme);
+  }
+  assert.equal(themeVars("light", "#C62828")["--elt-crest-plate"], "transparent");
+});

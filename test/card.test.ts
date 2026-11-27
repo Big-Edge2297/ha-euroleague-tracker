@@ -342,6 +342,13 @@ test("team theme: the crest is a watermark, and disappears if it can't load", as
   assert.equal($(el, "img.watermark"), null);
 });
 
+test("crests sit on a backing disc, small ones in the standings", async () => {
+  const el = await game("pre");
+  assert.equal($$(el, ".team .plate:not(.small) img.crest").length, 2);
+  const table = await mount({ view: "standings" });
+  assert.ok($$(table, ".srow .plate.small img").length > 0);
+});
+
 test("a crest that fails to load falls back to the team code", async () => {
   const el = await game("pre");
   const crests = $$(el, ".team img.crest") as HTMLImageElement[];

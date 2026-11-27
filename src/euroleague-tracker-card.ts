@@ -197,16 +197,18 @@ export class EuroLeagueTrackerCard extends LitElement {
     if (!url || this._broken.has(url)) {
       return html`<div class="crest-fallback" role="img" aria-label=${code}>${code}</div>`;
     }
-    return html`<img
-      class=${cls}
-      src=${url}
-      alt=""
-      loading="lazy"
-      referrerpolicy="no-referrer"
-      @error=${() => {
-        this._broken = new Set([...this._broken, url]);
-      }}
-    />`;
+    // A light disc behind the crest keeps dark crests (ASVEL, Partizan…) visible on dark backgrounds.
+    return html`<span class="plate ${cls ? "" : "small"}"
+      ><img
+        class=${cls}
+        src=${url}
+        alt=""
+        loading="lazy"
+        referrerpolicy="no-referrer"
+        @error=${() => {
+          this._broken = new Set([...this._broken, url]);
+        }}
+    /></span>`;
   }
 
   private _form(form: string[] | undefined, small = false) {

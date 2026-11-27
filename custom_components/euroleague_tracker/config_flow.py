@@ -23,11 +23,13 @@ from .api import EuroLeagueApi, EuroLeagueApiError
 from .const import (
     COMPETITIONS,
     CONF_COMPETITION,
+    CONF_EVENT_DELAY,
     CONF_FETCH_LEADERS,
     CONF_LIVE_INTERVAL,
     CONF_POST_GAME_HOURS,
     CONF_TEAM_CODE,
     CONF_TEAM_NAME,
+    DEFAULT_EVENT_DELAY,
     DEFAULT_FETCH_LEADERS,
     DEFAULT_LIVE_INTERVAL,
     DEFAULT_POST_GAME_HOURS,
@@ -133,6 +135,13 @@ class EuroLeagueTrackerOptionsFlow(OptionsFlow):
                 ): NumberSelector(
                     NumberSelectorConfig(
                         min=1, max=96, step=1, unit_of_measurement="h", mode=NumberSelectorMode.BOX
+                    )
+                ),
+                vol.Required(
+                    CONF_EVENT_DELAY, default=opts.get(CONF_EVENT_DELAY, DEFAULT_EVENT_DELAY)
+                ): NumberSelector(
+                    NumberSelectorConfig(
+                        min=0, max=180, step=1, unit_of_measurement="s", mode=NumberSelectorMode.BOX
                     )
                 ),
                 vol.Required(

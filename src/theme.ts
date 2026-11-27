@@ -45,6 +45,8 @@ function visibleAccent(accent: string, bgLuminance: number): string {
 
 export function themeVars(theme: ThemeName, teamColor: string): Record<string, string> {
   const base = {
+    // Behind crests: many are dark grey or black and vanish on dark backgrounds.
+    "--elt-crest-plate": "rgba(255, 255, 255, 0.92)",
     "--elt-win-bg": "#2E7D32",
     "--elt-win-fg": "#FFFFFF",
     "--elt-zone-playoffs": "#1F4FA8",
@@ -73,6 +75,7 @@ export function themeVars(theme: ThemeName, teamColor: string): Record<string, s
       const accent = visibleAccent(teamColor, 1);
       return {
         ...base,
+        "--elt-crest-plate": "transparent",
         "--elt-bg": "#FFFFFF",
         "--elt-fg": "#1F1F1F",
         "--elt-fg2": "#5C5C5C",

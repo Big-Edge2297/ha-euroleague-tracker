@@ -18,12 +18,14 @@ CONF_TEAM_NAME: Final = "team_name"
 CONF_LIVE_INTERVAL: Final = "live_interval"
 CONF_FETCH_LEADERS: Final = "fetch_leaders"
 CONF_POST_GAME_HOURS: Final = "post_game_hours"
+CONF_EVENT_DELAY: Final = "event_delay"
 
 COMPETITIONS: Final = {"E": "EuroLeague", "U": "EuroCup"}
 
 DEFAULT_LIVE_INTERVAL: Final = 15  # seconds
 DEFAULT_POST_GAME_HOURS: Final = 24
 DEFAULT_FETCH_LEADERS: Final = True
+DEFAULT_EVENT_DELAY: Final = 0  # seconds; raise it to match a TV stream that runs behind
 
 # Polling cadence outside live games.
 INTERVAL_IDLE: Final = timedelta(minutes=15)

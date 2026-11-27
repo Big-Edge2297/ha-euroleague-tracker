@@ -7,6 +7,7 @@ from pathlib import Path
 
 from custom_components.euroleague_tracker.const import (
     CONF_COMPETITION,
+    CONF_EVENT_DELAY,
     CONF_FETCH_LEADERS,
     CONF_LIVE_INTERVAL,
     CONF_POST_GAME_HOURS,
@@ -46,14 +47,25 @@ def test_options_fields():
     assert set(EN["options"]["step"]["init"]["data"]) == {
         CONF_LIVE_INTERVAL,
         CONF_POST_GAME_HOURS,
+        CONF_EVENT_DELAY,
         CONF_FETCH_LEADERS,
     }
 
 
 def test_entity_names():
+    from custom_components.euroleague_tracker.event import GAME_EVENT_TYPES, SHOT_TYPES
+    from custom_components.euroleague_tracker.sensor import GAME_STATUS, SIMPLE_SENSORS
+
     sensors = EN["entity"]["sensor"]
-    assert set(sensors) == {"game", "standings", "stats"}
+    assert set(sensors) == {"game", "standings", "stats"} | {d.key for d in SIMPLE_SENSORS}
     assert all(sensors[key]["name"] for key in sensors)
+    assert set(sensors["game_status"]["state"]) == set(GAME_STATUS.values())
+    assert set(EN["entity"]["binary_sensor"]) == {"live"}
+    events = EN["entity"]["event"]
+    assert set(events) == {"team_scored", "opponent_scored", "game_events"}
+    for key in ("team_scored", "opponent_scored"):
+        assert set(events[key]["state_attributes"]["event_type"]["state"]) == set(SHOT_TYPES)
+    assert set(events["game_events"]["state_attributes"]["event_type"]["state"]) == set(GAME_EVENT_TYPES)
 
 
 def test_game_states_stay_untranslated():

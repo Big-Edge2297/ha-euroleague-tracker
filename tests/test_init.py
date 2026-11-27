@@ -101,7 +101,14 @@ async def test_live_then_final_fires_events(
     assert "game_final" in kinds
     final = next(e for e in events if e.data["type"] == "game_final")
     assert final.data["won"] is True
-    assert "team_scored" not in kinds  # only fired while the game is IN
+    # The three baskets scored after the last live check still fire, one each, in order,
+    # with the score and clock at that basket (not the final score).
+    baskets = [e.data for e in events if e.data["type"] == "team_scored"]
+    assert [(b["player"], b["shot"], b["points"], b["team_score"], b["clock"]) for b in baskets] == [
+        ("Evan Fournier", "two_pointer", 2, 99, "00:52"),
+        ("Evan Fournier", "three_pointer", 3, 102, "00:39"),
+        ("Cory Joseph", "two_pointer", 2, 104, "00:02"),
+    ]
 
 
 def _games_with_140_unplayed():

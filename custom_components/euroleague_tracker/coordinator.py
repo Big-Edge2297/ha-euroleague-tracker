@@ -8,8 +8,10 @@ import logging
 from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
+from homeassistant.core import CALLBACK_TYPE, HomeAssistant, callback
 from homeassistant.helpers import issue_registry as ir
+from homeassistant.helpers.dispatcher import async_dispatcher_send
+from homeassistant.helpers.event import async_call_later
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from . import parser
@@ -17,10 +19,12 @@ from .api import EuroLeagueApi, EuroLeagueApiError, EuroLeagueAuthError
 from .const import (
     COMPETITIONS,
     CONF_COMPETITION,
+    CONF_EVENT_DELAY,
     CONF_FETCH_LEADERS,
     CONF_LIVE_INTERVAL,
     CONF_POST_GAME_HOURS,
     CONF_TEAM_CODE,
+    DEFAULT_EVENT_DELAY,
     DEFAULT_FETCH_LEADERS,
     DEFAULT_LIVE_INTERVAL,
     DEFAULT_POST_GAME_HOURS,
@@ -30,6 +34,8 @@ from .const import (
     INTERVAL_IDLE,
     INTERVAL_POST_GAME,
     INTERVAL_PRE_GAME,
+    PLAY_IN_SPOTS,
+    PLAYOFF_SPOTS,
     STATE_IN,
     STATE_NOT_FOUND,
     STATE_POST,
@@ -50,6 +56,21 @@ class TrackerData:
     team_stats: dict[str, Any] = field(default_factory=dict)
     leaders: dict[str, Any] = field(default_factory=dict)
     season: str | None = None
+    next_game_start: datetime | None = None
+    last_result: str | None = None
+    streak: str | None = None
+    games_behind_playoffs: float | None = None
+    games_behind_play_in: float | None = None
+
+
+def signal_scored(entry_id: str) -> str:
+    """Dispatcher signal for each basket (after the configured delay)."""
+    return f"{DOMAIN}_{entry_id}_scored"
+
+
+def signal_game_event(entry_id: str) -> str:
+    """Dispatcher signal for tip-off, quarter end, lead change and final."""
+    return f"{DOMAIN}_{entry_id}_game_event"
 
 
 type EuroLeagueConfigEntry = ConfigEntry[EuroLeagueCoordinator]
@@ -73,6 +94,10 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
         self.competition: str = entry.data.get(CONF_COMPETITION, "E")
         self._final_box_cache: dict[int, tuple[dict, dict, dict]] = {}
         self._tracked_live_game: int | None = None
+        # Basket tracking: the game being followed and the last play number seen.
+        self._scoring_game: int | None = None
+        self._last_seq: int = 0
+        self._pending: list[CALLBACK_TYPE] = []
 
     # ------------------------------------------------------------- options
 
@@ -87,6 +112,11 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
     @property
     def fetch_leaders(self) -> bool:
         return self.config_entry.options.get(CONF_FETCH_LEADERS, DEFAULT_FETCH_LEADERS)
+
+    @property
+    def event_delay(self) -> float:
+        """Seconds to hold live events back, to line up with a delayed TV stream."""
+        return float(self.config_entry.options.get(CONF_EVENT_DELAY, DEFAULT_EVENT_DELAY))
 
     # -------------------------------------------------------------- update
 
@@ -122,6 +152,7 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
         game, mode = parser.select_game(mine, now, self.post_game_hours)
 
         header = box = pbp = shots = None
+        baskets: list[dict[str, Any]] = []
         state = STATE_NOT_FOUND
         if game is not None:
             code = game["gameCode"]
@@ -138,6 +169,8 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
                 box, pbp, shots = await self._game_feeds(season_code, code, final=state == STATE_POST)
                 if state == STATE_POST and header is None:
                     header = await self._safe(api.header(season_code, code)) or {}
+
+            baskets = self._new_baskets(code, state, pbp)
 
             # The game we followed live just ended: drop cached schedule,
             # standings and season stats so they reflect the result.
@@ -187,6 +220,26 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
         if self.fetch_leaders:
             leaders = parser.parse_leaders(await self._safe(api.leaders(season_code)) or {}, self.team_code)
 
+        if state == STATE_PRE and game is not None:
+            next_start = parser.game_start(game)
+        else:
+            next_start = parser.parse_dt((next_game or {}).get("date"))
+        if state == STATE_POST:
+            # Right after the buzzer the cached schedule may not mark this game
+            # as played yet, so the result comes from the live data.
+            last_summary = {
+                "team_score": game_attrs.get("team_score"),
+                "opponent_score": game_attrs.get("opponent_score"),
+                "homeaway": game_attrs.get("team_homeaway"),
+                "opponent_abbr": game_attrs.get("opponent_abbr"),
+                "won": game_attrs.get("team_winner"),
+            }
+            earlier = [g for g in played if g is not game]
+            current_streak = _streak_with_final(earlier, self.team_code, game_attrs.get("team_winner"))
+        else:
+            last_summary = prev_game
+            current_streak = parser.streak(played, self.team_code)
+
         data = TrackerData(
             state=state,
             game=game_attrs,
@@ -195,8 +248,15 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
             team_stats=team_stats,
             leaders=leaders,
             season=season_code,
+            next_game_start=next_start,
+            last_result=parser.result_text(last_summary),
+            streak=current_streak,
+            games_behind_playoffs=parser.games_behind(standings_rows, self.team_code, PLAYOFF_SPOTS),
+            games_behind_play_in=parser.games_behind(standings_rows, self.team_code, PLAY_IN_SPOTS),
         )
         self._fire_events(self.data, data)
+        for basket in baskets:
+            self._schedule(self._send_basket, basket, data.game)
         self.update_interval = self._next_interval(state, game, now)
         return data
 
@@ -247,7 +307,58 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
             return INTERVAL_POST_GAME
         return INTERVAL_IDLE
 
+    # ------------------------------------------------------------- baskets
+
+    def _new_baskets(self, code: int, state: str, pbp: dict | None) -> list[dict[str, Any]]:
+        """Baskets scored since the last update, oldest first.
+
+        The first time a game is seen live (for example after a restart mid-game)
+        its baskets so far are only recorded, not fired, so nobody gets a burst of
+        old events. If the previous update showed this game before tip-off, the
+        baskets since then are real news and do fire.
+        """
+        if state not in (STATE_IN, STATE_POST) or not pbp:
+            return []
+        plays = parser.scoring_plays(pbp, self.team_code)
+        if self._scoring_game == code:
+            new = [p for p in plays if p["seq"] > self._last_seq]
+        elif (
+            state == STATE_IN
+            and self.data is not None
+            and self.data.state == STATE_PRE
+            and self.data.game.get("game_code") == code
+        ):
+            new = plays
+        else:
+            new = []
+        if plays:
+            self._last_seq = max(self._last_seq if self._scoring_game == code else 0, plays[-1]["seq"])
+        # Keep following until the final update has been read.
+        self._scoring_game = code if state == STATE_IN else None
+        return new
+
     # -------------------------------------------------------------- events
+
+    def _schedule(self, func, *args: Any) -> None:
+        """Run now, or after the configured delay (to match a TV stream)."""
+        delay = self.event_delay
+        if delay <= 0:
+            func(*args)
+            return
+
+        @callback
+        def _run(_now: datetime) -> None:
+            self._pending.remove(cancel)
+            func(*args)
+
+        cancel = async_call_later(self.hass, delay, _run)
+        self._pending.append(cancel)
+
+    @callback
+    def async_cancel_pending(self) -> None:
+        """Drop delayed events (on unload)."""
+        while self._pending:
+            self._pending.pop()()
 
     def _fire_events(self, old: TrackerData | None, new: TrackerData) -> None:
         if old is None:
@@ -258,42 +369,71 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
         ):
             # Different game: only announce a new tip-off.
             if new.state == STATE_IN:
-                self._fire("game_started", n)
+                self._schedule(self._send_event, "game_started", n, {})
             return
 
         if old.state == STATE_PRE and new.state == STATE_IN:
-            self._fire("game_started", n)
+            self._schedule(self._send_event, "game_started", n, {})
         if old.state == STATE_IN and new.state == STATE_POST:
-            self._fire("game_final", n, won=bool(n.get("team_winner")))
+            self._schedule(self._send_event, "game_final", n, {"won": bool(n.get("team_winner"))})
         if new.state != STATE_IN or old.state != STATE_IN:
             return
 
         if (o.get("quarter") or 0) < (n.get("quarter") or 0):
-            self._fire("quarter_end", n, quarter=o.get("quarter"))
+            self._schedule(self._send_event, "quarter_end", n, {"quarter": o.get("quarter")})
         ts_o, ts_n = o.get("team_score") or 0, n.get("team_score") or 0
         os_o, os_n = o.get("opponent_score") or 0, n.get("opponent_score") or 0
-        if ts_n > ts_o:
-            self._fire("team_scored", n, points=ts_n - ts_o)
-        if os_n > os_o:
-            self._fire("opponent_scored", n, points=os_n - os_o)
         lead_o = (ts_o > os_o) - (ts_o < os_o)
         lead_n = (ts_n > os_n) - (ts_n < os_n)
         if lead_n != 0 and lead_n != lead_o:
-            self._fire("lead_change", n, leader="team" if lead_n > 0 else "opponent")
+            self._schedule(
+                self._send_event, "lead_change", n, {"leader": "team" if lead_n > 0 else "opponent"}
+            )
 
-    def _fire(self, kind: str, game: dict[str, Any], **extra: Any) -> None:
-        self.hass.bus.async_fire(
-            EVENT_NAME,
-            {
-                "type": kind,
-                "entry_id": self.config_entry.entry_id,
-                "team": self.team_code,
-                "opponent": game.get("opponent_abbr"),
-                "team_score": game.get("team_score"),
-                "opponent_score": game.get("opponent_score"),
-                "quarter": game.get("quarter"),
-                "clock": game.get("clock"),
-                "game_code": game.get("game_code"),
-                **extra,
-            },
+    def _base(self, game: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "entry_id": self.config_entry.entry_id,
+            "team": self.team_code,
+            "opponent": game.get("opponent_abbr"),
+            "team_score": game.get("team_score"),
+            "opponent_score": game.get("opponent_score"),
+            "quarter": game.get("quarter"),
+            "clock": game.get("clock"),
+            "game_code": game.get("game_code"),
+        }
+
+    @callback
+    def _send_event(self, kind: str, game: dict[str, Any], extra: dict[str, Any]) -> None:
+        data = {**self._base(game), **extra}
+        self.hass.bus.async_fire(EVENT_NAME, {"type": kind, **data})
+        async_dispatcher_send(self.hass, signal_game_event(self.config_entry.entry_id), kind, data)
+
+    @callback
+    def _send_basket(self, basket: dict[str, Any], game: dict[str, Any]) -> None:
+        kind = "team_scored" if basket["side"] == "team" else "opponent_scored"
+        data = {
+            **self._base(game),
+            # The score and clock at this basket, not at the end of the update.
+            "team_score": basket["team_score"],
+            "opponent_score": basket["opponent_score"],
+            "quarter": basket["quarter"],
+            "clock": basket["clock"],
+            "points": basket["points"],
+            "shot": basket["type"],
+            "player": basket["player"],
+        }
+        self.hass.bus.async_fire(EVENT_NAME, {"type": kind, **data})
+        async_dispatcher_send(
+            self.hass, signal_scored(self.config_entry.entry_id), basket["side"], basket["type"], data
         )
+
+
+def _streak_with_final(earlier: list[dict[str, Any]], team_code: str, won: bool | None) -> str | None:
+    """The streak once the just-finished game is added to the earlier results."""
+    before = parser.streak(earlier, team_code)
+    if won is None:
+        return before
+    letter = "W" if won else "L"
+    if before and before[0] == letter:
+        return f"{letter}{int(before[1:]) + 1}"
+    return f"{letter}1"
