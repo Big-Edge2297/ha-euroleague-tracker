@@ -17,12 +17,6 @@
 
 Follow your **EuroLeague** or **EuroCup** basketball team in Home Assistant: live score and play-by-play, the next game with a countdown, the full standings table, season stats and a shot chart. A dashboard card ships with the integration, with no separate install.
 
-<p align="center">
-  <img src="docs/images/live-dark.png" width="32%" alt="Live game card, dark theme">
-  <img src="docs/images/next-game-team.png" width="32%" alt="Next game card, team colours">
-  <img src="docs/images/final-light.png" width="32%" alt="Final score card, light theme">
-</p>
-
 > [!NOTE]
 > This is an unofficial project, not affiliated with or endorsed by Euroleague Basketball. It reads the same public data feeds as the EuroLeague website.
 
