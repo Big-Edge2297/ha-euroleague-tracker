@@ -50,10 +50,17 @@ def test_options_fields():
     }
 
 
-def test_entity_names_and_game_states():
+def test_entity_names():
     sensors = EN["entity"]["sensor"]
     assert set(sensors) == {"game", "standings", "stats"}
-    assert set(sensors["game"]["state"]) == {STATE_PRE, STATE_IN, STATE_POST, STATE_NOT_FOUND}
+    assert all(sensors[key]["name"] for key in sensors)
+
+
+def test_game_states_stay_untranslated():
+    """The states are uppercase for ha-teamtracker compatibility, and translation
+    keys must be lowercase (hassfest), so the game states have no translations."""
+    assert "state" not in EN["entity"]["sensor"]["game"]
+    assert all(s.isupper() for s in (STATE_PRE, STATE_IN, STATE_POST, STATE_NOT_FOUND))
 
 
 def test_every_translation_key_in_the_code_exists():
@@ -62,3 +69,19 @@ def test_every_translation_key_in_the_code_exists():
     assert "api_access_refused" in EN["issues"]
     for key in ("cannot_connect", "no_teams"):
         assert f'"{key}"' in code, key
+
+
+def test_translation_keys_follow_hassfest_rules():
+    """hassfest: keys are [a-z0-9-_]+ and don't start or end with - or _."""
+    import re
+
+    pattern = re.compile(r"^[a-z0-9](?:[a-z0-9_-]*[a-z0-9])?$")
+
+    def keys(node, prefix=()):
+        if isinstance(node, dict):
+            for key, value in node.items():
+                yield (*prefix, key)
+                yield from keys(value, (*prefix, key))
+
+    bad = [".".join(path) for path in keys(EN) if not pattern.match(path[-1])]
+    assert not bad, bad

@@ -1,6 +1,9 @@
 {
   "domain": "euroleague_tracker",
   "name": "EuroLeague Tracker",
+  "categories": [
+    "media_entertainment"
+  ],
   "codeowners": [
     "@Big-Edge2297"
   ],

@@ -44,13 +44,7 @@
   "entity": {
     "sensor": {
       "game": {
-        "name": "Game",
-        "state": {
-          "PRE": "Upcoming",
-          "IN": "Live",
-          "POST": "Final",
-          "NOT_FOUND": "No game"
-        }
+        "name": "Game"
       },
       "standings": {
         "name": "Standings position"
