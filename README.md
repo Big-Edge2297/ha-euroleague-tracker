@@ -9,9 +9,6 @@
 [![Downloads](https://img.shields.io/github/downloads/Big-Edge2297/ha-euroleague-tracker/total?style=flat-square&label=downloads)](https://github.com/Big-Edge2297/ha-euroleague-tracker/releases)
 [![Latest release downloads](https://img.shields.io/github/downloads/Big-Edge2297/ha-euroleague-tracker/latest/total?style=flat-square&label=latest%20release)](https://github.com/Big-Edge2297/ha-euroleague-tracker/releases/latest)
 [![Validate](https://img.shields.io/github/actions/workflow/status/Big-Edge2297/ha-euroleague-tracker/validate.yml?branch=main&style=flat-square&label=validate)](https://github.com/Big-Edge2297/ha-euroleague-tracker/actions/workflows/validate.yml)
-[![Tests](https://img.shields.io/github/actions/workflow/status/Big-Edge2297/ha-euroleague-tracker/tests.yml?branch=main&style=flat-square&label=tests)](https://github.com/Big-Edge2297/ha-euroleague-tracker/actions/workflows/tests.yml)
-[![Dependency audit](https://img.shields.io/github/actions/workflow/status/Big-Edge2297/ha-euroleague-tracker/audit.yml?branch=main&style=flat-square&label=audit)](https://github.com/Big-Edge2297/ha-euroleague-tracker/actions/workflows/audit.yml)
-[![License](https://img.shields.io/github/license/Big-Edge2297/ha-euroleague-tracker?style=flat-square)](LICENSE)
 
 </p>
 
