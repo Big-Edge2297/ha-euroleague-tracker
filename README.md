@@ -1,3 +1,5 @@
+# **Euroleague Tracker**
+
 <p align="center">
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=flat-square)](https://hacs.xyz/docs/faq/custom_repositories/)
