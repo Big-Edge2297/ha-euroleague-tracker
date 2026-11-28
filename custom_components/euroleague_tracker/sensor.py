@@ -73,6 +73,7 @@ class GameSensor(_Base):
             "shots",
             "score_flow",
             "head_to_head",
+            "series",
             "previous_game",
             "next_game",
             "last_update",
@@ -98,7 +99,7 @@ class StandingsSensor(_Base):
     """State is the team's league position; the full table is an attribute."""
 
     _attr_icon = "mdi:format-list-numbered"
-    _unrecorded_attributes = frozenset({"table", "scoreboard"})
+    _unrecorded_attributes = frozenset({"table", "scoreboard", "bracket", "playoff_race"})
 
     def __init__(self, coordinator: EuroLeagueCoordinator) -> None:
         super().__init__(coordinator, "standings")
@@ -131,6 +132,8 @@ class StandingsSensor(_Base):
             "round": data.standings_round if data else None,
             "table": data.standings if data else [],
             "scoreboard": data.scoreboard if data else {},
+            "playoff_race": data.playoff_race if data else None,
+            "bracket": data.bracket if data else None,
         }
 
 

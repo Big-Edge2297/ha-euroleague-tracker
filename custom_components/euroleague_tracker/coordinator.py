@@ -68,6 +68,9 @@ class TrackerData:
     form: list[dict[str, Any]] = field(default_factory=list)
     shot_zones: dict[str, Any] | None = None
     scoreboard: dict[str, Any] = field(default_factory=dict)
+    playoff_race: dict[str, Any] | None = None
+    bracket: dict[str, Any] | None = None
+    calendar: list[dict[str, Any]] = field(default_factory=list)
 
 
 def signal_scored(entry_id: str) -> str:
@@ -158,7 +161,8 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
         comp_name = COMPETITIONS.get(self.competition, self.competition)
 
         all_games = await api.games(season_code)
-        mine = parser.team_games(all_games, self.team_code)
+        # "If necessary" playoff games of a decided series never happen.
+        mine = parser.drop_unneeded(parser.team_games(all_games, self.team_code), self.team_code)
         game, mode = parser.select_game(mine, now, self.post_game_hours)
 
         header = box = pbp = shots = evo = None
@@ -224,6 +228,7 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
         )
 
         if game is not None:
+            game_attrs.update(parser.postseason_attributes(game, mine, self.team_code, by_code))
             home = game_attrs.get("team_homeaway") == "home"
             game_attrs["score_flow"] = parser.parse_evolution(evo, home) if evo else None
             past = await self._past_meetings(season)
@@ -281,6 +286,9 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
             form=parser.season_form(played, self.team_code),
             shot_zones=await self._season_zones(season_code, played, fetch=state != STATE_IN),
             scoreboard=scoreboard,
+            playoff_race=parser.playoff_race(standings_rows, all_games, self.team_code),
+            bracket=parser.parse_bracket(all_games, standings_rows),
+            calendar=parser.calendar_events(mine, self.team_code, comp_name),
         )
         self._fire_events(self.data, data)
         for basket in baskets:

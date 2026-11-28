@@ -258,8 +258,17 @@ def standings_by_code(rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
 
 
 def current_round(rounds: list[dict[str, Any]], now: datetime) -> int | None:
-    """Latest round that has started (for standings)."""
-    started = [r for r in rounds if (parse_dt(r.get("minGameStartDate")) or now + timedelta(1)) <= now]
+    """Latest regular-season round that has started (for standings).
+
+    The table stops at the last regular-season round, so during the play-in,
+    playoffs and Final Four it shows the final table (the seeds).
+    """
+    started = [
+        r
+        for r in rounds
+        if (parse_dt(r.get("minGameStartDate")) or now + timedelta(1)) <= now
+        and (r.get("phaseTypeCode") or "RS") == "RS"
+    ]
     if not started:
         return None
     return max(to_int(r.get("round")) or 0 for r in started) or None
@@ -1124,3 +1133,343 @@ def round_scoreboard(all_games: list[dict[str, Any]], rounds: list[int]) -> dict
             games.sort(key=lambda g: (g["date"] or "", g["game_code"] or 0))
             out.append({"round": number, "games": games})
     return {"rounds": out, "crests": crests}
+
+
+# ------------------------------------------------------ v0.4.0 postseason
+
+POSTSEASON = ("PI", "PO", "FF")
+PLAYOFF_BEST_OF = 5
+PLAY_IN_LABELS = {"A": "7th v 8th", "B": "9th v 10th", "C": "for 8th place"}
+
+
+def phase_code(game: dict[str, Any]) -> str:
+    """'RS' (regular season), 'PI' (play-in), 'PO' (playoffs), 'FF' (Final Four)…"""
+    return clean_code((game.get("phaseType") or {}).get("code")) or "RS"
+
+
+def _group(game: dict[str, Any]) -> str:
+    """'PLAYOFF A ' -> 'PLAYOFF A' (the API pads some names)."""
+    group = game.get("group") or {}
+    return " ".join(str(group.get("rawName") or group.get("name") or "").upper().split())
+
+
+def _codes(game: dict[str, Any]) -> tuple[str, str]:
+    return clean_code(club_of(game.get("local")).get("code")), clean_code(
+        club_of(game.get("road")).get("code")
+    )
+
+
+def _series_games(games: list[dict[str, Any]], game: dict[str, Any]) -> list[dict[str, Any]]:
+    """Every game of the playoff series this game belongs to, oldest first."""
+    pair, group = set(_codes(game)), _group(game)
+    out = [g for g in games if phase_code(g) == "PO" and _group(g) == group and set(_codes(g)) == pair]
+    return sorted(
+        out, key=lambda g: (game_start(g) or datetime.max.replace(tzinfo=UTC), g.get("gameCode") or 0)
+    )
+
+
+def _winner(game: dict[str, Any]) -> str | None:
+    """The game's winner from the score (the API's `winner` field names the season champion)."""
+    if not game.get("played"):
+        return None
+    (hc, ac), hs, as_ = (
+        _codes(game),
+        to_int((game.get("local") or {}).get("score")),
+        to_int((game.get("road") or {}).get("score")),
+    )
+    if hs is None or as_ is None or hs == as_:
+        return None
+    return hc if hs > as_ else ac
+
+
+def game_label(game: dict[str, Any], games: list[dict[str, Any]]) -> str | None:
+    """'Playoffs · Game 3', 'Play-in · 7th v 8th', 'Final Four · Semifinal'; None in the regular season."""
+    phase = phase_code(game)
+    group = _group(game)
+    if phase == "PI":
+        letter = group.split()[-1] if group else ""
+        sub = PLAY_IN_LABELS.get(letter)
+        return f"Play-in · {sub}" if sub else "Play-in"
+    if phase == "PO":
+        series = _series_games(games, game)
+        number = next(
+            (i + 1 for i, g in enumerate(series) if g.get("gameCode") == game.get("gameCode")), None
+        )
+        return f"Playoffs · Game {number}" if number else "Playoffs"
+    if phase == "FF":
+        if "SEMI" in group:
+            return "Final Four · Semifinal"
+        if "THIRD" in group:
+            return "Final Four · Third place game"
+        if "CHAMPIONSHIP" in group or "FINAL" in group:
+            return "Final Four · Championship game"
+        return "Final Four"
+    return None
+
+
+def series_state(games: list[dict[str, Any]], game: dict[str, Any], team_code: str) -> dict[str, Any] | None:
+    """Where a best-of-five playoff series stands, from the team's side."""
+    if phase_code(game) != "PO":
+        return None
+    series = _series_games(games, game)
+    codes = _codes(game)
+    if team_code not in codes:
+        return None
+    opponent = codes[1] if codes[0] == team_code else codes[0]
+    need = PLAYOFF_BEST_OF // 2 + 1
+    wins = losses = 0
+    out_games = []
+    this = next(
+        (i for i, g in enumerate(series) if g.get("gameCode") == game.get("gameCode")), len(series) - 1
+    )
+    for number, g in enumerate(series, start=1):
+        s = summarize_game(g, team_code)
+        winner = _winner(g)
+        # The series as it stood after this game (later games don't count yet).
+        if number - 1 <= this:
+            wins += winner == team_code
+            losses += winner == opponent
+        out_games.append(
+            {
+                "game_number": number,
+                "date": s["date"],
+                "homeaway": s["homeaway"],
+                "played": bool(g.get("played")),
+                "team_score": s.get("team_score"),
+                "opponent_score": s.get("opponent_score"),
+                "won": s.get("won") if g.get("played") else None,
+            }
+        )
+    if wins >= need:
+        status = f"{team_code} win the series {wins}-{losses}"
+    elif losses >= need:
+        status = f"{opponent} win the series {losses}-{wins}"
+    elif wins == losses:
+        status = f"Series tied {wins}-{losses}"
+    elif wins > losses:
+        status = f"{team_code} lead {wins}-{losses}"
+    else:
+        status = f"{opponent} lead {losses}-{wins}"
+    return {
+        "group": _group(game),
+        "best_of": PLAYOFF_BEST_OF,
+        "game_number": this + 1,
+        "wins": wins,
+        "opponent_wins": losses,
+        "decided": max(wins, losses) >= need,
+        "status": status,
+        "games": out_games,
+    }
+
+
+def drop_unneeded(games: list[dict[str, Any]], team_code: str) -> list[dict[str, Any]]:
+    """Leave out 'if necessary' playoff games of a series that is already decided."""
+    need = PLAYOFF_BEST_OF // 2 + 1
+    out = []
+    for g in games:
+        if not g.get("played") and phase_code(g) == "PO":
+            series = _series_games(games, g)
+            winners = [_winner(s) for s in series]
+            if any(winners.count(code) >= need for code in set(_codes(g))):
+                continue
+        out.append(g)
+    return out
+
+
+def postseason_attributes(
+    game: dict[str, Any], games: list[dict[str, Any]], team_code: str, standings: dict[str, dict[str, Any]]
+) -> dict[str, Any]:
+    """Extra game attributes for play-in, playoff and Final Four games."""
+    phase = phase_code(game)
+    attrs: dict[str, Any] = {
+        "phase_code": phase,
+        "neutral_site": phase == "FF" or bool(game.get("isNeutralVenue")),
+        "series": series_state(games, game, team_code),
+        "team_seed": None,
+        "opponent_seed": None,
+    }
+    label = game_label(game, games)
+    if label:
+        attrs["round_name"] = label
+    if phase in POSTSEASON:
+        codes = _codes(game)
+        opponent = codes[1] if codes[0] == team_code else codes[0]
+        attrs["team_seed"] = (standings.get(team_code) or {}).get("position")
+        attrs["opponent_seed"] = (standings.get(opponent) or {}).get("position")
+    return attrs
+
+
+def _bracket_game(game: dict[str, Any]) -> dict[str, Any]:
+    (hc, ac), start = _codes(game), game_start(game)
+    played = bool(game.get("played"))
+    return {
+        "game_code": game.get("gameCode"),
+        "date": start.isoformat() if start else None,
+        "home": hc,
+        "away": ac,
+        "home_score": to_int((game.get("local") or {}).get("score")) if played else None,
+        "away_score": to_int((game.get("road") or {}).get("score")) if played else None,
+        "played": played,
+        "winner": _winner(game),
+    }
+
+
+def parse_bracket(
+    all_games: list[dict[str, Any]], standings_rows: list[dict[str, Any]]
+) -> dict[str, Any] | None:
+    """Play-in, playoff series and Final Four, once the postseason is on the schedule."""
+    post = [g for g in all_games if phase_code(g) in POSTSEASON and all(_codes(g))]
+    if not post:
+        return None
+    seeds = {r["code"]: r["position"] for r in standings_rows}
+    by_start = lambda g: (game_start(g) or datetime.max.replace(tzinfo=UTC), g.get("gameCode") or 0)  # noqa: E731
+
+    play_in = []
+    for g in sorted((g for g in post if phase_code(g) == "PI"), key=by_start):
+        letter = _group(g).split()[-1] if _group(g) else ""
+        play_in.append({**_bracket_game(g), "group": letter, "label": PLAY_IN_LABELS.get(letter)})
+
+    need = PLAYOFF_BEST_OF // 2 + 1
+    series: dict[str, list[dict[str, Any]]] = {}
+    for g in sorted((g for g in post if phase_code(g) == "PO"), key=by_start):
+        series.setdefault(_group(g), []).append(g)
+    playoffs = []
+    for group in sorted(series):
+        games = series[group]
+        codes = sorted(set(_codes(games[0])), key=lambda c: seeds.get(c) or 99)
+        winners = [_winner(g) for g in games]
+        sides = [{"code": c, "seed": seeds.get(c), "wins": winners.count(c)} for c in codes]
+        champ = next((s["code"] for s in sides if s["wins"] >= need), None)
+        playoffs.append(
+            {
+                "group": group.split()[-1],
+                "top": sides[0],
+                "bottom": sides[1] if len(sides) > 1 else None,
+                "best_of": PLAYOFF_BEST_OF,
+                "winner": champ,
+                "games": [_bracket_game(g) for g in games if g.get("played") or not champ],
+            }
+        )
+
+    ff = sorted((g for g in post if phase_code(g) == "FF"), key=by_start)
+    semis = [_bracket_game(g) for g in ff if "SEMI" in _group(g)]
+    third = next((_bracket_game(g) for g in ff if "THIRD" in _group(g)), None)
+    final = next((_bracket_game(g) for g in ff if "SEMI" not in _group(g) and "THIRD" not in _group(g)), None)
+    venue = next(((g.get("venue") or {}).get("name") for g in ff if g.get("venue")), None)
+    return {
+        "play_in": play_in,
+        "playoffs": playoffs,
+        "final_four": {"semifinals": semis, "final": final, "third_place": third, "venue": venue},
+        "champion": (final or {}).get("winner"),
+        "seeds": {c: s for c, s in seeds.items() if s is not None and s <= PLAY_IN_SPOTS},
+    }
+
+
+# ----------------------------------------------------------- playoff race
+
+
+def playoff_race(
+    rows: list[dict[str, Any]], all_games: list[dict[str, Any]], team_code: str
+) -> dict[str, Any] | None:
+    """How the team stands against the playoff (6th) and play-in (10th) lines.
+
+    Clinched and eliminated are worked out conservatively, from wins alone
+    (ties count against the team), so they never show too early.
+    """
+    me = next((r for r in rows if r["code"] == team_code), None)
+    if not me or me["position"] is None:
+        return None
+    remaining: dict[str, int] = {}
+    last_date = None
+    for g in all_games:
+        if phase_code(g) != "RS":
+            continue
+        start = game_start(g)
+        if start and (last_date is None or start > last_date):
+            last_date = start
+        if not g.get("played"):
+            for code in _codes(g):
+                remaining[code] = remaining.get(code, 0) + 1
+    # A missing or partial schedule must never make a clinch look certain: in a
+    # double round-robin every club plays 2 x (clubs - 1) games.
+    full = 2 * (len(rows) - 1)
+    for r in rows:
+        played = (r.get("wins") or 0) + (r.get("losses") or 0)
+        remaining[r["code"]] = max(remaining.get(r["code"], 0), full - played)
+    others = [r for r in rows if r["code"] != team_code and r["wins"] is not None]
+    my_max = me["wins"] + remaining.get(team_code, 0)
+
+    def line(spot: int) -> dict[str, Any] | None:
+        if len(rows) <= spot:
+            return None
+        inside = me["position"] <= spot
+        rival = next((r for r in rows if r["position"] == (spot + 1 if inside else spot)), None)
+        if rival is None:
+            return None
+        gap = ((me["wins"] - rival["wins"]) + (rival["losses"] - me["losses"])) / 2
+        can_catch = sum(1 for r in others if r["wins"] + remaining.get(r["code"], 0) >= me["wins"])
+        ahead_for_sure = sum(1 for r in others if r["wins"] > my_max)
+        status = (
+            "clinched"
+            if can_catch < spot
+            else "eliminated"
+            if ahead_for_sure >= spot
+            else "in"
+            if inside
+            else "out"
+        )
+        # Inside the line: games clear of the first team below it; outside: games behind the last team in.
+        return {"line": spot, "status": status, "inside": inside, "games": abs(gap), "rival": rival["code"]}
+
+    return {
+        "games_remaining": remaining.get(team_code, 0),
+        "last_game_date": last_date.isoformat() if last_date else None,
+        "playoffs": line(PLAYOFF_SPOTS),
+        "play_in": line(PLAY_IN_SPOTS),
+    }
+
+
+# --------------------------------------------------------------- calendar
+
+
+def calendar_events(
+    games: list[dict[str, Any]], team_code: str, competition_name: str
+) -> list[dict[str, Any]]:
+    """The team's season as calendar events (home team first)."""
+    out = []
+    for g in games:
+        start = game_start(g)
+        if not start:
+            continue
+        local, road = club_of(g.get("local")), club_of(g.get("road"))
+        home_name = local.get("abbreviatedName") or local.get("name") or clean_code(local.get("code"))
+        away_name = road.get("abbreviatedName") or road.get("name") or clean_code(road.get("code"))
+        label = (
+            game_label(g, games) or g.get("roundName") or (f"Round {g['round']}" if g.get("round") else "")
+        )
+        s = summarize_game(g, team_code)
+        lines = [f"{competition_name} · {label}" if label else competition_name]
+        if s.get("team_score") is not None:
+            lines.append(result_text(s) or "")
+        venue = (g.get("venue") or {}).get("name")
+        out.append(
+            {
+                "uid": f"{(g.get('season') or {}).get('code', '')}_{g.get('gameCode')}",
+                "summary": f"{home_name} vs {away_name}",
+                "start": start,
+                "end": start + GAME_LENGTH,
+                "location": titlecase_venue(venue),
+                "description": "\n".join(x for x in lines if x),
+            }
+        )
+    out.sort(key=lambda e: e["start"])
+    return out
+
+
+def titlecase_venue(venue: str | None) -> str | None:
+    """'SUNEL ARENA' -> 'Sunel Arena'."""
+    if not venue:
+        return None
+    if venue != venue.upper():
+        return venue
+    return " ".join(w.capitalize() for w in venue.split())
