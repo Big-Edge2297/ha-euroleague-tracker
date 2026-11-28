@@ -53,12 +53,15 @@
     ["final", "final", "game"],
     ["standings", "final", "standings"],
     ["stats", "final", "stats"],
+    ["stats-players", "final", "stats", { statsTab: "players" }],
+    ["stats-shots", "final", "stats", { statsTab: "shots" }],
+    ["round", "final", "round"],
     ["tabs", "live", "tabs"],
   ];
   const themes = ["dark", "light", "team"];
   const root = document.getElementById("root");
   for (const theme of themes) {
-    for (const [name, gameKey, view] of shots) {
+    for (const [name, gameKey, view, extra = {}] of shots) {
       const wrap = document.createElement("div");
       wrap.className = `shot ${theme}`;
       wrap.id = `${name}-${theme}`;
@@ -67,6 +70,7 @@
       const card = document.createElement("euroleague-tracker-card");
       card.setConfig({ type: "custom:euroleague-tracker-card", entity: ids.game, view, theme, play_by_play_rows: 4 });
       card.hass = hassFor(gameKey);
+      if (extra.statsTab) card._statsTab = extra.statsTab;
       frame.appendChild(card);
       wrap.appendChild(frame);
       root.appendChild(wrap);

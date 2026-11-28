@@ -2,11 +2,12 @@
  "points": [
   {
    "details": {
-    "code": "000000",
+    "code": "012640",
     "name": "HIFI, NADIR",
     "team": {
      "code": "PRS"
-    }
+    },
+    "imageUrl": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCjnONz/c4dc8064-fc52-451a-b27c-0aa9ec164948.png"
    },
    "rank": 1,
    "gamesPlayed": 14,
@@ -14,11 +15,12 @@
   },
   {
    "details": {
-    "code": "000001",
+    "code": "003469",
     "name": "VEZENKOV, SASHA",
     "team": {
      "code": "OLY"
-    }
+    },
+    "imageUrl": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCjnONy/f65c52c5-542f-4796-8dc6-b46cc9a6f3d5.png"
    },
    "rank": 2,
    "gamesPlayed": 14,
@@ -188,11 +190,12 @@
  "pir": [
   {
    "details": {
-    "code": "000000",
+    "code": "003469",
     "name": "VEZENKOV, SASHA",
     "team": {
      "code": "OLY"
-    }
+    },
+    "imageUrl": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCjnONy/f65c52c5-542f-4796-8dc6-b46cc9a6f3d5.png"
    },
    "rank": 1,
    "gamesPlayed": 14,
@@ -236,11 +239,12 @@
   },
   {
    "details": {
-    "code": "000004",
+    "code": "012640",
     "name": "HIFI, NADIR",
     "team": {
      "code": "PRS"
-    }
+    },
+    "imageUrl": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCjnONz/c4dc8064-fc52-451a-b27c-0aa9ec164948.png"
    },
    "rank": 5,
    "gamesPlayed": 14,

@@ -63,9 +63,40 @@ async def test_setup_pre_game(hass: HomeAssistant, aioclient_mock, freezer: Froz
     stats = hass.states.get(_entity(hass, "stats"))
     assert float(stats.state) == 90.4
     assert stats.attributes["team_leader_ranks"][0]["name"] == "Sasha Vezenkov"
+    assert stats.attributes["league_ranks"]["fg2_pct"]["rank"] == 1
+    assert stats.attributes["league_ranks"]["points"] == {
+        "value": 90.4,
+        "rank": 4,
+        "teams": 20,
+        "worst": 79.5,
+        "best": 96.1,
+        "average": 87.1,
+        "lower_is_better": False,
+    }
+    assert stats.attributes["attack_defence"]["scored"] == 90.4
+    assert stats.attributes["attack_defence"]["allowed"] == 81.3
+    form = stats.attributes["form"]
+    assert len(form) == 14 and form[0]["round"] == 1 and form[-1]["margin"] == 25
+    # The finished games' shots are read for the season zones, ten per update.
+    assert stats.attributes["shot_zones"]["games"] == 10
 
-    # Live feeds aren't touched before tip-off.
-    assert not any("//live.euroleague.net" in str(call[1]) for call in aioclient_mock.mock_calls)
+    h2h = game.attributes["head_to_head"]
+    assert (h2h["wins"], h2h["losses"], h2h["average_margin"]) == (3, 1, 5.5)
+    assert h2h["meetings"][0]["date"].startswith("2026-04-03")
+    assert game.attributes["score_flow"] is None
+
+    board = standings.attributes["scoreboard"]
+    assert [r["round"] for r in board["rounds"]] == [14, 15, 16]
+    assert len(board["rounds"][0]["games"]) == 10 and board["rounds"][0]["games"][0]["played"]
+    assert board["crests"]["OLY"].startswith("https://")
+
+    # Before tip-off the only live feed read is finished games' shot locations.
+    live_calls = {
+        str(call[1]).split("?")[0]
+        for call in aioclient_mock.mock_calls
+        if "//live.euroleague.net" in str(call[1])
+    }
+    assert live_calls == {"https://live.euroleague.net/api/Points"}
 
     assert await hass.config_entries.async_unload(entry.entry_id)
 
@@ -84,6 +115,10 @@ async def test_live_then_final_fires_events(
     assert game.state == "IN"
     assert game.attributes["clock"] == "Q3 04:21"
     assert game.attributes["team_score"] == 63
+    assert game.attributes["score_flow"]["team"][:3] == [2, 8, 10]
+    # Live updates don't read past games' shots.
+    stats = hass.states.get(_entity(hass, "stats"))
+    assert stats.attributes["shot_zones"] is None
     coordinator = entry.runtime_data
     assert coordinator.update_interval == timedelta(seconds=15)
 
@@ -97,6 +132,9 @@ async def test_live_then_final_fires_events(
     game = hass.states.get(_entity(hass, "game"))
     assert game.state == "POST"
     assert game.attributes["team_score"] == 104
+    flow = game.attributes["score_flow"]
+    assert (flow["largest_lead"], flow["largest_lead_minute"]) == (25, 39)
+    assert (flow["largest_deficit"], flow["largest_deficit_minute"]) == (6, 12)
     kinds = [e.data["type"] for e in events]
     assert "game_final" in kinds
     final = next(e for e in events if e.data["type"] == "game_final")

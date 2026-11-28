@@ -70,7 +70,12 @@ def game_state(state, game_code, now, **feeds):
     return {"state": state, "attributes": {**common, **attrs}}
 
 
+past = load("games_E2025.json")["data"] + load("games_E2024.json")["data"]
+evolution = load("evolution_140.json")
+
 pre = game_state("PRE", 150, datetime(2026, 11, 27, 15, tzinfo=UTC))
+pre["attributes"]["head_to_head"] = parser.head_to_head(past, TEAM, "ASV")
+pre["attributes"]["score_flow"] = None
 live = game_state(
     "IN",
     140,
@@ -80,6 +85,11 @@ live = game_state(
     pbp=load("pbp_140_live.json"),
     shots=None,
 )
+# Q3 04:21 is minute 25 of 40.
+live["attributes"]["score_flow"] = parser.parse_evolution(
+    {"PointsList": [side[:26] for side in evolution["PointsList"]]}, True
+)
+live["attributes"]["head_to_head"] = None
 final = game_state(
     "POST",
     140,
@@ -89,6 +99,9 @@ final = game_state(
     pbp=load("pbp_140_final.json"),
     shots=load("points_140.json"),
 )
+
+final["attributes"]["score_flow"] = parser.parse_evolution(evolution, True)
+final["attributes"]["head_to_head"] = None
 
 me = by_code[TEAM]
 standings = {
@@ -100,6 +113,7 @@ standings = {
         "season": "E2026",
         "round": 14,
         "table": rows,
+        "scoreboard": parser.round_scoreboard(load("games.json")["data"], [13, 14, 15]),
         "friendly_name": "Olympiacos Standings position",
     },
 }
@@ -114,6 +128,31 @@ stats = {
         "per_game": parser.parse_team_stats(load("team_stats_oly.json")[0]),
         "team_leader_ranks": leaders["team"],
         "league_leaders": leaders["league"],
+        "league_ranks": parser.parse_league_ranks(load("team_traditional.json"), TEAM),
+        # Real season figures (27 Nov 2026, from all 140 games played so far
+        # and the 934 Olympiacos shots); the fixtures only hold a few games.
+        "attack_defence": {
+            "scored": 90.4,
+            "allowed": 81.3,
+            "net": 9.1,
+            "scored_rank": 4,
+            "allowed_rank": 4,
+            "league_average": 87.1,
+            "teams": 20,
+        },
+        "form": parser.season_form([g for g in games() if g.get("played")], TEAM),
+        "shot_zones": parser.merge_zones(
+            [
+                {
+                    "rim": [171, 209],
+                    "paint": [138, 282],
+                    "mid_range": [27, 67],
+                    "corner_three": [32, 77],
+                    "above_break_three": [96, 299],
+                }
+            ]
+        )
+        | {"games": 14},
         "friendly_name": "Olympiacos Season stats",
     },
 }

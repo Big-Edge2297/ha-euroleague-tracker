@@ -69,6 +69,7 @@ test("the visual editor offers every option", () => {
   assert.deepEqual(names.sort(), [
     "entity",
     "play_by_play_rows",
+    "show_round_tab",
     "show_shot_chart",
     "standings_entity",
     "standings_rows",
@@ -250,41 +251,192 @@ test("standings_rows shows a window around your team", async () => {
 
 // ---------------------------------------------------------------------- stats
 
-test("stats: season averages with one decimal, PIR whole", async () => {
+test("stats · team: attack, defence and league average", async () => {
   const el = await mount({ view: "stats" });
-  const tiles = $$(el, ".tile").map(text);
-  assert.deepEqual(tiles, [
+  assert.deepEqual(
+    $$(el, ".subtabs button").map(text),
+    ["Team", "Players", "Shots"],
+  );
+  assert.deepEqual($$(el, ".facts.two .tile").map(text), [
+    "Attack 90.4 scored 4th · +3.3 vs avg",
+    "Defence 81.3 allowed 4th · −5.8 vs avg",
+  ]);
+  assert.match(cardText(el), /Attack vs defence Net \+9\.1/);
+  assert.match($$(el, "svg.chart")[0].getAttribute("aria-label")!, /90\.4 scored, 81\.3 allowed, league average 87\.1/);
+  assert.match(text($(el, ".head")), /Olympiacos · 2026-27 Per game · 14 GP/);
+});
+
+test("stats · team: every stat's league rank on a worst-to-best bar", async () => {
+  const el = await mount({ view: "stats" });
+  const rows = $$(el, ".rankbars .rb").map((n) => n.getAttribute("aria-label"));
+  assert.deepEqual(rows, [
+    "Points 90.4, 4th of 20",
+    "Rebounds 36.6, 10th of 20",
+    "Assists 20.6, 3rd of 20",
+    "Steals 7.4, 5th of 20",
+    "Turnovers 12.9, 9th of 20",
+    "Blocks 2.4, 14th of 20",
+    "PIR 107, 2nd of 20",
+    "2P% 60.2, 1st of 20",
+    "3P% 34, 16th of 20",
+    "FT% 76.6, 10th of 20",
+  ]);
+  // 2P% is the league's best: the dot sits at the right end.
+  const dot = (i: number) => ($$(el, ".rankbars .rb .p")[i] as HTMLElement).style.left;
+  assert.equal(dot(7), "100%");
+  // Turnovers are flipped: 12.9 against a worst of 14.4 and a best of 10.5.
+  assert.equal(dot(4), `${(((12.9 - 14.4) / (10.5 - 14.4)) * 100).toFixed(1)}%`);
+  assert.deepEqual(
+    $$(el, ".rankbars .r.top").map(text),
+    ["3rd", "2nd", "1st"],
+  );
+  assert.equal(text($$(el, ".rankbars .v")[6]), "107");
+});
+
+test("stats · team: without league ranks it falls back to the season averages", async () => {
+  const hass = makeHass();
+  hass.states[IDS.stats].attributes.league_ranks = {};
+  hass.states[IDS.stats].attributes.attack_defence = null;
+  const el = await mount({ view: "stats" }, hass);
+  assert.deepEqual($$(el, ".tiles .tile").map(text), [
     "Points 90.4",
     "Rebounds 36.6",
     "Assists 20.6",
     "2P% 60.2",
     "3P% 34.0",
     "PIR 107",
-    "Steals 7.4",
-    "Turnovers 12.9",
-    "FT% 76.6",
   ]);
-  assert.match(text($(el, ".head")), /Olympiacos · 2026-27 14 games/);
 });
 
-test("stats: your players among the league leaders", async () => {
-  const el = await mount({ view: "stats" });
-  const ranks = text($(el, ".ranks"));
-  assert.match(ranks, /^Sasha Vezenkov PIR 1st · 23\.9 Sasha Vezenkov Points 2nd · 20\.2 Codi Miller-McIntyre Assists 4th · 5\.1/);
-  assert.match(cardText(el), /Points: Nadir Hifi \(PRS\) 20\.4/);
+async function statsTab(name: string, hass = makeHass()) {
+  const el = await mount({ view: "stats" }, hass);
+  const btn = $$(el, ".subtabs button").find((b) => text(b) === name) as HTMLElement;
+  btn.click();
+  await el.updateComplete;
+  return el;
+}
+
+test("stats · players: season form, one bar per game", async () => {
+  const el = await statsTab("Players");
+  assert.equal($$(el, ".subtabs button")[1].getAttribute("aria-selected"), "true");
+  assert.equal($$(el, "svg.chart rect.win").length, 11);
+  assert.equal($$(el, "svg.chart rect.loss").length, 3);
+  assert.deepEqual(
+    $$(el, "svg.chart text.val").map(text),
+    ["+17", "+2", "−2", "+23", "+5", "+5", "−3", "+8", "+6", "−5", "+29", "+2", "+16", "+25"],
+  );
+  assert.match(cardText(el), /Season form · point margin Avg \+9\.1/);
+  assert.match(text($(el, ".head")), /11-3 · 1st/);
 });
 
-test("stats: the shot chart has all 70 field goals, 38 made", async () => {
-  const el = await mount({ view: "stats" }, makeHass("final"));
+test("stats · players: your players among the league leaders, with headshots", async () => {
+  const el = await statsTab("Players");
+  const rows = $$(el, ".leader").map(text);
+  assert.equal(rows[0], "Sasha Vezenkov PIR · League leader 23.9 1st");
+  assert.equal(rows[1], "Sasha Vezenkov Points · Leader: Nadir Hifi (PRS) 20.4 20.2 2nd");
+  // No headshot in the data: initials instead.
+  assert.equal(rows[2], "CM Codi Miller-McIntyre Assists · Leader: TJ Shorts (PAM) 5.9 5.1 4th");
+  assert.match(($(el, ".leader img.head-shot") as HTMLImageElement).src, /^https:\/\/media-cdn/);
+});
+
+test("stats · players: a headshot that fails to load shows initials", async () => {
+  const el = await statsTab("Players");
+  const img = $(el, ".leader img.head-shot") as HTMLImageElement;
+  img.dispatchEvent(new Event("error"));
+  await el.updateComplete;
+  assert.equal(text($(el, ".leader .head-shot.fallback")), "SV");
+});
+
+test("stats · shots: season zones from 934 shots", async () => {
+  const el = await statsTab("Shots");
+  assert.match(text($(el, ".head")), /14 games · 934 shots/);
+  assert.match(cardText(el), /Season shooting by zone 464\/934 FG · 49\.7%/);
+  const table = text($(el, ".zone-table"));
+  assert.match(table, /At the rim 171\/209 81\.8% 1\.64/);
+  assert.match(table, /Above-break three 96\/299 32\.1% 0\.96/);
+  const label = $(el, "svg.court.zones")!.getAttribute("aria-label")!;
+  assert.match(label, /At the rim 82%, Paint 49%, Mid-range 40%, Corner three 42%, Above-break three 32%/);
+  // The rim (1.64 points a shot) is shaded darker than mid-range (0.81).
+  const op = (i: number) => Number(($$(el, ".zone-table .sw")[i] as HTMLElement).style.opacity);
+  assert.ok(op(0) > op(2));
+});
+
+test("stats · shots: nothing yet shows a message", async () => {
+  const hass = makeHass();
+  hass.states[IDS.stats].attributes.shot_zones = null;
+  const el = await statsTab("Shots", hass);
+  assert.match(cardText(el), /Shot locations aren't available yet/);
+});
+
+test("final: score flow with the biggest leads", async () => {
+  const el = await game("final");
+  const label = $(el, "svg.chart")!.getAttribute("aria-label")!;
+  assert.equal(label, "Score flow: largest OLY lead 25, largest HTA lead 6");
+  assert.deepEqual($$(el, ".facts .tile").map(text), [
+    "Biggest lead +25 · 39'",
+    "HTA biggest +6 · 12'",
+    "Final margin +25",
+  ]);
+  assert.equal($$(el, "svg.chart polyline.flow")[0].getAttribute("points")!.split(" ").length, 41);
+});
+
+test("live: the score flow so far", async () => {
+  const el = await game("live");
+  assert.equal($(el, "svg.chart polyline.flow")!.getAttribute("points")!.split(" ").length, 26);
+  assert.match(text($$(el, ".facts .tile")[2]), /Now \+5/);
+});
+
+test("final: the last game's shot chart has all 70 field goals, 38 made", async () => {
+  const el = await game("final");
   assert.equal($$(el, "svg.court circle.made").length, 38);
   assert.equal($$(el, "svg.court circle.miss").length, 32);
   assert.match(text($(el, ".shot-legend")), /2P 26\/40 · 3P 12\/30/);
   assert.match($(el, "svg.court")!.getAttribute("aria-label")!, /38 of 70 field goals/);
 });
 
-test("stats: show_shot_chart: false hides the chart", async () => {
-  const el = await mount({ view: "stats", show_shot_chart: false }, makeHass("final"));
+test("show_shot_chart: false hides the last game's chart", async () => {
+  const el = await game("final", { show_shot_chart: false });
   assert.equal($(el, "svg.court"), null);
+});
+
+test("next game: head to head, newest first", async () => {
+  const el = await game("pre");
+  assert.match(cardText(el), /Head to head · last 4 OLY leads 3-1/);
+  assert.deepEqual($$(el, ".h2h-row").map(text), [
+    "3 Apr 2026 ASV 74 – 82 OLY W",
+    "19 Dec 2025 OLY 107 – 84 ASV W",
+    "25 Mar 2025 ASV 81 – 70 OLY L",
+    "12 Nov 2024 OLY 94 – 92 ASV W",
+  ]);
+  assert.match(cardText(el), /Average margin \+5\.5/);
+});
+
+test("round: every game of the round, yours highlighted", async () => {
+  const el = await mount({ view: "round" }, makeHass("final"));
+  assert.match(text($(el, ".head")), /Round 14 · results 10 games/);
+  const games = $$(el, ".bgame");
+  assert.equal(games.length, 10);
+  const mine = $$(el, ".bgame.me");
+  assert.equal(mine.length, 1);
+  assert.equal(text(mine[0]), "OLY 104 HTA 79");
+  assert.equal(text(mine[0].querySelector(".side.w")), "OLY 104");
+});
+
+test("round: arrows step through rounds; fixtures show tip-off times", async () => {
+  const el = await mount({ view: "round" }, makeHass("final"));
+  const [prev, next] = $$(el, ".nav") as HTMLButtonElement[];
+  next.click();
+  await el.updateComplete;
+  assert.match(text($(el, ".head")), /Round 15 · fixtures/);
+  const mine = text($(el, ".bgame.me"));
+  assert.equal(mine, "OLY ASV Fri 4 Dec · 21:15");
+  assert.equal(($$(el, ".nav")[1] as HTMLButtonElement).disabled, true);
+  for (let i = 0; i < 2; i++) {
+    ($$(el, ".nav")[0] as HTMLElement).click();
+    await el.updateComplete;
+  }
+  assert.match(text($(el, ".head")), /Round 13/);
+  assert.equal(prev.disabled, true);
 });
 
 test("stats and standings find their sensors even when renamed", async () => {
@@ -297,15 +449,16 @@ test("stats and standings find their sensors even when renamed", async () => {
     delete hass.states[from];
   }
   assert.equal($$(await mount({ view: "standings" }, hass), ".srow:not(.header)").length, 20);
-  assert.equal($$(await mount({ view: "stats" }, hass), ".tile").length, 9);
+  assert.equal($$(await mount({ view: "stats" }, hass), ".rankbars .rb").length, 10);
+  assert.equal($$(await mount({ view: "round" }, hass), ".bgame").length, 10);
 });
 
 // ----------------------------------------------------------------- tabs, theme
 
-test("tabs switch between game, standings and stats", async () => {
+test("tabs switch between game, standings, stats and round", async () => {
   const el = await mount({ view: "tabs" }, makeHass("live"));
   const tabs = $$(el, ".tabs button") as HTMLButtonElement[];
-  assert.deepEqual(tabs.map(text), ["Game", "Standings", "Stats"]);
+  assert.deepEqual(tabs.map(text), ["Game", "Standings", "Stats", "Round"]);
   assert.equal(tabs[0].getAttribute("aria-selected"), "true");
   assert.ok($(el, ".score"));
 
@@ -316,7 +469,16 @@ test("tabs switch between game, standings and stats", async () => {
 
   ($$(el, ".tabs button")[2] as HTMLElement).click();
   await el.updateComplete;
-  assert.equal($$(el, ".tile").length, 9);
+  assert.equal($$(el, ".rankbars .rb").length, 10);
+
+  ($$(el, ".tabs button")[3] as HTMLElement).click();
+  await el.updateComplete;
+  assert.equal($$(el, ".bgame").length, 10);
+});
+
+test("show_round_tab: false hides the Round tab", async () => {
+  const el = await mount({ view: "tabs", show_round_tab: false });
+  assert.deepEqual($$(el, ".tabs button").map(text), ["Game", "Standings", "Stats"]);
 });
 
 test("a single view has no tabs", async () => {

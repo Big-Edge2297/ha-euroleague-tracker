@@ -14,8 +14,9 @@ const CARD_VERSION = (() => {
 })();
 const ATTRIBUTION_PREFIX = "Data provided by the EuroLeague API";
 
-type View = "tabs" | "game" | "standings" | "stats";
-type Tab = "game" | "standings" | "stats";
+type View = "tabs" | "game" | "standings" | "stats" | "round";
+type Tab = "game" | "standings" | "stats" | "round";
+type StatsTab = "team" | "players" | "shots";
 
 interface CardConfig {
   type: string;
@@ -28,6 +29,7 @@ interface CardConfig {
   play_by_play_rows?: number;
   standings_rows?: number;
   show_shot_chart?: boolean;
+  show_round_tab?: boolean;
 }
 
 type Attrs = Record<string, any>;
@@ -41,8 +43,39 @@ const LABELS: Record<string, string> = {
   standings_rows: "Standings rows",
   standings_entity: "Standings sensor (optional, found automatically)",
   stats_entity: "Stats sensor (optional, found automatically)",
-  show_shot_chart: "Show shot chart",
+  show_shot_chart: "Show the shot chart after a game",
+  show_round_tab: "Show the Round tab",
 };
+
+const STAT_LABELS: Record<string, string> = {
+  points: "Points",
+  rebounds: "Rebounds",
+  assists: "Assists",
+  steals: "Steals",
+  turnovers: "Turnovers",
+  blocks: "Blocks",
+  pir: "PIR",
+  fg2_pct: "2P%",
+  fg3_pct: "3P%",
+  ft_pct: "FT%",
+};
+
+const ZONES: [string, string][] = [
+  ["rim", "At the rim"],
+  ["paint", "Paint"],
+  ["mid_range", "Mid-range"],
+  ["corner_three", "Corner three"],
+  ["above_break_three", "Above-break three"],
+];
+
+const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
 
 export class EuroLeagueTrackerCard extends LitElement {
   static styles = styles;
@@ -51,12 +84,16 @@ export class EuroLeagueTrackerCard extends LitElement {
     hass: { attribute: false },
     _config: { state: true },
     _tab: { state: true },
+    _statsTab: { state: true },
+    _round: { state: true },
     _broken: { state: true },
   };
 
   hass: any;
   private _config!: CardConfig;
   private _tab: Tab = "game";
+  private _statsTab: StatsTab = "team";
+  private _round: number | null = null;
   private _broken: Set<string> = new Set();
 
   // ------------------------------------------------------------- HA hooks
@@ -65,12 +102,19 @@ export class EuroLeagueTrackerCard extends LitElement {
     if (!config || !config.entity) {
       throw new Error("Choose the game sensor created by EuroLeague Tracker (entity).");
     }
-    this._config = { view: "tabs", theme: "auto", play_by_play_rows: 4, show_shot_chart: true, ...config };
+    this._config = {
+      view: "tabs",
+      theme: "auto",
+      play_by_play_rows: 4,
+      show_shot_chart: true,
+      show_round_tab: true,
+      ...config,
+    };
     if (this._config.view && this._config.view !== "tabs") this._tab = this._config.view as Tab;
   }
 
   getCardSize(): number {
-    return this._tab === "standings" ? 12 : 7;
+    return this._tab === "standings" || this._tab === "stats" ? 12 : this._tab === "round" ? 9 : 8;
   }
 
   getGridOptions() {
@@ -91,10 +135,11 @@ export class EuroLeagueTrackerCard extends LitElement {
             {
               name: "view",
               selector: select([
-                ["tabs", "Tabs: game, standings, stats"],
+                ["tabs", "Tabs: game, standings, stats, round"],
                 ["game", "Game only"],
                 ["standings", "Standings only"],
                 ["stats", "Stats only"],
+                ["round", "Round scoreboard only"],
               ]),
             },
             {
@@ -117,7 +162,14 @@ export class EuroLeagueTrackerCard extends LitElement {
             { name: "standings_rows", selector: { number: { min: 4, max: 20, mode: "box" } } },
           ],
         },
-        { name: "show_shot_chart", selector: { boolean: {} } },
+        {
+          type: "grid",
+          name: "",
+          schema: [
+            { name: "show_shot_chart", selector: { boolean: {} } },
+            { name: "show_round_tab", selector: { boolean: {} } },
+          ],
+        },
         { name: "standings_entity", selector: { entity: { domain: "sensor", integration: "euroleague_tracker" } } },
         { name: "stats_entity", selector: { entity: { domain: "sensor", integration: "euroleague_tracker" } } },
       ],
@@ -246,7 +298,13 @@ export class EuroLeagueTrackerCard extends LitElement {
         : nothing}
       <div class="content">
         ${this._config.view === "tabs" ? this._renderTabs() : nothing}
-        ${tab === "standings" ? this._renderStandings(a) : tab === "stats" ? this._renderStats(a) : this._renderGame(game.state, a)}
+        ${tab === "standings"
+          ? this._renderStandings(a)
+          : tab === "stats"
+            ? this._renderStats(a)
+            : tab === "round"
+              ? this._renderRound(a)
+              : this._renderGame(game.state, a)}
       </div>
     </ha-card>`;
   }
@@ -257,6 +315,7 @@ export class EuroLeagueTrackerCard extends LitElement {
       ["standings", "Standings"],
       ["stats", "Stats"],
     ];
+    if (this._config.show_round_tab !== false) tabs.push(["round", "Round"]);
     return html`<div class="tabs" role="tablist">
       ${tabs.map(
         ([key, label]) =>
@@ -292,9 +351,11 @@ export class EuroLeagueTrackerCard extends LitElement {
       </div>
       ${this._renderMatchup(state, a)}
       ${state === "PRE" ? this._renderPreCompare(a) : this._renderQuarters(state, a)}
+      ${state === "PRE" ? this._renderH2H(a) : this._renderFlow(state, a)}
       ${state === "IN" ? this._renderPlays(a) : nothing}
       ${state !== "PRE" ? this._renderPlayers(state, a) : nothing}
       ${state === "POST" ? this._renderBars(a) : nothing}
+      ${state === "POST" && this._config.show_shot_chart !== false ? this._renderShots(a) : nothing}
       ${this._renderFoot(state, a)}
     `;
   }
@@ -516,54 +577,448 @@ export class EuroLeagueTrackerCard extends LitElement {
 
   // --------------------------------------------------------------- stats
 
+  // ------------------------------------------------- head to head, score flow
+
+  private _renderH2H(a: Attrs) {
+    const h = a.head_to_head;
+    if (!h?.meetings?.length) return nothing;
+    const lead =
+      h.wins === h.losses
+        ? `Level ${h.wins}-${h.losses}`
+        : `${h.wins > h.losses ? a.team_abbr : h.opponent_abbr} leads ${Math.max(h.wins, h.losses)}-${Math.min(h.wins, h.losses)}`;
+    return html`<div>
+      <div class="head" style="margin-bottom:4px">
+        <span class="section-title" style="margin:0">Head to head · last ${h.meetings.length}</span>
+        <span style="font-size:13px">${lead}</span>
+      </div>
+      <div class="h2h">
+        ${h.meetings.map((m: Attrs) => {
+          const [hc, hs, ac, as] =
+            m.homeaway === "home"
+              ? [a.team_abbr, m.team_score, h.opponent_abbr, m.opponent_score]
+              : [h.opponent_abbr, m.opponent_score, a.team_abbr, m.team_score];
+          return html`<div class="h2h-row">
+            <span class="d">${m.date ? this._fmtDate(m.date) : ""}</span>
+            <span
+              ><span class=${hs > as ? "w" : "dim"}>${hc} ${hs}</span> – <span class=${as > hs ? "w" : "dim"}
+                >${as} ${ac}</span
+              ></span
+            >
+            <span class="chip ${m.won ? "W" : "L"}">${m.won ? "W" : "L"}</span>
+          </div>`;
+        })}
+      </div>
+      <div class="foot" style="margin-top:6px">Average margin ${signed(h.average_margin)}</div>
+    </div>`;
+  }
+
+  private _fmtDate(iso: string): string {
+    const { lang, tz } = this._locale();
+    return new Intl.DateTimeFormat(lang, { day: "numeric", month: "short", year: "numeric", timeZone: tz }).format(
+      new Date(iso),
+    );
+  }
+
+  private _renderFlow(state: string, a: Attrs) {
+    const f = a.score_flow;
+    const team: number[] = f?.team ?? [];
+    const opp: number[] = f?.opponent ?? [];
+    if (team.length < 2) return nothing;
+    const diffs = team.map((t, i) => t - (opp[i] ?? 0));
+    const minutes = Math.max(40, diffs.length - 1);
+    const W = 400;
+    const H = 140;
+    const up = Math.max(5, ...diffs);
+    const down = Math.max(5, ...diffs.map((d) => -d));
+    const zero = 8 + ((H - 16) * up) / (up + down);
+    const k = (H - 16) / (up + down);
+    const x = (m: number) => ((m / minutes) * W).toFixed(1);
+    const y = (d: number) => (zero - d * k).toFixed(1);
+    const line = diffs.map((d, m) => `${x(m)},${y(d)}`).join(" ");
+    const area = `M 0,${zero.toFixed(1)} L ${diffs.map((d, m) => `${x(m)},${y(d)}`).join(" L ")} L ${x(diffs.length - 1)},${zero.toFixed(1)} Z`;
+    const quarters = [10, 20, 30, ...(minutes > 40 ? [40] : [])];
+    const id = `flow-${a.game_code ?? "x"}`;
+    const label = `Score flow: largest ${a.team_abbr} lead ${f.largest_lead ?? 0}, largest ${a.opponent_abbr} lead ${f.largest_deficit ?? 0}`;
+    return html`<div>
+      <div class="head" style="margin-bottom:6px">
+        <span class="section-title" style="margin:0">Score flow</span>
+        <span class="legend">
+          <span><i style="background:var(--elt-accent)"></i>${a.team_abbr} ahead</span>
+          <span><i style="background:var(--elt-other)"></i>${a.opponent_abbr} ahead</span>
+        </span>
+      </div>
+      <svg class="chart" viewBox="0 0 ${W} ${H + 14}" role="img" aria-label=${label}>
+        <defs>
+          <clipPath id="${id}-up"><rect x="0" y="0" width=${W} height=${zero}></rect></clipPath>
+          <clipPath id="${id}-dn"><rect x="0" y=${zero} width=${W} height=${H}></rect></clipPath>
+        </defs>
+        ${quarters.map((q) => svg`<line class="grid" x1=${x(q)} y1="4" x2=${x(q)} y2=${H - 4}></line>`)}
+        <path d=${area} class="area-up" clip-path="url(#${id}-up)"></path>
+        <path d=${area} class="area-down" clip-path="url(#${id}-dn)"></path>
+        <line class="zero" x1="0" y1=${zero} x2=${W} y2=${zero}></line>
+        <polyline class="flow" points=${line}></polyline>
+        ${[1, 2, 3, 4].map(
+          (q) => svg`<text class="axis" x=${x(q * 10 - 5)} y=${H + 12} text-anchor="middle">Q${q}</text>`,
+        )}
+      </svg>
+      <div class="facts">
+        <div class="tile small">
+          <div class="k">Biggest lead</div>
+          <div class="v">${f.largest_lead ? `+${f.largest_lead} · ${f.largest_lead_minute}'` : "–"}</div>
+        </div>
+        <div class="tile small">
+          <div class="k">${a.opponent_abbr} biggest</div>
+          <div class="v">${f.largest_deficit ? `+${f.largest_deficit} · ${f.largest_deficit_minute}'` : "–"}</div>
+        </div>
+        <div class="tile small">
+          <div class="k">${state === "IN" ? "Now" : "Final margin"}</div>
+          <div class="v">${signed(diffs[diffs.length - 1])}</div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // --------------------------------------------------------------- stats
+
   private _renderStats(a: Attrs) {
     const st = this._state(this._statsId());
-    const pg: Attrs = st?.attributes?.per_game ?? {};
-    const ranks: Attrs[] = st?.attributes?.team_leader_ranks ?? [];
-    const league: Attrs = st?.attributes?.league_leaders ?? {};
-    const tile = (k: string, v: any, digits = 1) =>
-      html`<div class="tile">
-        <div class="k">${k}</div>
-        <div class="v">${typeof v === "number" ? v.toFixed(digits) : "–"}</div>
-      </div>`;
-    const catName: Record<string, string> = {
-      points: "Points",
-      rebounds: "Rebounds",
-      assists: "Assists",
-      pir: "PIR",
-      steals: "Steals",
-      blocks: "Blocks",
-    };
-    const leaderLine = ["points", "rebounds", "assists"]
-      .map((c) => league[c]?.[0] && `${catName[c]}: ${league[c][0].name} (${league[c][0].team}) ${league[c][0].value}`)
-      .filter(Boolean)
-      .join(" · ");
-
+    const at: Attrs = st?.attributes ?? {};
+    const pg: Attrs = at.per_game ?? {};
+    const standings = this._state(this._standingsId())?.attributes ?? {};
+    const row = (standings.table ?? []).find((r: Attrs) => r.code === (a.team_abbr ?? at.team_abbr));
+    const right =
+      this._statsTab === "shots" && at.shot_zones
+        ? `${at.shot_zones.games} games · ${at.shot_zones.attempts} shots`
+        : this._statsTab === "players" && row
+          ? `${row.wins}-${row.losses} · ${row.position}${ordinalSuffix(row.position)}`
+          : pg.games_played
+            ? `Per game · ${pg.games_played} GP`
+            : "";
+    const tabs: [StatsTab, string][] = [
+      ["team", "Team"],
+      ["players", "Players"],
+      ["shots", "Shots"],
+    ];
     return html`
       <div class="head">
-        <span class="eyebrow">${a.team_name ?? ""} · ${seasonLabel(st?.attributes?.season)}</span>
-        <span class="pill">${pg.games_played ? `${pg.games_played} games` : ""}</span>
+        <span class="eyebrow">${a.team_name ?? ""} · ${seasonLabel(at.season)}</span>
+        <span class="pill">${right}</span>
       </div>
-      ${Object.keys(pg).length
-        ? html`<div class="tiles">
-            ${tile("Points", pg.points)} ${tile("Rebounds", pg.rebounds)} ${tile("Assists", pg.assists)}
-            ${tile("2P%", pg.fg2_pct)} ${tile("3P%", pg.fg3_pct)} ${tile("PIR", pg.pir, 0)}
-            ${tile("Steals", pg.steals)} ${tile("Turnovers", pg.turnovers)} ${tile("FT%", pg.ft_pct)}
-          </div>`
-        : html`<div class="empty-state">Season stats aren't available yet.</div>`}
-      ${ranks.length
-        ? html`<div>
-            <div class="section-title">League leaders · your players</div>
-            <div class="ranks">
-              ${ranks.slice(0, 5).map(
-                (r) => html`<span><b>${r.name}</b></span><span class="cat">${catName[r.category] ?? r.category}</span
-                  ><span><span class="rank">${r.rank}${ordinalSuffix(r.rank)}</span> · ${r.value}</span>`,
-              )}
-            </div>
-            ${leaderLine ? html`<div class="foot" style="margin-top:6px">${leaderLine}</div>` : nothing}
-          </div>`
-        : nothing}
-      ${this._config.show_shot_chart !== false ? this._renderShots(a) : nothing}
+      <div class="subtabs" role="tablist">
+        ${tabs.map(
+          ([key, label]) =>
+            html`<button
+              role="tab"
+              aria-selected=${this._statsTab === key ? "true" : "false"}
+              @click=${() => (this._statsTab = key)}
+            >
+              ${label}
+            </button>`,
+        )}
+      </div>
+      ${this._statsTab === "players"
+        ? this._statsPlayers(at)
+        : this._statsTab === "shots"
+          ? this._statsShots(at)
+          : this._statsTeam(at)}
+    `;
+  }
+
+  private _statsTeam(at: Attrs) {
+    const pg: Attrs = at.per_game ?? {};
+    const ranks: Attrs = at.league_ranks ?? {};
+    const ad: Attrs | null = at.attack_defence ?? null;
+    if (!Object.keys(pg).length && !Object.keys(ranks).length) {
+      return html`<div class="empty-state">Season stats aren't available yet.</div>`;
+    }
+    const parts: TemplateResult[] = [];
+    if (ad) {
+      const vsAvg = (v: number) => `${signed(Math.round((v - ad.league_average) * 10) / 10)} vs avg`;
+      const lo = Math.min(ad.allowed, ad.scored, ad.league_average) - 4;
+      const hi = Math.max(ad.allowed, ad.scored, ad.league_average) + 4;
+      const px = (v: number) => (((v - lo) / (hi - lo)) * 380 + 10).toFixed(1);
+      parts.push(html`<div class="facts two">
+          <div class="tile">
+            <div class="k">Attack</div>
+            <div class="v">${ad.scored.toFixed(1)} <span class="unit">scored</span></div>
+            <div class="note">${ad.scored_rank}${ordinalSuffix(ad.scored_rank)} · ${vsAvg(ad.scored)}</div>
+          </div>
+          <div class="tile">
+            <div class="k">Defence</div>
+            <div class="v">${ad.allowed.toFixed(1)} <span class="unit">allowed</span></div>
+            <div class="note">${ad.allowed_rank}${ordinalSuffix(ad.allowed_rank)} · ${vsAvg(ad.allowed)}</div>
+          </div>
+        </div>
+        <div>
+          <div class="head" style="margin-bottom:2px">
+            <span class="section-title" style="margin:0">Attack vs defence</span>
+            <span style="font-size:13px">Net <b>${signed(ad.net)}</b></span>
+          </div>
+          <svg
+            class="chart"
+            viewBox="0 0 400 60"
+            role="img"
+            aria-label=${`Points per game: ${ad.scored} scored, ${ad.allowed} allowed, league average ${ad.league_average}`}
+          >
+            <line class="track" x1="10" y1="32" x2="390" y2="32"></line>
+            <line class="avg" x1=${px(ad.league_average)} y1="20" x2=${px(ad.league_average)} y2="44"></line>
+            <text class="axis" x=${px(ad.league_average)} y="58" text-anchor="middle">avg ${ad.league_average}</text>
+            <line class="span" x1=${px(ad.allowed)} y1="32" x2=${px(ad.scored)} y2="32"></line>
+            <circle class="ring" cx=${px(ad.allowed)} cy="32" r="6"></circle>
+            <circle class="dot" cx=${px(ad.scored)} cy="32" r="6"></circle>
+            <text class="label" x=${px(ad.allowed)} y="16" text-anchor="middle">${ad.allowed} allowed</text>
+            <text class="label" x=${px(ad.scored)} y="16" text-anchor="middle">${ad.scored} scored</text>
+          </svg>
+        </div>`);
+    }
+    const keys = Object.keys(STAT_LABELS).filter((k) => ranks[k]);
+    if (keys.length) {
+      parts.push(html`<div>
+        <div class="head" style="margin-bottom:6px">
+          <span class="section-title" style="margin:0">League rank</span>
+          <span class="legend">
+            <span><i class="round" style="background:var(--elt-accent)"></i>${at.team_abbr ?? "Team"}</span>
+            <span><i class="tick"></i>League avg</span>
+          </span>
+        </div>
+        <div class="rankbars">
+          ${keys.map((k) => {
+            const r = ranks[k];
+            const span = r.best - r.worst || 1;
+            const pos = Math.max(0, Math.min(100, ((r.value - r.worst) / span) * 100));
+            const avg = Math.max(0, Math.min(100, ((r.average - r.worst) / span) * 100));
+            const tier = r.rank <= 3 ? "top" : r.rank <= Math.ceil(r.teams / 2) ? "" : "low";
+            const digits = k === "pir" ? 0 : 1;
+            return html`<span class="k">${STAT_LABELS[k]}</span>
+              <span class="v">${Number(r.value).toFixed(digits)}</span>
+              <span
+                class="rb"
+                role="img"
+                aria-label=${`${STAT_LABELS[k]} ${r.value}, ${r.rank}${ordinalSuffix(r.rank)} of ${r.teams}`}
+                ><span class="t"></span><span class="a" style=${`left:${avg.toFixed(1)}%`}></span
+                ><span class="p" style=${`left:${pos.toFixed(1)}%`}></span
+              ></span>
+              <span class="r ${tier}">${r.rank}${ordinalSuffix(r.rank)}</span>`;
+          })}
+        </div>
+        <div class="foot" style="margin-top:6px">
+          Each bar runs from the league's worst to best; turnovers are flipped so right is always better.
+        </div>
+      </div>`);
+    } else if (Object.keys(pg).length) {
+      const tile = (k: string, v: any, digits = 1) =>
+        html`<div class="tile">
+          <div class="k">${k}</div>
+          <div class="v">${typeof v === "number" ? v.toFixed(digits) : "–"}</div>
+        </div>`;
+      parts.push(html`<div class="tiles">
+        ${tile("Points", pg.points)} ${tile("Rebounds", pg.rebounds)} ${tile("Assists", pg.assists)}
+        ${tile("2P%", pg.fg2_pct)} ${tile("3P%", pg.fg3_pct)} ${tile("PIR", pg.pir, 0)}
+      </div>`);
+    }
+    return parts;
+  }
+
+  private _statsPlayers(at: Attrs) {
+    const form: Attrs[] = at.form ?? [];
+    const ranks: Attrs[] = at.team_leader_ranks ?? [];
+    const league: Attrs = at.league_leaders ?? {};
+    const parts: TemplateResult[] = [];
+    if (form.length) {
+      const W = 400;
+      // Room above for the biggest win, below for the biggest loss (labels included).
+      const up = Math.max(5, ...form.map((g) => g.margin));
+      const down = Math.max(5, ...form.map((g) => -g.margin));
+      const k = 110 / (up + down);
+      const mid = 16 + up * k;
+      const H = mid + down * k + 16;
+      const bw = W / form.length;
+      const avg = form.reduce((s, g) => s + g.margin, 0) / form.length;
+      const showOpp = form.length <= 20;
+      parts.push(html`<div>
+        <div class="head" style="margin-bottom:6px">
+          <span class="section-title" style="margin:0">Season form · point margin</span>
+          <span style="font-size:13px">Avg <b>${signed(Math.round(avg * 10) / 10)}</b></span>
+        </div>
+        <svg
+          class="chart"
+          viewBox="0 0 ${W} ${H + (showOpp ? 14 : 0)}"
+          role="img"
+          aria-label=${`Point margin in ${form.length} games: ${form.filter((g) => g.margin > 0).length} wins, ${form.filter((g) => g.margin < 0).length} losses`}
+        >
+          <line class="zero" x1="0" y1=${mid} x2=${W} y2=${mid}></line>
+          ${form.map((g, i) => {
+            const h = Math.max(1.5, Math.abs(g.margin) * k);
+            const x = i * bw + bw * 0.15;
+            const w = bw * 0.7;
+            const top = g.margin > 0 ? mid - h : mid;
+            const cx = x + w / 2;
+            return svg`<rect class=${g.margin > 0 ? "win" : "loss"} x=${x.toFixed(1)} y=${top.toFixed(1)} width=${w.toFixed(1)} height=${h.toFixed(1)} rx="2"><title>${`R${g.round} ${g.homeaway === "home" ? "vs" : "@"} ${g.opponent_abbr} ${g.team_score}-${g.opponent_score}`}</title></rect>
+              ${form.length <= 24 ? svg`<text class="val" x=${cx.toFixed(1)} y=${(g.margin > 0 ? top - 4 : top + h + 11).toFixed(1)} text-anchor="middle">${signed(g.margin)}</text>` : nothing}
+              ${showOpp ? svg`<text class="axis" x=${cx.toFixed(1)} y=${H + 12} text-anchor="middle">${g.opponent_abbr}</text>` : nothing}`;
+          })}
+        </svg>
+      </div>`);
+    }
+    if (ranks.length) {
+      parts.push(html`<div>
+        <div class="section-title">Your players in the league leaders</div>
+        <div class="leaders">
+          ${ranks.slice(0, 6).map((r) => {
+            const top = league[r.category]?.[0];
+            const sub =
+              r.rank === 1 || !top
+                ? "League leader"
+                : `Leader: ${top.name} (${top.team}) ${top.value}`;
+            return html`<div class="leader">
+              ${r.image && !this._broken.has(r.image)
+                ? html`<img
+                    class="head-shot"
+                    src=${r.image}
+                    alt=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer"
+                    @error=${() => (this._broken = new Set([...this._broken, r.image]))}
+                  />`
+                : html`<span class="head-shot fallback" aria-hidden="true">${initials(r.name)}</span>`}
+              <span class="who"
+                ><b>${r.name}</b><span>${STAT_LABELS[r.category] ?? titleCase(r.category)} · ${sub}</span></span
+              >
+              <span class="num"
+                ><b>${r.value}</b><span class="rank ${r.rank <= 3 ? "top" : ""}"
+                  >${r.rank}${ordinalSuffix(r.rank)}</span
+                ></span
+              >
+            </div>`;
+          })}
+        </div>
+      </div>`);
+    }
+    return parts.length ? parts : html`<div class="empty-state">No games played yet.</div>`;
+  }
+
+  private _statsShots(at: Attrs) {
+    const z: Attrs | null = at.shot_zones ?? null;
+    if (!z?.zones) return html`<div class="empty-state">Shot locations aren't available yet.</div>`;
+    const pps = (k: string) => z.zones[k]?.points_per_shot ?? 0;
+    // Darker = more points per shot (0.8 .. 1.65 covers EuroLeague zones).
+    const shade = (k: string) => (0.15 + 0.75 * Math.max(0, Math.min(1, (pps(k) - 0.8) / 0.85))).toFixed(2);
+    const pct = (k: string) => (z.zones[k]?.pct == null ? "–" : `${Math.round(z.zones[k].pct)}%`);
+    const tag = (x: number, y: number, k: string, label: string) => svg`<g>
+        <rect class="tag" x=${x - 120} y=${y - 58} width="240" height="96" rx="18"></rect>
+        <text class="tag-v" x=${x} y=${y - 12} text-anchor="middle">${pct(k)}</text>
+        <text class="tag-k" x=${x} y=${y + 26} text-anchor="middle">${z.zones[k]?.made ?? 0}/${z.zones[k]?.attempts ?? 0} · ${label}</text>
+      </g>`;
+    const arc = "M -660 -157 L -660 141.5 A 675 675 0 0 0 660 141.5 L 660 -157 Z";
+    const label = ZONES.map(([k, l]) => `${l} ${pct(k)}`).join(", ");
+    return html`<div>
+        <div class="head" style="margin-bottom:6px">
+          <span class="section-title" style="margin:0">Season shooting by zone</span>
+          <span style="font-size:13px">${z.made}/${z.attempts} FG · ${z.pct}%</span>
+        </div>
+        <svg class="court zones" viewBox="-760 -170 1520 1150" role="img" aria-label=${`Season shooting by zone: ${label}`}>
+          <defs><clipPath id="elt-court"><rect x="-750" y="-157" width="1500" height="1130"></rect></clipPath></defs>
+          <g clip-path="url(#elt-court)">
+            <rect class="z" x="-750" y="-157" width="1500" height="1130" style=${`fill-opacity:${shade("above_break_three")}`}></rect>
+            <path class="bg" d=${arc}></path>
+            <path class="z" d=${arc} style=${`fill-opacity:${shade("mid_range")}`}></path>
+            <rect class="bg" x="-750" y="-157" width="90" height="298.5"></rect>
+            <rect class="bg" x="660" y="-157" width="90" height="298.5"></rect>
+            <rect class="z" x="-750" y="-157" width="90" height="298.5" style=${`fill-opacity:${shade("corner_three")}`}></rect>
+            <rect class="z" x="660" y="-157" width="90" height="298.5" style=${`fill-opacity:${shade("corner_three")}`}></rect>
+            <rect class="bg" x="-245" y="-157" width="490" height="580"></rect>
+            <rect class="z" x="-245" y="-157" width="490" height="580" style=${`fill-opacity:${shade("paint")}`}></rect>
+            <circle class="bg" cx="0" cy="0" r="125"></circle>
+            <circle class="z" cx="0" cy="0" r="125" style=${`fill-opacity:${shade("rim")}`}></circle>
+            <g class="zone-lines">
+              <rect x="-245" y="-157" width="490" height="580"></rect>
+              <path d="M -660 -157 L -660 141.5 A 675 675 0 0 0 660 141.5 L 660 -157"></path>
+              <circle cx="0" cy="0" r="125"></circle>
+              <circle cx="0" cy="423" r="180"></circle>
+              <line x1="-90" y1="-37" x2="90" y2="-37"></line>
+              <circle cx="0" cy="0" r="23"></circle>
+            </g>
+          </g>
+          ${tag(0, 60, "rim", "rim")} ${tag(0, 330, "paint", "paint")} ${tag(-450, 330, "mid_range", "mid")}
+          ${tag(0, 820, "above_break_three", "above break")}
+        </svg>
+        <div class="shot-legend">
+          <span>Darker = more points per shot</span>
+          <span class="sum">Corners: ${z.zones.corner_three?.made ?? 0}/${z.zones.corner_three?.attempts ?? 0} · ${pct("corner_three")}</span>
+        </div>
+      </div>
+      <div class="zone-table">
+        <span></span><span class="h">Zone</span><span class="h r">FG</span><span class="h r">%</span
+        ><span class="h r">Pts/shot</span>
+        ${ZONES.map(
+          ([k, l]) => html`<span class="sw" style=${`opacity:${shade(k)}`}></span><span>${l}</span
+            ><span class="r dim">${z.zones[k]?.made ?? 0}/${z.zones[k]?.attempts ?? 0}</span
+            ><b class="r">${z.zones[k]?.pct == null ? "–" : `${z.zones[k].pct.toFixed(1)}%`}</b
+            ><span class="r dim">${z.zones[k]?.points_per_shot?.toFixed(2) ?? "–"}</span>`,
+        )}
+      </div>`;
+  }
+
+  // ---------------------------------------------------------------- round
+
+  private _renderRound(a: Attrs) {
+    const st = this._state(this._standingsId())?.attributes ?? {};
+    const board: Attrs = st.scoreboard ?? {};
+    const rounds: Attrs[] = board.rounds ?? [];
+    if (!rounds.length) return html`<div class="empty-state">The round's games aren't available yet.</div>`;
+    const me = a.team_abbr ?? st.team_abbr;
+    const fallback = rounds.find((r) => r.round === a.round) ?? rounds[Math.floor(rounds.length / 2)];
+    const current = rounds.find((r) => r.round === this._round) ?? fallback;
+    const i = rounds.indexOf(current);
+    const played = current.games.filter((g: Attrs) => g.played).length;
+    const status = played === current.games.length ? "results" : played ? "in progress" : "fixtures";
+    const crest = (code: string) => {
+      const url = board.crests?.[code];
+      return url && !this._broken.has(url)
+        ? html`<img
+            class="mini-crest"
+            src=${url}
+            alt=""
+            loading="lazy"
+            referrerpolicy="no-referrer"
+            @error=${() => (this._broken = new Set([...this._broken, url]))}
+          />`
+        : html`<span class="mini-crest fallback" aria-hidden="true"></span>`;
+    };
+    const side = (code: string, score: number | null, win: boolean, g: Attrs) =>
+      html`<div class="side ${g.played && !win ? "dim" : ""} ${g.played && win ? "w" : ""}">
+        ${crest(code)}<span class="c">${code}</span><span class="s">${g.played ? score : ""}</span>
+      </div>`;
+    const arrow = (dir: -1 | 1) => {
+      const target = rounds[i + dir];
+      return html`<button
+        class="nav"
+        aria-label=${dir < 0 ? "Previous round" : "Next round"}
+        ?disabled=${!target}
+        @click=${() => target && (this._round = target.round)}
+      >
+        <svg viewBox="0 0 16 16" aria-hidden="true">
+          <path d=${dir < 0 ? "M10 3 L5 8 L10 13" : "M6 3 L11 8 L6 13"}></path>
+        </svg>
+      </button>`;
+    };
+    return html`
+      <div class="head">
+        <div class="round-nav">
+          ${arrow(-1)}<span class="round-title">Round ${current.round} · ${status}</span>${arrow(1)}
+        </div>
+        <span class="pill">${current.games.length} games</span>
+      </div>
+      <div class="board">
+        ${current.games.map((g: Attrs) => {
+          const mine = g.home === me || g.away === me;
+          const hw = (g.home_score ?? 0) > (g.away_score ?? 0);
+          return html`<div class="bgame ${mine ? "me" : ""}">
+            ${side(g.home, g.home_score, hw, g)} ${side(g.away, g.away_score, !hw, g)}
+            ${g.played || !g.date ? nothing : html`<div class="when-s">${this._fmtDay(g.date)} · ${this._fmtTime(g.date)}</div>`}
+          </div>`;
+        })}
+      </div>
     `;
   }
 

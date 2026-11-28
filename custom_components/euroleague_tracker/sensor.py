@@ -71,6 +71,8 @@ class GameSensor(_Base):
             "game_stats",
             "quarter_scores",
             "shots",
+            "score_flow",
+            "head_to_head",
             "previous_game",
             "next_game",
             "last_update",
@@ -96,7 +98,7 @@ class StandingsSensor(_Base):
     """State is the team's league position; the full table is an attribute."""
 
     _attr_icon = "mdi:format-list-numbered"
-    _unrecorded_attributes = frozenset({"table"})
+    _unrecorded_attributes = frozenset({"table", "scoreboard"})
 
     def __init__(self, coordinator: EuroLeagueCoordinator) -> None:
         super().__init__(coordinator, "standings")
@@ -128,6 +130,7 @@ class StandingsSensor(_Base):
             "zone": row.get("zone"),
             "round": data.standings_round if data else None,
             "table": data.standings if data else [],
+            "scoreboard": data.scoreboard if data else {},
         }
 
 
@@ -137,7 +140,17 @@ class StatsSensor(_Base):
     _attr_icon = "mdi:chart-bar"
     _attr_native_unit_of_measurement = "pts/game"
     _attr_suggested_display_precision = 1
-    _unrecorded_attributes = frozenset({"per_game", "team_leader_ranks", "league_leaders"})
+    _unrecorded_attributes = frozenset(
+        {
+            "per_game",
+            "team_leader_ranks",
+            "league_leaders",
+            "league_ranks",
+            "attack_defence",
+            "form",
+            "shot_zones",
+        }
+    )
 
     def __init__(self, coordinator: EuroLeagueCoordinator) -> None:
         super().__init__(coordinator, "stats")
@@ -157,6 +170,10 @@ class StatsSensor(_Base):
             "per_game": data.team_stats,
             "team_leader_ranks": data.leaders.get("team", []),
             "league_leaders": data.leaders.get("league", {}),
+            "league_ranks": data.league_ranks,
+            "attack_defence": data.attack_defence,
+            "form": data.form,
+            "shot_zones": data.shot_zones,
         }
 
 

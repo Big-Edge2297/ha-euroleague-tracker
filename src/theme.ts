@@ -35,6 +35,14 @@ function rgba(hex: string, alpha: number): string {
   return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
 }
 
+/** Solid blend of two colours (amount of b, 0..1). */
+function mix(a: string, b: string, amount: number): string {
+  const x = hexToRgb(a) ?? [128, 128, 128];
+  const y = hexToRgb(b) ?? [128, 128, 128];
+  const c = x.map((v, i) => Math.round(v + (y[i] - v) * amount));
+  return `#${c.map((v) => v.toString(16).padStart(2, "0")).join("")}`;
+}
+
 /** An accent that stays visible on the card background. */
 function visibleAccent(accent: string, bgLuminance: number): string {
   const l = luminance(accent);
@@ -67,6 +75,8 @@ export function themeVars(theme: ThemeName, teamColor: string): Record<string, s
         "--elt-loss-bg": "#424242",
         "--elt-loss-fg": "#E0E0E0",
         "--elt-bar-other": "#5A5A5A",
+        "--elt-other": "#5B8DEF",
+        "--elt-surface-solid": "#262626",
         "--elt-accent": accent,
         "--elt-accent-fg": readableOn(accent),
       };
@@ -85,6 +95,8 @@ export function themeVars(theme: ThemeName, teamColor: string): Record<string, s
         "--elt-loss-bg": "#DDDDDD",
         "--elt-loss-fg": "#333333",
         "--elt-bar-other": "#C7C7C7",
+        "--elt-other": "#2F6BD9",
+        "--elt-surface-solid": "#F2F2F2",
         "--elt-accent": accent,
         "--elt-accent-fg": readableOn(accent),
       };
@@ -104,6 +116,9 @@ export function themeVars(theme: ThemeName, teamColor: string): Record<string, s
         "--elt-win-bg": fg,
         "--elt-win-fg": teamColor,
         "--elt-bar-other": rgba(fg, 0.3),
+        // The other side: a shade darker (or lighter) than the card, not the text colour.
+        "--elt-other": fg === "#FFFFFF" ? "rgba(0, 0, 0, 0.38)" : "rgba(255, 255, 255, 0.55)",
+        "--elt-surface-solid": mix(teamColor, fg, 0.12),
         "--elt-accent": fg,
         "--elt-accent-fg": teamColor,
       };
@@ -121,6 +136,9 @@ export function themeVars(theme: ThemeName, teamColor: string): Record<string, s
         "--elt-loss-bg": "color-mix(in srgb, var(--primary-text-color, #212121) 20%, transparent)",
         "--elt-loss-fg": "var(--primary-text-color, #212121)",
         "--elt-bar-other": "color-mix(in srgb, var(--primary-text-color, #212121) 30%, transparent)",
+        "--elt-other": "var(--info-color, #2F6BD9)",
+        "--elt-surface-solid":
+          "color-mix(in srgb, var(--primary-text-color, #212121) 7%, var(--ha-card-background, var(--card-background-color, #fff)))",
         "--elt-accent": teamColor,
         "--elt-accent-fg": readableOn(teamColor),
       };

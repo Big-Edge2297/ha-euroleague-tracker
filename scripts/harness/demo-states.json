@@ -98,8 +98,62 @@
     "opponent_score": 79,
     "won": true
    },
-   "next_game": null,
-   "team_color": "#C62828"
+   "next_game": {
+    "game_code": 160,
+    "round": 16,
+    "date": "2026-12-11T19:15:00+00:00",
+    "homeaway": "away",
+    "opponent_abbr": "PAN",
+    "opponent_name": "Panathinaikos",
+    "opponent_logo": "https://media-cdn.incrowdsports.com/e3dff28a-9ec6-4faf-9d96-ecbc68f75780.png",
+    "venue": null
+   },
+   "team_color": "#C62828",
+   "head_to_head": {
+    "opponent_abbr": "ASV",
+    "wins": 3,
+    "losses": 1,
+    "average_margin": 5.5,
+    "meetings": [
+     {
+      "date": "2026-04-03T18:00:00+00:00",
+      "season": "E2025",
+      "round": 35,
+      "homeaway": "away",
+      "team_score": 82,
+      "opponent_score": 74,
+      "won": true
+     },
+     {
+      "date": "2025-12-19T19:15:00+00:00",
+      "season": "E2025",
+      "round": 17,
+      "homeaway": "home",
+      "team_score": 107,
+      "opponent_score": 84,
+      "won": true
+     },
+     {
+      "date": "2025-03-25T19:00:00+00:00",
+      "season": "E2024",
+      "round": 31,
+      "homeaway": "away",
+      "team_score": 70,
+      "opponent_score": 81,
+      "won": false
+     },
+     {
+      "date": "2024-11-12T19:15:00+00:00",
+      "season": "E2024",
+      "round": 9,
+      "homeaway": "home",
+      "team_score": 94,
+      "opponent_score": 92,
+      "won": true
+     }
+    ]
+   },
+   "score_flow": null
   }
  },
  "live": {
@@ -283,7 +337,70 @@
     "opponent_logo": "https://media-cdn.incrowdsports.com/e33c6d1a-95ca-4dbc-b8cb-0201812104cc.png",
     "venue": "SUNEL ARENA"
    },
-   "team_color": "#C62828"
+   "team_color": "#C62828",
+   "score_flow": {
+    "team": [
+     2,
+     8,
+     10,
+     12,
+     15,
+     17,
+     19,
+     24,
+     27,
+     32,
+     32,
+     32,
+     32,
+     34,
+     38,
+     40,
+     42,
+     45,
+     47,
+     49,
+     50,
+     53,
+     55,
+     58,
+     61,
+     63
+    ],
+    "opponent": [
+     5,
+     8,
+     10,
+     12,
+     12,
+     15,
+     18,
+     21,
+     24,
+     29,
+     31,
+     33,
+     38,
+     38,
+     40,
+     42,
+     44,
+     44,
+     44,
+     44,
+     47,
+     52,
+     52,
+     55,
+     58,
+     58
+    ],
+    "largest_lead": 5,
+    "largest_lead_minute": 19,
+    "largest_deficit": 6,
+    "largest_deficit_minute": 12
+   },
+   "head_to_head": null
   }
  },
  "final": {
@@ -1035,7 +1152,100 @@
     "opponent_logo": "https://media-cdn.incrowdsports.com/e33c6d1a-95ca-4dbc-b8cb-0201812104cc.png",
     "venue": "SUNEL ARENA"
    },
-   "team_color": "#C62828"
+   "team_color": "#C62828",
+   "score_flow": {
+    "team": [
+     2,
+     8,
+     10,
+     12,
+     15,
+     17,
+     19,
+     24,
+     27,
+     32,
+     32,
+     32,
+     32,
+     34,
+     38,
+     40,
+     42,
+     45,
+     47,
+     49,
+     50,
+     53,
+     55,
+     58,
+     61,
+     63,
+     67,
+     69,
+     69,
+     72,
+     74,
+     77,
+     77,
+     77,
+     83,
+     85,
+     94,
+     97,
+     97,
+     104,
+     104
+    ],
+    "opponent": [
+     5,
+     8,
+     10,
+     12,
+     12,
+     15,
+     18,
+     21,
+     24,
+     29,
+     31,
+     33,
+     38,
+     38,
+     40,
+     42,
+     44,
+     44,
+     44,
+     44,
+     47,
+     52,
+     52,
+     55,
+     58,
+     58,
+     58,
+     60,
+     64,
+     66,
+     66,
+     66,
+     66,
+     66,
+     69,
+     72,
+     75,
+     75,
+     79,
+     79,
+     79
+    ],
+    "largest_lead": 25,
+    "largest_lead_minute": 39,
+    "largest_deficit": 6,
+    "largest_deficit_minute": 12
+   },
+   "head_to_head": null
   }
  },
  "standings": {
@@ -1568,6 +1778,236 @@
      "zone": null
     }
    ],
+   "scoreboard": {
+    "rounds": [
+     {
+      "round": 13,
+      "games": [
+       {
+        "game_code": 126,
+        "date": "2026-11-19T19:15:00+00:00",
+        "home": "OLY",
+        "away": "MAD",
+        "home_score": 92,
+        "away_score": 76,
+        "played": true
+       }
+      ]
+     },
+     {
+      "round": 14,
+      "games": [
+       {
+        "game_code": 141,
+        "date": "2026-11-25T17:00:00+00:00",
+        "home": "BAS",
+        "away": "IST",
+        "home_score": 86,
+        "away_score": 81,
+        "played": true
+       },
+       {
+        "game_code": 147,
+        "date": "2026-11-25T17:00:00+00:00",
+        "home": "RED",
+        "away": "VIR",
+        "home_score": 84,
+        "away_score": 108,
+        "played": true
+       },
+       {
+        "game_code": 143,
+        "date": "2026-11-25T17:30:00+00:00",
+        "home": "BAR",
+        "away": "ULK",
+        "home_score": 77,
+        "away_score": 83,
+        "played": true
+       },
+       {
+        "game_code": 145,
+        "date": "2026-11-25T17:30:00+00:00",
+        "home": "PAM",
+        "away": "PAN",
+        "home_score": 83,
+        "away_score": 86,
+        "played": true
+       },
+       {
+        "game_code": 140,
+        "date": "2026-11-25T18:15:00+00:00",
+        "home": "OLY",
+        "away": "HTA",
+        "home_score": 104,
+        "away_score": 79,
+        "played": true
+       },
+       {
+        "game_code": 139,
+        "date": "2026-11-25T19:45:00+00:00",
+        "home": "MAD",
+        "away": "ZAL",
+        "home_score": 108,
+        "away_score": 93,
+        "played": true
+       },
+       {
+        "game_code": 144,
+        "date": "2026-11-26T17:00:00+00:00",
+        "home": "ASV",
+        "away": "MIL",
+        "home_score": 91,
+        "away_score": 95,
+        "played": true
+       },
+       {
+        "game_code": 142,
+        "date": "2026-11-26T17:30:00+00:00",
+        "home": "DUB",
+        "away": "PAR",
+        "home_score": 71,
+        "away_score": 84,
+        "played": true
+       },
+       {
+        "game_code": 146,
+        "date": "2026-11-26T17:30:00+00:00",
+        "home": "MUN",
+        "away": "TEL",
+        "home_score": 79,
+        "away_score": 87,
+        "played": true
+       },
+       {
+        "game_code": 148,
+        "date": "2026-11-26T17:30:00+00:00",
+        "home": "BES",
+        "away": "PRS",
+        "home_score": 76,
+        "away_score": 88,
+        "played": true
+       }
+      ]
+     },
+     {
+      "round": 15,
+      "games": [
+       {
+        "game_code": 158,
+        "date": "2026-12-03T17:30:00+00:00",
+        "home": "IST",
+        "away": "PAM",
+        "home_score": null,
+        "away_score": null,
+        "played": false
+       },
+       {
+        "game_code": 157,
+        "date": "2026-12-03T17:45:00+00:00",
+        "home": "ULK",
+        "away": "RED",
+        "home_score": null,
+        "away_score": null,
+        "played": false
+       },
+       {
+        "game_code": 156,
+        "date": "2026-12-03T18:45:00+00:00",
+        "home": "HTA",
+        "away": "MIL",
+        "home_score": null,
+        "away_score": null,
+        "played": false
+       },
+       {
+        "game_code": 155,
+        "date": "2026-12-03T19:00:00+00:00",
+        "home": "MUN",
+        "away": "PRS",
+        "home_score": null,
+        "away_score": null,
+        "played": false
+       },
+       {
+        "game_code": 145,
+        "date": "2026-12-03T19:45:00+00:00",
+        "home": "MAD",
+        "away": "BAR",
+        "home_score": null,
+        "away_score": null,
+        "played": false
+       },
+       {
+        "game_code": 153,
+        "date": "2026-12-03T20:00:00+00:00",
+        "home": "VIR",
+        "away": "PAR",
+        "home_score": null,
+        "away_score": null,
+        "played": false
+       },
+       {
+        "game_code": 154,
+        "date": "2026-12-03T20:00:00+00:00",
+        "home": "BAS",
+        "away": "TEL",
+        "home_score": null,
+        "away_score": null,
+        "played": false
+       },
+       {
+        "game_code": 152,
+        "date": "2026-12-04T17:00:00+00:00",
+        "home": "BES",
+        "away": "PAN",
+        "home_score": null,
+        "away_score": null,
+        "played": false
+       },
+       {
+        "game_code": 151,
+        "date": "2026-12-04T18:00:00+00:00",
+        "home": "ZAL",
+        "away": "DUB",
+        "home_score": null,
+        "away_score": null,
+        "played": false
+       },
+       {
+        "game_code": 150,
+        "date": "2026-12-04T19:15:00+00:00",
+        "home": "OLY",
+        "away": "ASV",
+        "home_score": null,
+        "away_score": null,
+        "played": false
+       }
+      ]
+     }
+    ],
+    "crests": {
+     "OLY": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png",
+     "MAD": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png",
+     "HTA": "https://media-cdn.incrowdsports.com/cbb1c3ad-03d5-426a-b5ef-2832a4eee484.png",
+     "ZAL": "https://media-cdn.incrowdsports.com/0aa09358-3847-4c4e-b228-3582ee4e536d.png",
+     "BAS": "https://media-cdn.cortextech.io/cbc49cb0-99ce-4462-bdb7-56983ee03cf4.png",
+     "IST": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCgOCxM/a844756c-a58d-4666-93b8-48f7337bc79d.png",
+     "DUB": "https://media-cdn.incrowdsports.com/1efae090-16e2-4963-ae47-4b94f249c244.png",
+     "PAR": "https://media-cdn.incrowdsports.com/2681304e-77dd-4331-88b1-683078c0fb49.png",
+     "BAR": "https://media-cdn.incrowdsports.com/35dfa503-e417-481f-963a-bdf6f013763e.png",
+     "ULK": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png",
+     "ASV": "https://media-cdn.incrowdsports.com/e33c6d1a-95ca-4dbc-b8cb-0201812104cc.png",
+     "MIL": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHH/5c2f0ab6-f86a-4df0-b2f3-f9ab92f7267b.png",
+     "PAM": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHL/bc3e00b2-fea4-40be-a7ec-1e633129bde3.png",
+     "PAN": "https://media-cdn.incrowdsports.com/e3dff28a-9ec6-4faf-9d96-ecbc68f75780.png",
+     "MUN": "https://media-cdn.incrowdsports.com/817b0e58-d595-4b09-ab0b-1e7cc26249ff.png",
+     "TEL": "https://media-cdn.cortextech.io/1b533342-78f5-4932-b714-a7d80b5826b5.png",
+     "RED": "https://media-cdn.incrowdsports.com/d2eef4a8-62df-4fdd-9076-276004268515.png",
+     "VIR": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezvk/a92d4c3b-9f9c-4163-8a10-bcf8fc15893e.png",
+     "BES": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjHHNTU0/07707827-9461-400d-8acc-355150011194.png",
+     "PRS": "https://media-cdn.incrowdsports.com/a033e5b3-0de7-48a3-98d9-d9a4b9df1f39.png"
+    }
+   },
    "friendly_name": "Olympiacos Standings position"
   }
  },
@@ -1602,7 +2042,7 @@
      "team": "OLY",
      "value": 23.9,
      "games": 14,
-     "image": null,
+     "image": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCjnONy/f65c52c5-542f-4796-8dc6-b46cc9a6f3d5.png",
      "category": "pir"
     },
     {
@@ -1611,7 +2051,7 @@
      "team": "OLY",
      "value": 20.2,
      "games": 14,
-     "image": null,
+     "image": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCjnONy/f65c52c5-542f-4796-8dc6-b46cc9a6f3d5.png",
      "category": "points"
     },
     {
@@ -1632,7 +2072,7 @@
       "team": "PRS",
       "value": 20.4,
       "games": 14,
-      "image": null
+      "image": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCjnONz/c4dc8064-fc52-451a-b27c-0aa9ec164948.png"
      },
      {
       "rank": 2,
@@ -1640,7 +2080,7 @@
       "team": "OLY",
       "value": 20.2,
       "games": 14,
-      "image": null
+      "image": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCjnONy/f65c52c5-542f-4796-8dc6-b46cc9a6f3d5.png"
      },
      {
       "rank": 3,
@@ -1758,7 +2198,7 @@
       "team": "OLY",
       "value": 23.9,
       "games": 14,
-      "image": null
+      "image": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCjnONy/f65c52c5-542f-4796-8dc6-b46cc9a6f3d5.png"
      },
      {
       "rank": 2,
@@ -1790,11 +2230,278 @@
       "team": "PRS",
       "value": 19.6,
       "games": 14,
-      "image": null
+      "image": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCjnONz/c4dc8064-fc52-451a-b27c-0aa9ec164948.png"
      }
     ],
     "steals": [],
     "blocks": []
+   },
+   "league_ranks": {
+    "points": {
+     "value": 90.4,
+     "rank": 4,
+     "teams": 20,
+     "worst": 79.5,
+     "best": 96.1,
+     "average": 87.1,
+     "lower_is_better": false
+    },
+    "rebounds": {
+     "value": 36.6,
+     "rank": 10,
+     "teams": 20,
+     "worst": 29.9,
+     "best": 40.4,
+     "average": 35.9,
+     "lower_is_better": false
+    },
+    "assists": {
+     "value": 20.6,
+     "rank": 3,
+     "teams": 20,
+     "worst": 17.1,
+     "best": 21.4,
+     "average": 19.2,
+     "lower_is_better": false
+    },
+    "steals": {
+     "value": 7.4,
+     "rank": 5,
+     "teams": 20,
+     "worst": 4.9,
+     "best": 8.4,
+     "average": 6.6,
+     "lower_is_better": false
+    },
+    "turnovers": {
+     "value": 12.9,
+     "rank": 9,
+     "teams": 20,
+     "worst": 14.4,
+     "best": 10.5,
+     "average": 13.0,
+     "lower_is_better": true
+    },
+    "blocks": {
+     "value": 2.4,
+     "rank": 14,
+     "teams": 20,
+     "worst": 1.7,
+     "best": 3.5,
+     "average": 2.6,
+     "lower_is_better": false
+    },
+    "pir": {
+     "value": 107.0,
+     "rank": 2,
+     "teams": 20,
+     "worst": 85.1,
+     "best": 110.1,
+     "average": 96.0,
+     "lower_is_better": false
+    },
+    "fg2_pct": {
+     "value": 60.2,
+     "rank": 1,
+     "teams": 20,
+     "worst": 50.5,
+     "best": 60.2,
+     "average": 55.3,
+     "lower_is_better": false
+    },
+    "fg3_pct": {
+     "value": 34.0,
+     "rank": 16,
+     "teams": 20,
+     "worst": 29.6,
+     "best": 40.2,
+     "average": 35.7,
+     "lower_is_better": false
+    },
+    "ft_pct": {
+     "value": 76.6,
+     "rank": 10,
+     "teams": 20,
+     "worst": 70.8,
+     "best": 84.0,
+     "average": 77.0,
+     "lower_is_better": false
+    }
+   },
+   "attack_defence": {
+    "scored": 90.4,
+    "allowed": 81.3,
+    "net": 9.1,
+    "scored_rank": 4,
+    "allowed_rank": 4,
+    "league_average": 87.1,
+    "teams": 20
+   },
+   "form": [
+    {
+     "round": 1,
+     "date": "2026-09-24T18:00:00+00:00",
+     "opponent_abbr": "BAS",
+     "homeaway": "away",
+     "team_score": 106,
+     "opponent_score": 89,
+     "margin": 17
+    },
+    {
+     "round": 2,
+     "date": "2026-09-29T18:00:00+00:00",
+     "opponent_abbr": "ZAL",
+     "homeaway": "away",
+     "team_score": 93,
+     "opponent_score": 91,
+     "margin": 2
+    },
+    {
+     "round": 3,
+     "date": "2026-10-01T18:00:00+00:00",
+     "opponent_abbr": "VIR",
+     "homeaway": "away",
+     "team_score": 94,
+     "opponent_score": 96,
+     "margin": -2
+    },
+    {
+     "round": 4,
+     "date": "2026-10-09T18:00:00+00:00",
+     "opponent_abbr": "IST",
+     "homeaway": "home",
+     "team_score": 89,
+     "opponent_score": 66,
+     "margin": 23
+    },
+    {
+     "round": 5,
+     "date": "2026-10-13T18:00:00+00:00",
+     "opponent_abbr": "PAM",
+     "homeaway": "away",
+     "team_score": 102,
+     "opponent_score": 97,
+     "margin": 5
+    },
+    {
+     "round": 6,
+     "date": "2026-10-16T18:00:00+00:00",
+     "opponent_abbr": "BAR",
+     "homeaway": "away",
+     "team_score": 105,
+     "opponent_score": 100,
+     "margin": 5
+    },
+    {
+     "round": 7,
+     "date": "2026-10-23T18:00:00+00:00",
+     "opponent_abbr": "ULK",
+     "homeaway": "home",
+     "team_score": 61,
+     "opponent_score": 64,
+     "margin": -3
+    },
+    {
+     "round": 8,
+     "date": "2026-10-28T18:00:00+00:00",
+     "opponent_abbr": "BES",
+     "homeaway": "away",
+     "team_score": 81,
+     "opponent_score": 73,
+     "margin": 8
+    },
+    {
+     "round": 9,
+     "date": "2026-10-30T15:00:00+00:00",
+     "opponent_abbr": "MIL",
+     "homeaway": "home",
+     "team_score": 84,
+     "opponent_score": 78,
+     "margin": 6
+    },
+    {
+     "round": 10,
+     "date": "2026-10-30T18:15:00+00:00",
+     "opponent_abbr": "RED",
+     "homeaway": "home",
+     "team_score": 57,
+     "opponent_score": 62,
+     "margin": -5
+    },
+    {
+     "round": 11,
+     "date": "2026-11-04T18:15:00+00:00",
+     "opponent_abbr": "DUB",
+     "homeaway": "home",
+     "team_score": 101,
+     "opponent_score": 72,
+     "margin": 29
+    },
+    {
+     "round": 12,
+     "date": "2026-11-06T18:30:00+00:00",
+     "opponent_abbr": "TEL",
+     "homeaway": "away",
+     "team_score": 97,
+     "opponent_score": 95,
+     "margin": 2
+    },
+    {
+     "round": 13,
+     "date": "2026-11-19T19:15:00+00:00",
+     "opponent_abbr": "MAD",
+     "homeaway": "home",
+     "team_score": 92,
+     "opponent_score": 76,
+     "margin": 16
+    },
+    {
+     "round": 14,
+     "date": "2026-11-25T18:15:00+00:00",
+     "opponent_abbr": "HTA",
+     "homeaway": "home",
+     "team_score": 104,
+     "opponent_score": 79,
+     "margin": 25
+    }
+   ],
+   "shot_zones": {
+    "games": 14,
+    "made": 464,
+    "attempts": 934,
+    "pct": 49.7,
+    "zones": {
+     "rim": {
+      "made": 171,
+      "attempts": 209,
+      "pct": 81.8,
+      "points_per_shot": 1.64
+     },
+     "paint": {
+      "made": 138,
+      "attempts": 282,
+      "pct": 48.9,
+      "points_per_shot": 0.98
+     },
+     "mid_range": {
+      "made": 27,
+      "attempts": 67,
+      "pct": 40.3,
+      "points_per_shot": 0.81
+     },
+     "corner_three": {
+      "made": 32,
+      "attempts": 77,
+      "pct": 41.6,
+      "points_per_shot": 1.25
+     },
+     "above_break_three": {
+      "made": 96,
+      "attempts": 299,
+      "pct": 32.1,
+      "points_per_shot": 0.96
+     }
+    }
    },
    "friendly_name": "Olympiacos Season stats"
   }

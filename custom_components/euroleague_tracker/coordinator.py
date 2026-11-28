@@ -30,6 +30,7 @@ from .const import (
     DEFAULT_POST_GAME_HOURS,
     DOMAIN,
     EVENT_NAME,
+    H2H_PAST_SEASONS,
     INTERVAL_GAME_DAY,
     INTERVAL_IDLE,
     INTERVAL_POST_GAME,
@@ -40,6 +41,7 @@ from .const import (
     STATE_NOT_FOUND,
     STATE_POST,
     STATE_PRE,
+    ZONE_FETCHES_PER_UPDATE,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -61,6 +63,11 @@ class TrackerData:
     streak: str | None = None
     games_behind_playoffs: float | None = None
     games_behind_play_in: float | None = None
+    league_ranks: dict[str, Any] = field(default_factory=dict)
+    attack_defence: dict[str, Any] | None = None
+    form: list[dict[str, Any]] = field(default_factory=list)
+    shot_zones: dict[str, Any] | None = None
+    scoreboard: dict[str, Any] = field(default_factory=dict)
 
 
 def signal_scored(entry_id: str) -> str:
@@ -98,6 +105,9 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
         self._scoring_game: int | None = None
         self._last_seq: int = 0
         self._pending: list[CALLBACK_TYPE] = []
+        # Season shot zones per finished game, and our games from past seasons.
+        self._zones: dict[tuple[str, int], dict[str, list[int]]] = {}
+        self._past_games: dict[str, list[dict[str, Any]]] = {}
 
     # ------------------------------------------------------------- options
 
@@ -151,7 +161,7 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
         mine = parser.team_games(all_games, self.team_code)
         game, mode = parser.select_game(mine, now, self.post_game_hours)
 
-        header = box = pbp = shots = None
+        header = box = pbp = shots = evo = None
         baskets: list[dict[str, Any]] = []
         state = STATE_NOT_FOUND
         if game is not None:
@@ -166,7 +176,7 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
                 state = STATE_PRE
 
             if state in (STATE_IN, STATE_POST):
-                box, pbp, shots = await self._game_feeds(season_code, code, final=state == STATE_POST)
+                box, pbp, shots, evo = await self._game_feeds(season_code, code, final=state == STATE_POST)
                 if state == STATE_POST and header is None:
                     header = await self._safe(api.header(season_code, code)) or {}
 
@@ -175,7 +185,7 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
             # The game we followed live just ended: drop cached schedule,
             # standings and season stats so they reflect the result.
             if self._tracked_live_game == code and state == STATE_POST:
-                for prefix in ("games:", "standings:", "teamstats:", "leaders:"):
+                for prefix in ("games:", "standings:", "teamstats:", "teamtrad:", "leaders:"):
                     api.invalidate(prefix)
             self._tracked_live_game = code if state == STATE_IN else None
 
@@ -213,6 +223,14 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
             shots=shots,
         )
 
+        if game is not None:
+            home = game_attrs.get("team_homeaway") == "home"
+            game_attrs["score_flow"] = parser.parse_evolution(evo, home) if evo else None
+            past = await self._past_meetings(season)
+            game_attrs["head_to_head"] = parser.head_to_head(
+                past + played, self.team_code, game_attrs.get("opponent_abbr") or ""
+            )
+
         team_stats = parser.parse_team_stats(
             await self._safe(api.team_stats(season_code, self.team_code)) or {}
         )
@@ -240,6 +258,9 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
             last_summary = prev_game
             current_streak = parser.streak(played, self.team_code)
 
+        centre = (game or {}).get("round") or standings_round
+        scoreboard = parser.round_scoreboard(all_games, [centre - 1, centre, centre + 1]) if centre else {}
+
         data = TrackerData(
             state=state,
             game=game_attrs,
@@ -253,6 +274,13 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
             streak=current_streak,
             games_behind_playoffs=parser.games_behind(standings_rows, self.team_code, PLAYOFF_SPOTS),
             games_behind_play_in=parser.games_behind(standings_rows, self.team_code, PLAY_IN_SPOTS),
+            league_ranks=parser.parse_league_ranks(
+                await self._safe(api.team_traditional(season_code)) or {}, self.team_code
+            ),
+            attack_defence=parser.attack_defence(all_games, self.team_code),
+            form=parser.season_form(played, self.team_code),
+            shot_zones=await self._season_zones(season_code, played, fetch=state != STATE_IN),
+            scoreboard=scoreboard,
         )
         self._fire_events(self.data, data)
         for basket in baskets:
@@ -272,16 +300,50 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
             rows, rnd = parser.parse_standings(payload), rnd - 1
         return rows, rnd
 
-    async def _game_feeds(self, season_code: str, code: int, final: bool) -> tuple[dict, dict, dict]:
-        """Box score, play-by-play and shots. A finished game is fetched once."""
+    async def _game_feeds(self, season_code: str, code: int, final: bool) -> tuple[dict, dict, dict, dict]:
+        """Box score, play-by-play, shots and score flow. A finished game is fetched once."""
         if final and code in self._final_box_cache:
             return self._final_box_cache[code]
         box = await self._safe(self.api.boxscore(season_code, code)) or {}
         pbp = await self._safe(self.api.play_by_play(season_code, code)) or {}
         shots = await self._safe(self.api.shots(season_code, code)) or {}
+        evo = await self._safe(self.api.evolution(season_code, code)) or {}
         if final and box:
-            self._final_box_cache = {code: (box, pbp, shots)}  # keep only the latest final
-        return box, pbp, shots
+            self._final_box_cache = {code: (box, pbp, shots, evo)}  # keep only the latest final
+            if shots:
+                self._zones[(season_code, code)] = parser.zone_counts(shots, self.team_code)
+        return box, pbp, shots, evo
+
+    async def _season_zones(
+        self, season_code: str, played: list[dict[str, Any]], *, fetch: bool
+    ) -> dict[str, Any] | None:
+        """Season shooting by zone. Each finished game's shots are fetched once,
+        a few games per update so the first start stays quick, and never while
+        a game is live (those updates must stay fast)."""
+        missing = [g["gameCode"] for g in played if (season_code, g["gameCode"]) not in self._zones]
+        for code in missing[:ZONE_FETCHES_PER_UPDATE] if fetch else []:
+            points = await self._safe(self.api.shots(season_code, code))
+            if points:
+                self._zones[(season_code, code)] = parser.zone_counts(points, self.team_code)
+        return parser.merge_zones([z for (s, _), z in self._zones.items() if s == season_code])
+
+    async def _past_meetings(self, season: dict[str, Any]) -> list[dict[str, Any]]:
+        """Our games from the two seasons before this one (fetched once each)."""
+        seasons = await self._safe(self.api.seasons()) or []
+        year = season.get("year") or 0
+        earlier = sorted((s for s in seasons if (s.get("year") or 0) < year), key=lambda s: s.get("year", 0))
+        out: list[dict[str, Any]] = []
+        for past in earlier[-H2H_PAST_SEASONS:]:
+            code = past.get("code")
+            if code not in self._past_games:
+                games = await self._safe(self.api.past_games(code))
+                if games is None:
+                    continue
+                self._past_games[code] = [
+                    g for g in parser.team_games(games, self.team_code) if g.get("played")
+                ]
+            out.extend(self._past_games[code])
+        return out
 
     async def _safe(self, coro):
         """Optional data: log and carry on instead of failing the whole update."""

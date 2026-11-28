@@ -151,6 +151,17 @@ class EuroLeagueApi:
         data = await self._cached(key, CACHE_GAMES, f"{self._comp}/seasons/{season_code}/games")
         return data.get("data", []) if isinstance(data, dict) else []
 
+    async def past_games(self, season_code: str) -> list[dict[str, Any]]:
+        """A finished season's games, not cached (callers keep only what they need)."""
+        data = await self._get_json(f"{self._comp}/seasons/{season_code}/games")
+        return data.get("data", []) if isinstance(data, dict) else []
+
+    async def team_traditional(self, season_code: str) -> Any:
+        """Per-game averages for every club, used to rank the team."""
+        url = f"{API_BASE}/v3/competitions/{self.competition}/statistics/teams/traditional"
+        params = {"seasonMode": "Single", "seasonCode": season_code, "statisticMode": "PerGame"}
+        return await self._cached(f"teamtrad:{season_code}", CACHE_TEAM_STATS, url, params)
+
     async def standings(self, season_code: str, round_number: int, *, force=False) -> dict:
         key = f"standings:{season_code}:{round_number}"
         if force:
@@ -195,6 +206,10 @@ class EuroLeagueApi:
     async def shots(self, season_code: str, game_code: int) -> dict[str, Any]:
         """Shot locations ("Points" feed), made and missed field goals."""
         return await self._get_live("Points", season_code, game_code) or {}
+
+    async def evolution(self, season_code: str, game_code: int) -> dict[str, Any]:
+        """Score after every minute ("Evolution" feed)."""
+        return await self._get_live("Evolution", season_code, game_code) or {}
 
 
 def _parse_dt(value: str | None) -> datetime | None:

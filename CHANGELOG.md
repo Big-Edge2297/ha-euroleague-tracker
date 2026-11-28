@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.3.0 (2026-11-27)
+
+### New
+- **Stats, redesigned** into three tabs:
+  - **Team**: where your team ranks in the league for ten stats, each on a bar from the league's worst to its best with the league average marked; attack against defence, with points scored and allowed per game and their ranks.
+  - **Players**: the season's form, with the point margin of every game; your players among the league leaders, with their headshots and the current leader for comparison.
+  - **Shots**: the season's shooting by court zone (at the rim, paint, mid-range, corner threes, above the break), shaded by points per shot.
+- **Score flow** on live and final games: who led and by how much, minute by minute, with the biggest leads.
+- **Head to head** on the next game: the last five meetings with that opponent, from this season and the two before.
+- **Round tab**: every game of the round, your team's highlighted, with arrows to the rounds before and after. Turn it off with `show_round_tab: false`, or show it alone with `view: round`.
+- New sensor attributes for all of the above (`league_ranks`, `attack_defence`, `form`, `shot_zones`, `score_flow`, `head_to_head`, `scoreboard`), kept out of the recorder.
+
+### Changed
+- The last game's shot chart moved from the Stats view to the final result on the Game view.
+
 ## v0.2.0 (2026-11-27)
 
 ### New

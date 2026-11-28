@@ -277,9 +277,9 @@ def test_scoring_plays_reads_the_fourth_quarter_once():
 def test_streak_record_and_result_text():
     games = _oly_games()
     played = [g for g in games if g.get("played")]
-    # Real results, oldest first: L (R10), W, W, W, W (R14).
+    # Real results, oldest first: ... L (R10), W, W, W, W (R14).
     assert parser.streak(played, "OLY") == "W4"
-    assert parser.streak(played[:1], "OLY") == "L1"
+    assert parser.streak([g for g in played if g["round"] <= 10], "OLY") == "L1"
     assert parser.streak([], "OLY") is None
     assert parser.result_text(parser.summarize_game(played[-1], "OLY")) == "W 104-79 vs HTA"
     tel = next(g for g in played if g["gameCode"] == 117)
@@ -309,3 +309,102 @@ def test_humanize():
     assert parser.humanize_delta(datetime(2026, 11, 27, 18, tzinfo=UTC), now) == "in 3 hours"
     assert parser.humanize_delta(datetime(2026, 11, 27, 14, tzinfo=UTC), now) == "an hour ago"
     assert parser.humanize_delta(datetime(2026, 11, 27, 15, 30, tzinfo=UTC), now) == "in 30 minutes"
+
+
+# ---------------------------------------------------------------- v0.3.0
+
+
+def test_league_ranks_read_percent_strings_and_flip_turnovers():
+    ranks = parser.parse_league_ranks(load("team_traditional.json"), "OLY")
+    assert ranks["fg3_pct"]["rank"] == 16 and ranks["fg3_pct"]["value"] == 34.0
+    to = ranks["turnovers"]
+    assert to["lower_is_better"] is True and to["best"] < to["worst"] and to["rank"] == 9
+    assert parser.parse_league_ranks({}, "OLY") == {}
+    # Other response shapes the endpoint has used.
+    rows = load("team_traditional.json")["teams"]
+    assert parser.parse_league_ranks({"data": rows}, "OLY") == parser.parse_league_ranks(rows, "OLY")
+
+
+def test_attack_defence_counts_overtime_and_ranks():
+    def g(h, hs, a, as_):
+        return {
+            "played": True,
+            "local": {"club": {"code": h}, "score": hs},
+            "road": {"club": {"code": a}, "score": as_},
+        }
+
+    games = [g("OLY", 100, "ASV", 80), g("ASV", 90, "MAD", 95), g("MAD", 70, "OLY", 72), {"played": False}]
+    out = parser.attack_defence(games, "OLY")
+    assert out == {
+        "scored": 86.0,
+        "allowed": 75.0,
+        "net": 11.0,
+        "scored_rank": 1,
+        "allowed_rank": 1,
+        "league_average": 84.5,
+        "teams": 3,
+    }
+    assert parser.attack_defence(games, "BAR") is None
+
+
+def test_season_form_margins_oldest_first():
+    form = parser.season_form([g for g in _oly_games() if g.get("played")], "OLY")
+    assert [f["margin"] for f in form] == [17, 2, -2, 23, 5, 5, -3, 8, 6, -5, 29, 2, 16, 25]
+    assert form[2] == {
+        "round": 3,
+        "date": "2026-10-01T18:00:00+00:00",
+        "opponent_abbr": "VIR",
+        "homeaway": "away",
+        "team_score": 94,
+        "opponent_score": 96,
+        "margin": -2,
+    }
+
+
+def test_shot_zones():
+    assert parser.shot_zone(10, 20, 2) == "rim"
+    assert parser.shot_zone(200, 300, 2) == "paint"
+    assert parser.shot_zone(400, 300, 2) == "mid_range"
+    assert parser.shot_zone(700, 50, 3) == "corner_three"
+    assert parser.shot_zone(700, 300, 3) == "above_break_three"
+    one = parser.zone_counts(load("points_140.json"), "OLY")
+    assert sum(a for _, a in one.values()) == 70 and sum(m for m, _ in one.values()) == 38
+    season = parser.merge_zones([one, one])
+    assert (season["games"], season["made"], season["attempts"]) == (2, 76, 140)
+    rim = season["zones"]["rim"]
+    assert rim["pct"] == round(100 * rim["made"] / rim["attempts"], 1)
+    assert parser.merge_zones([]) is None
+
+
+def test_evolution_from_either_side():
+    evo = load("evolution_140.json")
+    home = parser.parse_evolution(evo, True)
+    away = parser.parse_evolution(evo, False)
+    assert home["team"][-1] == 104 and away["team"][-1] == 79
+    assert (away["largest_lead"], away["largest_lead_minute"]) == (6, 12)
+    assert parser.parse_evolution({}, True) is None
+
+
+def test_head_to_head_newest_first():
+    past = []
+    for season in ("E2025", "E2024"):
+        past += load(f"games_{season}.json")["data"]
+    h2h = parser.head_to_head(past, "OLY", "ASV")
+    assert [m["season"] for m in h2h["meetings"]] == ["E2025", "E2025", "E2024", "E2024"]
+    assert [m["won"] for m in h2h["meetings"]] == [True, True, False, True]
+    assert h2h["meetings"][0]["homeaway"] == "away"
+    assert parser.head_to_head(past, "OLY", "ASV", limit=2)["wins"] == 2
+    assert parser.head_to_head(past, "OLY", "MAD") is None
+
+
+def test_round_scoreboard():
+    board = parser.round_scoreboard(load("games.json")["data"], [13, 14, 15, 99])
+    assert [r["round"] for r in board["rounds"]] == [13, 14, 15]
+    r14 = board["rounds"][1]["games"]
+    oly = next(g for g in r14 if g["game_code"] == 140)
+    assert (oly["home"], oly["home_score"], oly["away"], oly["away_score"]) == ("OLY", 104, "HTA", 79)
+    r15 = board["rounds"][2]["games"]
+    assert len(r15) == 10 and not any(g["played"] for g in r15)
+    assert r15[0]["home_score"] is None
+    assert [g["date"] for g in r15] == sorted(g["date"] for g in r15)
+    assert len(board["crests"]) == 20

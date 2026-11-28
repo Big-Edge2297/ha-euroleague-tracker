@@ -505,6 +505,1587 @@
     "capacity": 10000
    },
    "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-5",
+   "identifier": "E2026_5",
+   "gameCode": 5,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 1,
+   "roundAlias": "Round 1",
+   "roundName": "Round 1",
+   "played": true,
+   "date": "2026-09-24T18:00:00",
+   "utcDate": "2026-09-24T18:00:00Z",
+   "local": {
+    "club": {
+     "code": "BAS",
+     "name": "Kosner Baskonia Vitoria-Gasteiz",
+     "abbreviatedName": "Baskonia",
+     "editorialName": "Baskonia",
+     "tvCode": "BAS",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/cbc49cb0-99ce-4462-bdb7-56983ee03cf4.png"
+     }
+    },
+    "score": 89,
+    "standingsScore": 89,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 106,
+    "standingsScore": 106,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-14",
+   "identifier": "E2026_14",
+   "gameCode": 14,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 2,
+   "roundAlias": "Round 2",
+   "roundName": "Round 2",
+   "played": true,
+   "date": "2026-09-29T18:00:00",
+   "utcDate": "2026-09-29T18:00:00Z",
+   "local": {
+    "club": {
+     "code": "ZAL",
+     "name": "Zalgiris Kaunas",
+     "abbreviatedName": "Zalgiris",
+     "editorialName": "Zalgiris",
+     "tvCode": "ZAL",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/0aa09358-3847-4c4e-b228-3582ee4e536d.png"
+     }
+    },
+    "score": 91,
+    "standingsScore": 91,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 93,
+    "standingsScore": 93,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-23",
+   "identifier": "E2026_23",
+   "gameCode": 23,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 3,
+   "roundAlias": "Round 3",
+   "roundName": "Round 3",
+   "played": true,
+   "date": "2026-10-01T18:00:00",
+   "utcDate": "2026-10-01T18:00:00Z",
+   "local": {
+    "club": {
+     "code": "VIR",
+     "name": "Virtus Bologna",
+     "abbreviatedName": "Virtus Bologna",
+     "editorialName": "Virtus Bologna",
+     "tvCode": "VIR",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezvk/a92d4c3b-9f9c-4163-8a10-bcf8fc15893e.png"
+     }
+    },
+    "score": 96,
+    "standingsScore": 96,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 94,
+    "standingsScore": 94,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-40",
+   "identifier": "E2026_40",
+   "gameCode": 40,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 4,
+   "roundAlias": "Round 4",
+   "roundName": "Round 4",
+   "played": true,
+   "date": "2026-10-09T18:00:00",
+   "utcDate": "2026-10-09T18:00:00Z",
+   "local": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 89,
+    "standingsScore": 89,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "IST",
+     "name": "Anadolu Efes Istanbul",
+     "abbreviatedName": "Anadolu Efes",
+     "editorialName": "Anadolu Efes",
+     "tvCode": "IST",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCgOCxM/a844756c-a58d-4666-93b8-48f7337bc79d.png"
+     }
+    },
+    "score": 66,
+    "standingsScore": 66,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "SUNEL ARENA",
+    "code": "AVT1",
+    "capacity": 8300,
+    "address": "Konstantinoupoleos 59, Ano Liosia, 13342 Athens, Greece"
+   },
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-45",
+   "identifier": "E2026_45",
+   "gameCode": 45,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 5,
+   "roundAlias": "Round 5",
+   "roundName": "Round 5",
+   "played": true,
+   "date": "2026-10-13T18:00:00",
+   "utcDate": "2026-10-13T18:00:00Z",
+   "local": {
+    "club": {
+     "code": "PAM",
+     "name": "Valencia Basket",
+     "abbreviatedName": "Valencia",
+     "editorialName": "Valencia",
+     "tvCode": "PAM",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHL/bc3e00b2-fea4-40be-a7ec-1e633129bde3.png"
+     }
+    },
+    "score": 97,
+    "standingsScore": 97,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 102,
+    "standingsScore": 102,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-58",
+   "identifier": "E2026_58",
+   "gameCode": 58,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 6,
+   "roundAlias": "Round 6",
+   "roundName": "Round 6",
+   "played": true,
+   "date": "2026-10-16T18:00:00",
+   "utcDate": "2026-10-16T18:00:00Z",
+   "local": {
+    "club": {
+     "code": "BAR",
+     "name": "FC Barcelona",
+     "abbreviatedName": "FC Barcelona",
+     "editorialName": "FC Barcelona",
+     "tvCode": "BAR",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/35dfa503-e417-481f-963a-bdf6f013763e.png"
+     }
+    },
+    "score": 100,
+    "standingsScore": 100,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 105,
+    "standingsScore": 105,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-70",
+   "identifier": "E2026_70",
+   "gameCode": 70,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 7,
+   "roundAlias": "Round 7",
+   "roundName": "Round 7",
+   "played": true,
+   "date": "2026-10-23T18:00:00",
+   "utcDate": "2026-10-23T18:00:00Z",
+   "local": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 61,
+    "standingsScore": 61,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "ULK",
+     "name": "Fenerbahce Tarfin Istanbul",
+     "abbreviatedName": "Fenerbahce",
+     "editorialName": "Fenerbahce",
+     "tvCode": "ULK",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png"
+     }
+    },
+    "score": 64,
+    "standingsScore": 64,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "SUNEL ARENA",
+    "code": "AVT1",
+    "capacity": 8300,
+    "address": "Konstantinoupoleos 59, Ano Liosia, 13342 Athens, Greece"
+   },
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-79",
+   "identifier": "E2026_79",
+   "gameCode": 79,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 8,
+   "roundAlias": "Round 8",
+   "roundName": "Round 8",
+   "played": true,
+   "date": "2026-10-28T18:00:00",
+   "utcDate": "2026-10-28T18:00:00Z",
+   "local": {
+    "club": {
+     "code": "BES",
+     "name": "Besiktas Fuzul Istanbul",
+     "abbreviatedName": "Besiktas",
+     "editorialName": "Besiktas",
+     "tvCode": "BES",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjHHNTU0/07707827-9461-400d-8acc-355150011194.png"
+     }
+    },
+    "score": 73,
+    "standingsScore": 73,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 81,
+    "standingsScore": 81,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-90",
+   "identifier": "E2026_90",
+   "gameCode": 90,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 9,
+   "roundAlias": "Round 9",
+   "roundName": "Round 9",
+   "played": true,
+   "date": "2026-10-30T15:00:00",
+   "utcDate": "2026-10-30T15:00:00Z",
+   "local": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 84,
+    "standingsScore": 84,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "MIL",
+     "name": "Armani Olimpia Milan",
+     "abbreviatedName": "Milan",
+     "editorialName": "Milan",
+     "tvCode": "MIL",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHH/5c2f0ab6-f86a-4df0-b2f3-f9ab92f7267b.png"
+     }
+    },
+    "score": 78,
+    "standingsScore": 78,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "SUNEL ARENA",
+    "code": "AVT1",
+    "capacity": 8300,
+    "address": "Konstantinoupoleos 59, Ano Liosia, 13342 Athens, Greece"
+   },
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-141",
+   "identifier": "E2026_141",
+   "gameCode": 141,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 14,
+   "roundAlias": "Round 14",
+   "roundName": "Round 14",
+   "played": true,
+   "date": "2026-11-25T17:00:00",
+   "utcDate": "2026-11-25T17:00:00Z",
+   "local": {
+    "club": {
+     "code": "BAS",
+     "name": "Kosner Baskonia Vitoria-Gasteiz",
+     "abbreviatedName": "Baskonia",
+     "editorialName": "Baskonia",
+     "tvCode": "BAS",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/cbc49cb0-99ce-4462-bdb7-56983ee03cf4.png"
+     }
+    },
+    "score": 86,
+    "standingsScore": 86,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "IST",
+     "name": "Anadolu Efes Istanbul",
+     "abbreviatedName": "Anadolu Efes",
+     "editorialName": "Anadolu Efes",
+     "tvCode": "IST",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCgOCxM/a844756c-a58d-4666-93b8-48f7337bc79d.png"
+     }
+    },
+    "score": 81,
+    "standingsScore": 81,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-142",
+   "identifier": "E2026_142",
+   "gameCode": 142,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 14,
+   "roundAlias": "Round 14",
+   "roundName": "Round 14",
+   "played": true,
+   "date": "2026-11-26T17:30:00",
+   "utcDate": "2026-11-26T17:30:00Z",
+   "local": {
+    "club": {
+     "code": "DUB",
+     "name": "Dubai Basketball",
+     "abbreviatedName": "Dubai",
+     "editorialName": "Dubai",
+     "tvCode": "DUB",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/1efae090-16e2-4963-ae47-4b94f249c244.png"
+     }
+    },
+    "score": 71,
+    "standingsScore": 71,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "PAR",
+     "name": "Partizan Mozzart Bet Belgrade",
+     "abbreviatedName": "Partizan",
+     "editorialName": "Partizan",
+     "tvCode": "PAR",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/2681304e-77dd-4331-88b1-683078c0fb49.png"
+     }
+    },
+    "score": 84,
+    "standingsScore": 84,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-143",
+   "identifier": "E2026_143",
+   "gameCode": 143,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 14,
+   "roundAlias": "Round 14",
+   "roundName": "Round 14",
+   "played": true,
+   "date": "2026-11-25T17:30:00",
+   "utcDate": "2026-11-25T17:30:00Z",
+   "local": {
+    "club": {
+     "code": "BAR",
+     "name": "FC Barcelona",
+     "abbreviatedName": "FC Barcelona",
+     "editorialName": "FC Barcelona",
+     "tvCode": "BAR",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/35dfa503-e417-481f-963a-bdf6f013763e.png"
+     }
+    },
+    "score": 77,
+    "standingsScore": 77,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "ULK",
+     "name": "Fenerbahce Tarfin Istanbul",
+     "abbreviatedName": "Fenerbahce",
+     "editorialName": "Fenerbahce",
+     "tvCode": "ULK",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png"
+     }
+    },
+    "score": 83,
+    "standingsScore": 83,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-144",
+   "identifier": "E2026_144",
+   "gameCode": 144,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 14,
+   "roundAlias": "Round 14",
+   "roundName": "Round 14",
+   "played": true,
+   "date": "2026-11-26T17:00:00",
+   "utcDate": "2026-11-26T17:00:00Z",
+   "local": {
+    "club": {
+     "code": "ASV",
+     "name": "LDLC ASVEL Villeurbanne",
+     "abbreviatedName": "LDLC ASVEL",
+     "editorialName": "LDLC ASVEL",
+     "tvCode": "ASV",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/e33c6d1a-95ca-4dbc-b8cb-0201812104cc.png"
+     }
+    },
+    "score": 91,
+    "standingsScore": 91,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "MIL",
+     "name": "Armani Olimpia Milan",
+     "abbreviatedName": "Milan",
+     "editorialName": "Milan",
+     "tvCode": "MIL",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHH/5c2f0ab6-f86a-4df0-b2f3-f9ab92f7267b.png"
+     }
+    },
+    "score": 95,
+    "standingsScore": 95,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-145",
+   "identifier": "E2026_145",
+   "gameCode": 145,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 14,
+   "roundAlias": "Round 14",
+   "roundName": "Round 14",
+   "played": true,
+   "date": "2026-11-25T17:30:00",
+   "utcDate": "2026-11-25T17:30:00Z",
+   "local": {
+    "club": {
+     "code": "PAM",
+     "name": "Valencia Basket",
+     "abbreviatedName": "Valencia",
+     "editorialName": "Valencia",
+     "tvCode": "PAM",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHL/bc3e00b2-fea4-40be-a7ec-1e633129bde3.png"
+     }
+    },
+    "score": 83,
+    "standingsScore": 83,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "PAN",
+     "name": "Panathinaikos AKTOR Athens",
+     "abbreviatedName": "Panathinaikos",
+     "editorialName": "Panathinaikos",
+     "tvCode": "PAN",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/e3dff28a-9ec6-4faf-9d96-ecbc68f75780.png"
+     }
+    },
+    "score": 86,
+    "standingsScore": 86,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-146",
+   "identifier": "E2026_146",
+   "gameCode": 146,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 14,
+   "roundAlias": "Round 14",
+   "roundName": "Round 14",
+   "played": true,
+   "date": "2026-11-26T17:30:00",
+   "utcDate": "2026-11-26T17:30:00Z",
+   "local": {
+    "club": {
+     "code": "MUN",
+     "name": "FC Bayern Munich",
+     "abbreviatedName": "Bayern Munich",
+     "editorialName": "Bayern Munich",
+     "tvCode": "MUN",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/817b0e58-d595-4b09-ab0b-1e7cc26249ff.png"
+     }
+    },
+    "score": 79,
+    "standingsScore": 79,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "TEL",
+     "name": "Maccabi Rapyd Tel Aviv",
+     "abbreviatedName": "Maccabi",
+     "editorialName": "Maccabi",
+     "tvCode": "TEL",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1b533342-78f5-4932-b714-a7d80b5826b5.png"
+     }
+    },
+    "score": 87,
+    "standingsScore": 87,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-147",
+   "identifier": "E2026_147",
+   "gameCode": 147,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 14,
+   "roundAlias": "Round 14",
+   "roundName": "Round 14",
+   "played": true,
+   "date": "2026-11-25T17:00:00",
+   "utcDate": "2026-11-25T17:00:00Z",
+   "local": {
+    "club": {
+     "code": "RED",
+     "name": "Crvena Zvezda Meridianbet Belgrade",
+     "abbreviatedName": "Crvena Zvezda",
+     "editorialName": "Crvena Zvezda",
+     "tvCode": "RED",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/d2eef4a8-62df-4fdd-9076-276004268515.png"
+     }
+    },
+    "score": 84,
+    "standingsScore": 84,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "VIR",
+     "name": "Virtus Bologna",
+     "abbreviatedName": "Virtus Bologna",
+     "editorialName": "Virtus Bologna",
+     "tvCode": "VIR",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezvk/a92d4c3b-9f9c-4163-8a10-bcf8fc15893e.png"
+     }
+    },
+    "score": 108,
+    "standingsScore": 108,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-148",
+   "identifier": "E2026_148",
+   "gameCode": 148,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 14,
+   "roundAlias": "Round 14",
+   "roundName": "Round 14",
+   "played": true,
+   "date": "2026-11-26T17:30:00",
+   "utcDate": "2026-11-26T17:30:00Z",
+   "local": {
+    "club": {
+     "code": "BES",
+     "name": "Besiktas Fuzul Istanbul",
+     "abbreviatedName": "Besiktas",
+     "editorialName": "Besiktas",
+     "tvCode": "BES",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjHHNTU0/07707827-9461-400d-8acc-355150011194.png"
+     }
+    },
+    "score": 76,
+    "standingsScore": 76,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "PRS",
+     "name": "Paris Basketball",
+     "abbreviatedName": "Paris",
+     "editorialName": "Paris",
+     "tvCode": "PRS",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/a033e5b3-0de7-48a3-98d9-d9a4b9df1f39.png"
+     }
+    },
+    "score": 88,
+    "standingsScore": 88,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-151",
+   "identifier": "E2026_151",
+   "gameCode": 151,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 15,
+   "roundAlias": "Round 15",
+   "roundName": "Round 15",
+   "played": false,
+   "date": "2026-12-04T18:00:00",
+   "utcDate": "2026-12-04T18:00:00Z",
+   "local": {
+    "club": {
+     "code": "ZAL",
+     "name": "Zalgiris Kaunas",
+     "abbreviatedName": "Zalgiris",
+     "editorialName": "Zalgiris",
+     "tvCode": "ZAL",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/0aa09358-3847-4c4e-b228-3582ee4e536d.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "DUB",
+     "name": "Dubai Basketball",
+     "abbreviatedName": "Dubai",
+     "editorialName": "Dubai",
+     "tvCode": "DUB",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/1efae090-16e2-4963-ae47-4b94f249c244.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-152",
+   "identifier": "E2026_152",
+   "gameCode": 152,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 15,
+   "roundAlias": "Round 15",
+   "roundName": "Round 15",
+   "played": false,
+   "date": "2026-12-04T17:00:00",
+   "utcDate": "2026-12-04T17:00:00Z",
+   "local": {
+    "club": {
+     "code": "BES",
+     "name": "Besiktas Fuzul Istanbul",
+     "abbreviatedName": "Besiktas",
+     "editorialName": "Besiktas",
+     "tvCode": "BES",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjHHNTU0/07707827-9461-400d-8acc-355150011194.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "PAN",
+     "name": "Panathinaikos AKTOR Athens",
+     "abbreviatedName": "Panathinaikos",
+     "editorialName": "Panathinaikos",
+     "tvCode": "PAN",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/e3dff28a-9ec6-4faf-9d96-ecbc68f75780.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-153",
+   "identifier": "E2026_153",
+   "gameCode": 153,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 15,
+   "roundAlias": "Round 15",
+   "roundName": "Round 15",
+   "played": false,
+   "date": "2026-12-03T20:00:00",
+   "utcDate": "2026-12-03T20:00:00Z",
+   "local": {
+    "club": {
+     "code": "VIR",
+     "name": "Virtus Bologna",
+     "abbreviatedName": "Virtus Bologna",
+     "editorialName": "Virtus Bologna",
+     "tvCode": "VIR",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezvk/a92d4c3b-9f9c-4163-8a10-bcf8fc15893e.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "PAR",
+     "name": "Partizan Mozzart Bet Belgrade",
+     "abbreviatedName": "Partizan",
+     "editorialName": "Partizan",
+     "tvCode": "PAR",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/2681304e-77dd-4331-88b1-683078c0fb49.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-154",
+   "identifier": "E2026_154",
+   "gameCode": 154,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 15,
+   "roundAlias": "Round 15",
+   "roundName": "Round 15",
+   "played": false,
+   "date": "2026-12-03T20:00:00",
+   "utcDate": "2026-12-03T20:00:00Z",
+   "local": {
+    "club": {
+     "code": "BAS",
+     "name": "Kosner Baskonia Vitoria-Gasteiz",
+     "abbreviatedName": "Baskonia",
+     "editorialName": "Baskonia",
+     "tvCode": "BAS",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/cbc49cb0-99ce-4462-bdb7-56983ee03cf4.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "TEL",
+     "name": "Maccabi Rapyd Tel Aviv",
+     "abbreviatedName": "Maccabi",
+     "editorialName": "Maccabi",
+     "tvCode": "TEL",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1b533342-78f5-4932-b714-a7d80b5826b5.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-155",
+   "identifier": "E2026_155",
+   "gameCode": 155,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 15,
+   "roundAlias": "Round 15",
+   "roundName": "Round 15",
+   "played": false,
+   "date": "2026-12-03T19:00:00",
+   "utcDate": "2026-12-03T19:00:00Z",
+   "local": {
+    "club": {
+     "code": "MUN",
+     "name": "FC Bayern Munich",
+     "abbreviatedName": "Bayern Munich",
+     "editorialName": "Bayern Munich",
+     "tvCode": "MUN",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/817b0e58-d595-4b09-ab0b-1e7cc26249ff.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "PRS",
+     "name": "Paris Basketball",
+     "abbreviatedName": "Paris",
+     "editorialName": "Paris",
+     "tvCode": "PRS",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/a033e5b3-0de7-48a3-98d9-d9a4b9df1f39.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-156",
+   "identifier": "E2026_156",
+   "gameCode": 156,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 15,
+   "roundAlias": "Round 15",
+   "roundName": "Round 15",
+   "played": false,
+   "date": "2026-12-03T18:45:00",
+   "utcDate": "2026-12-03T18:45:00Z",
+   "local": {
+    "club": {
+     "code": "HTA",
+     "name": "Hapoel IBI Tel Aviv",
+     "abbreviatedName": "Hapoel TLV",
+     "editorialName": "Hapoel TLV",
+     "tvCode": "HTA",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/cbb1c3ad-03d5-426a-b5ef-2832a4eee484.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "MIL",
+     "name": "Armani Olimpia Milan",
+     "abbreviatedName": "Milan",
+     "editorialName": "Milan",
+     "tvCode": "MIL",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHH/5c2f0ab6-f86a-4df0-b2f3-f9ab92f7267b.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-157",
+   "identifier": "E2026_157",
+   "gameCode": 157,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 15,
+   "roundAlias": "Round 15",
+   "roundName": "Round 15",
+   "played": false,
+   "date": "2026-12-03T17:45:00",
+   "utcDate": "2026-12-03T17:45:00Z",
+   "local": {
+    "club": {
+     "code": "ULK",
+     "name": "Fenerbahce Tarfin Istanbul",
+     "abbreviatedName": "Fenerbahce",
+     "editorialName": "Fenerbahce",
+     "tvCode": "ULK",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "RED",
+     "name": "Crvena Zvezda Meridianbet Belgrade",
+     "abbreviatedName": "Crvena Zvezda",
+     "editorialName": "Crvena Zvezda",
+     "tvCode": "RED",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/d2eef4a8-62df-4fdd-9076-276004268515.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-158",
+   "identifier": "E2026_158",
+   "gameCode": 158,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 15,
+   "roundAlias": "Round 15",
+   "roundName": "Round 15",
+   "played": false,
+   "date": "2026-12-03T17:30:00",
+   "utcDate": "2026-12-03T17:30:00Z",
+   "local": {
+    "club": {
+     "code": "IST",
+     "name": "Anadolu Efes Istanbul",
+     "abbreviatedName": "Anadolu Efes",
+     "editorialName": "Anadolu Efes",
+     "tvCode": "IST",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCgOCxM/a844756c-a58d-4666-93b8-48f7337bc79d.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "PAM",
+     "name": "Valencia Basket",
+     "abbreviatedName": "Valencia",
+     "editorialName": "Valencia",
+     "tvCode": "PAM",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHL/bc3e00b2-fea4-40be-a7ec-1e633129bde3.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-160",
+   "identifier": "E2026_160",
+   "gameCode": 160,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 16,
+   "roundAlias": "Round 16",
+   "roundName": "Round 16",
+   "played": false,
+   "date": "2026-12-11T19:15:00",
+   "utcDate": "2026-12-11T19:15:00Z",
+   "local": {
+    "club": {
+     "code": "PAN",
+     "name": "Panathinaikos AKTOR Athens",
+     "abbreviatedName": "Panathinaikos",
+     "editorialName": "Panathinaikos",
+     "tvCode": "PAN",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/e3dff28a-9ec6-4faf-9d96-ecbc68f75780.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-165",
+   "identifier": "E2026_165",
+   "gameCode": 165,
+   "season": {
+    "code": "E2026"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 17,
+   "roundAlias": "Round 17",
+   "roundName": "Round 17",
+   "played": false,
+   "date": "2026-12-15T19:45:00",
+   "utcDate": "2026-12-15T19:45:00Z",
+   "local": {
+    "club": {
+     "code": "PRS",
+     "name": "Paris Basketball",
+     "abbreviatedName": "Paris",
+     "editorialName": "Paris",
+     "tvCode": "PRS",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/a033e5b3-0de7-48a3-98d9-d9a4b9df1f39.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 0,
+    "standingsScore": 0,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
   }
  ]
 }

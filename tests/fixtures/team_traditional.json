@@ -1,0 +1,364 @@
+{
+ "teams": [
+  {
+   "team": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus",
+    "imageUrl": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 90.4,
+   "totalRebounds": 36.6,
+   "assists": 20.6,
+   "steals": 7.4,
+   "turnovers": 12.9,
+   "blocks": 2.4,
+   "pir": 107.0,
+   "twoPointersPercentage": "60.2%",
+   "threePointersPercentage": "34.0%",
+   "freeThrowsPercentage": "76.6%"
+  },
+  {
+   "team": {
+    "code": "PAM",
+    "name": "Valencia Basket",
+    "imageUrl": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHL/bc3e00b2-fea4-40be-a7ec-1e633129bde3.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 96.1,
+   "totalRebounds": 40.4,
+   "assists": 21.4,
+   "steals": 8.4,
+   "turnovers": 10.5,
+   "blocks": 3.5,
+   "pir": 110.1,
+   "twoPointersPercentage": "50.5%",
+   "threePointersPercentage": "40.2%",
+   "freeThrowsPercentage": "84.0%"
+  },
+  {
+   "team": {
+    "code": "PAN",
+    "name": "Panathinaikos AKTOR Athens",
+    "imageUrl": "https://media-cdn.incrowdsports.com/e3dff28a-9ec6-4faf-9d96-ecbc68f75780.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 96.1,
+   "totalRebounds": 40.4,
+   "assists": 21.4,
+   "steals": 8.4,
+   "turnovers": 12.8,
+   "blocks": 2.5,
+   "pir": 85.1,
+   "twoPointersPercentage": "58.7%",
+   "threePointersPercentage": "34.1%",
+   "freeThrowsPercentage": "80.3%"
+  },
+  {
+   "team": {
+    "code": "ULK",
+    "name": "Fenerbahce Tarfin Istanbul",
+    "imageUrl": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 96.1,
+   "totalRebounds": 37.9,
+   "assists": 17.1,
+   "steals": 8.4,
+   "turnovers": 12.8,
+   "blocks": 2.5,
+   "pir": 90.8,
+   "twoPointersPercentage": "59.2%",
+   "threePointersPercentage": "34.1%",
+   "freeThrowsPercentage": "78.2%"
+  },
+  {
+   "team": {
+    "code": "DUB",
+    "name": "Dubai Basketball",
+    "imageUrl": "https://media-cdn.incrowdsports.com/1efae090-16e2-4963-ae47-4b94f249c244.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 79.5,
+   "totalRebounds": 37.9,
+   "assists": 20.5,
+   "steals": 8.4,
+   "turnovers": 12.8,
+   "blocks": 2.5,
+   "pir": 104.6,
+   "twoPointersPercentage": "58.7%",
+   "threePointersPercentage": "34.1%",
+   "freeThrowsPercentage": "79.1%"
+  },
+  {
+   "team": {
+    "code": "MAD",
+    "name": "Real Madrid",
+    "imageUrl": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 90.3,
+   "totalRebounds": 38.3,
+   "assists": 20.5,
+   "steals": 4.9,
+   "turnovers": 12.8,
+   "blocks": 2.5,
+   "pir": 103.3,
+   "twoPointersPercentage": "58.2%",
+   "threePointersPercentage": "34.1%",
+   "freeThrowsPercentage": "79.9%"
+  },
+  {
+   "team": {
+    "code": "RED",
+    "name": "Crvena Zvezda Meridianbet Belgrade",
+    "imageUrl": "https://media-cdn.incrowdsports.com/d2eef4a8-62df-4fdd-9076-276004268515.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 90.3,
+   "totalRebounds": 38.7,
+   "assists": 20.5,
+   "steals": 7.2,
+   "turnovers": 12.6,
+   "blocks": 2.5,
+   "pir": 102.1,
+   "twoPointersPercentage": "57.6%",
+   "threePointersPercentage": "35.2%",
+   "freeThrowsPercentage": "80.7%"
+  },
+  {
+   "team": {
+    "code": "BAR",
+    "name": "FC Barcelona",
+    "imageUrl": "https://media-cdn.incrowdsports.com/35dfa503-e417-481f-963a-bdf6f013763e.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 90.3,
+   "totalRebounds": 39.1,
+   "assists": 20.5,
+   "steals": 7.1,
+   "turnovers": 11.1,
+   "blocks": 2.5,
+   "pir": 100.9,
+   "twoPointersPercentage": "57.1%",
+   "threePointersPercentage": "36.5%",
+   "freeThrowsPercentage": "81.5%"
+  },
+  {
+   "team": {
+    "code": "PAR",
+    "name": "Partizan Mozzart Bet Belgrade",
+    "imageUrl": "https://media-cdn.incrowdsports.com/2681304e-77dd-4331-88b1-683078c0fb49.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 90.3,
+   "totalRebounds": 39.6,
+   "assists": 19.9,
+   "steals": 6.9,
+   "turnovers": 10.8,
+   "blocks": 3.0,
+   "pir": 99.7,
+   "twoPointersPercentage": "56.6%",
+   "threePointersPercentage": "36.9%",
+   "freeThrowsPercentage": "82.4%"
+  },
+  {
+   "team": {
+    "code": "ZAL",
+    "name": "Zalgiris Kaunas",
+    "imageUrl": "https://media-cdn.incrowdsports.com/0aa09358-3847-4c4e-b228-3582ee4e536d.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 90.1,
+   "totalRebounds": 40.0,
+   "assists": 19.4,
+   "steals": 6.7,
+   "turnovers": 14.4,
+   "blocks": 3.1,
+   "pir": 98.5,
+   "twoPointersPercentage": "56.1%",
+   "threePointersPercentage": "37.3%",
+   "freeThrowsPercentage": "83.2%"
+  },
+  {
+   "team": {
+    "code": "PRS",
+    "name": "Paris Basketball",
+    "imageUrl": "https://media-cdn.incrowdsports.com/a033e5b3-0de7-48a3-98d9-d9a4b9df1f39.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 86.3,
+   "totalRebounds": 29.9,
+   "assists": 19.2,
+   "steals": 6.6,
+   "turnovers": 13.0,
+   "blocks": 3.2,
+   "pir": 97.3,
+   "twoPointersPercentage": "55.6%",
+   "threePointersPercentage": "37.7%",
+   "freeThrowsPercentage": "70.8%"
+  },
+  {
+   "team": {
+    "code": "HTA",
+    "name": "Hapoel IBI Tel Aviv",
+    "imageUrl": "https://media-cdn.incrowdsports.com/cbb1c3ad-03d5-426a-b5ef-2832a4eee484.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 85.6,
+   "totalRebounds": 35.9,
+   "assists": 19.0,
+   "steals": 6.4,
+   "turnovers": 13.2,
+   "blocks": 3.2,
+   "pir": 96.0,
+   "twoPointersPercentage": "55.1%",
+   "threePointersPercentage": "38.1%",
+   "freeThrowsPercentage": "76.0%"
+  },
+  {
+   "team": {
+    "code": "IST",
+    "name": "Anadolu Efes Istanbul",
+    "imageUrl": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCgOCxM/a844756c-a58d-4666-93b8-48f7337bc79d.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 85.0,
+   "totalRebounds": 35.3,
+   "assists": 18.7,
+   "steals": 6.2,
+   "turnovers": 13.3,
+   "blocks": 3.3,
+   "pir": 94.8,
+   "twoPointersPercentage": "54.6%",
+   "threePointersPercentage": "38.5%",
+   "freeThrowsPercentage": "75.4%"
+  },
+  {
+   "team": {
+    "code": "VIR",
+    "name": "Virtus Bologna",
+    "imageUrl": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezvk/a92d4c3b-9f9c-4163-8a10-bcf8fc15893e.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 84.3,
+   "totalRebounds": 34.6,
+   "assists": 18.5,
+   "steals": 6.1,
+   "turnovers": 13.4,
+   "blocks": 3.4,
+   "pir": 93.6,
+   "twoPointersPercentage": "54.1%",
+   "threePointersPercentage": "39.0%",
+   "freeThrowsPercentage": "74.9%"
+  },
+  {
+   "team": {
+    "code": "BES",
+    "name": "Besiktas Fuzul Istanbul",
+    "imageUrl": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjHHNTU0/07707827-9461-400d-8acc-355150011194.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 83.6,
+   "totalRebounds": 33.9,
+   "assists": 18.3,
+   "steals": 5.9,
+   "turnovers": 13.6,
+   "blocks": 1.7,
+   "pir": 92.4,
+   "twoPointersPercentage": "53.6%",
+   "threePointersPercentage": "39.4%",
+   "freeThrowsPercentage": "74.3%"
+  },
+  {
+   "team": {
+    "code": "MIL",
+    "name": "Armani Olimpia Milan",
+    "imageUrl": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHH/5c2f0ab6-f86a-4df0-b2f3-f9ab92f7267b.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 82.9,
+   "totalRebounds": 33.2,
+   "assists": 18.1,
+   "steals": 5.7,
+   "turnovers": 13.7,
+   "blocks": 2.3,
+   "pir": 91.2,
+   "twoPointersPercentage": "53.1%",
+   "threePointersPercentage": "39.8%",
+   "freeThrowsPercentage": "73.7%"
+  },
+  {
+   "team": {
+    "code": "MUN",
+    "name": "FC Bayern Munich",
+    "imageUrl": "https://media-cdn.incrowdsports.com/817b0e58-d595-4b09-ab0b-1e7cc26249ff.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 82.2,
+   "totalRebounds": 32.6,
+   "assists": 17.9,
+   "steals": 5.6,
+   "turnovers": 13.9,
+   "blocks": 2.2,
+   "pir": 90.0,
+   "twoPointersPercentage": "52.5%",
+   "threePointersPercentage": "29.6%",
+   "freeThrowsPercentage": "73.1%"
+  },
+  {
+   "team": {
+    "code": "TEL",
+    "name": "Maccabi Rapyd Tel Aviv",
+    "imageUrl": "https://media-cdn.cortextech.io/1b533342-78f5-4932-b714-a7d80b5826b5.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 81.5,
+   "totalRebounds": 31.9,
+   "assists": 17.7,
+   "steals": 5.4,
+   "turnovers": 14.0,
+   "blocks": 2.0,
+   "pir": 88.8,
+   "twoPointersPercentage": "52.0%",
+   "threePointersPercentage": "32.9%",
+   "freeThrowsPercentage": "72.5%"
+  },
+  {
+   "team": {
+    "code": "ASV",
+    "name": "LDLC ASVEL Villeurbanne",
+    "imageUrl": "https://media-cdn.incrowdsports.com/e33c6d1a-95ca-4dbc-b8cb-0201812104cc.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 80.9,
+   "totalRebounds": 31.2,
+   "assists": 17.5,
+   "steals": 5.2,
+   "turnovers": 14.1,
+   "blocks": 1.9,
+   "pir": 87.5,
+   "twoPointersPercentage": "51.5%",
+   "threePointersPercentage": "31.8%",
+   "freeThrowsPercentage": "72.0%"
+  },
+  {
+   "team": {
+    "code": "BAS",
+    "name": "Kosner Baskonia Vitoria-Gasteiz",
+    "imageUrl": "https://media-cdn.cortextech.io/cbc49cb0-99ce-4462-bdb7-56983ee03cf4.png"
+   },
+   "gamesPlayed": 14,
+   "pointsScored": 80.2,
+   "totalRebounds": 30.6,
+   "assists": 17.3,
+   "steals": 5.1,
+   "turnovers": 14.3,
+   "blocks": 1.8,
+   "pir": 86.3,
+   "twoPointersPercentage": "51.0%",
+   "threePointersPercentage": "30.7%",
+   "freeThrowsPercentage": "71.4%"
+  }
+ ]
+}

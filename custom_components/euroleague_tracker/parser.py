@@ -844,3 +844,283 @@ def _quarters_from_schedule(us: dict[str, Any], them: dict[str, Any]) -> dict[st
 
     t, o = q(us), q(them)
     return {"team": t, "opponent": o} if t or o else None
+
+
+# ---------------------------------------------------------- v0.3.0 extras
+
+# Season stats ranked across the league: attribute key -> (API field, lower is better).
+RANK_STATS: dict[str, tuple[str, bool]] = {
+    "points": ("pointsScored", False),
+    "rebounds": ("totalRebounds", False),
+    "assists": ("assists", False),
+    "steals": ("steals", False),
+    "turnovers": ("turnovers", True),
+    "blocks": ("blocks", False),
+    "pir": ("pir", False),
+    "fg2_pct": ("twoPointersPercentage", False),
+    "fg3_pct": ("threePointersPercentage", False),
+    "ft_pct": ("freeThrowsPercentage", False),
+}
+
+
+def _num(value: Any) -> float | None:
+    """60.2, '60.2', '60.2%' -> 60.2."""
+    if isinstance(value, (int, float)):
+        return float(value)
+    return to_float(str(value or "").replace("%", ""))
+
+
+def _rows_of(payload: Any) -> list[dict[str, Any]]:
+    if isinstance(payload, list):
+        return payload
+    if isinstance(payload, dict):
+        for key in ("teams", "data", "rows"):
+            if isinstance(payload.get(key), list):
+                return payload[key]
+    return []
+
+
+def parse_league_ranks(payload: Any, team_code: str) -> dict[str, dict[str, Any]]:
+    """Where the team ranks in each season average among all clubs.
+
+    Each stat gives the team's value, its rank (1 = best), and the league's
+    worst, best and average, so the card can draw a worst-to-best bar.
+    """
+    rows = _rows_of(payload)
+    out: dict[str, dict[str, Any]] = {}
+    for key, (field_name, lower_better) in RANK_STATS.items():
+        values = []
+        for row in rows:
+            code = clean_code((row.get("team") or {}).get("code") or row.get("teamCode"))
+            value = _num(row.get(field_name))
+            if code and value is not None:
+                values.append((code, value))
+        mine = next((v for c, v in values if c == team_code), None)
+        if mine is None or len(values) < 2:
+            continue
+        nums = [v for _, v in values]
+        better = sum(1 for v in nums if (v < mine if lower_better else v > mine))
+        out[key] = {
+            "value": round(mine, 1),
+            "rank": better + 1,
+            "teams": len(nums),
+            "worst": round(max(nums) if lower_better else min(nums), 1),
+            "best": round(min(nums) if lower_better else max(nums), 1),
+            "average": round(sum(nums) / len(nums), 1),
+            "lower_is_better": lower_better,
+        }
+    return out
+
+
+def attack_defence(all_games: list[dict[str, Any]], team_code: str) -> dict[str, Any] | None:
+    """Points scored and allowed per game, ranked against every club.
+
+    Worked out from the schedule so overtime counts (the standings leave it out).
+    """
+    totals: dict[str, list[int]] = {}
+    for game in all_games:
+        if not game.get("played"):
+            continue
+        local, road = game.get("local") or {}, game.get("road") or {}
+        ls, rs = to_int(local.get("score")), to_int(road.get("score"))
+        if ls is None or rs is None:
+            continue
+        for side, scored, allowed in ((local, ls, rs), (road, rs, ls)):
+            code = clean_code(club_of(side).get("code"))
+            t = totals.setdefault(code, [0, 0, 0])
+            t[0] += scored
+            t[1] += allowed
+            t[2] += 1
+    if team_code not in totals or len(totals) < 2:
+        return None
+    avg = {c: (s / n, a / n) for c, (s, a, n) in totals.items() if n}
+    scored, allowed = avg[team_code]
+    league = sum(s for s, _ in avg.values()) / len(avg)
+    return {
+        "scored": round(scored, 1),
+        "allowed": round(allowed, 1),
+        "net": round(scored - allowed, 1),
+        "scored_rank": 1 + sum(1 for s, _ in avg.values() if s > scored),
+        "allowed_rank": 1 + sum(1 for _, a in avg.values() if a < allowed),
+        "league_average": round(league, 1),
+        "teams": len(avg),
+    }
+
+
+def season_form(played_games: list[dict[str, Any]], team_code: str) -> list[dict[str, Any]]:
+    """Every played game, oldest first, with the point margin."""
+    out = []
+    for game in played_games:
+        s = summarize_game(game, team_code)
+        if s.get("team_score") is None:
+            continue
+        out.append(
+            {
+                "round": s["round"],
+                "date": s["date"],
+                "opponent_abbr": s["opponent_abbr"],
+                "homeaway": s["homeaway"],
+                "team_score": s["team_score"],
+                "opponent_score": s["opponent_score"],
+                "margin": s["team_score"] - (s["opponent_score"] or 0),
+            }
+        )
+    return out
+
+
+SHOT_ZONES = ("rim", "paint", "mid_range", "corner_three", "above_break_three")
+
+
+def shot_zone(x: int, y: int, value: int) -> str:
+    """Court zone of a shot; coordinates in cm with the basket at (0, 0)."""
+    if value == 3:
+        return "corner_three" if abs(x) > 660 and y < 141.5 else "above_break_three"
+    if (x * x + y * y) ** 0.5 < 125:
+        return "rim"
+    if abs(x) <= 245 and y <= 423:
+        return "paint"
+    return "mid_range"
+
+
+def zone_counts(points: dict[str, Any], team_code: str) -> dict[str, list[int]]:
+    """Made and attempted field goals per zone for one game."""
+    counts = {z: [0, 0] for z in SHOT_ZONES}
+    for x, y, made, value in (parse_shots(points, team_code) or {}).get("team", []):
+        zone = counts[shot_zone(x, y, value)]
+        zone[0] += made
+        zone[1] += 1
+    return counts
+
+
+def merge_zones(per_game: list[dict[str, list[int]]]) -> dict[str, Any] | None:
+    """Season totals per zone, with percentage and points per shot."""
+    if not per_game:
+        return None
+    zones: dict[str, dict[str, Any]] = {}
+    made_all = att_all = 0
+    for zone in SHOT_ZONES:
+        made = sum(g.get(zone, [0, 0])[0] for g in per_game)
+        att = sum(g.get(zone, [0, 0])[1] for g in per_game)
+        made_all += made
+        att_all += att
+        value = 3 if zone.endswith("three") else 2
+        zones[zone] = {
+            "made": made,
+            "attempts": att,
+            "pct": round(100 * made / att, 1) if att else None,
+            "points_per_shot": round(value * made / att, 2) if att else None,
+        }
+    if not att_all:
+        return None
+    return {
+        "games": len(per_game),
+        "made": made_all,
+        "attempts": att_all,
+        "pct": round(100 * made_all / att_all, 1),
+        "zones": zones,
+    }
+
+
+def parse_evolution(evo: dict[str, Any], team_is_home: bool) -> dict[str, Any] | None:
+    """Score after every minute for both sides ("Evolution" feed).
+
+    PointsList is [home, away]; minute 0 is the tip-off.
+    """
+    lists = (evo or {}).get("PointsList") or []
+    if len(lists) != 2 or not lists[0]:
+        return None
+    home = [to_int(v) or 0 for v in lists[0]]
+    away = [to_int(v) or 0 for v in lists[1]]
+    n = min(len(home), len(away))
+    home, away = home[:n], away[:n]
+    team, opp = (home, away) if team_is_home else (away, home)
+    diffs = [t - o for t, o in zip(team, opp, strict=True)]
+    best = max(diffs) if diffs else 0
+    worst = min(diffs) if diffs else 0
+    return {
+        "team": team,
+        "opponent": opp,
+        "largest_lead": max(best, 0),
+        "largest_lead_minute": diffs.index(best) if best > 0 else None,
+        "largest_deficit": max(-worst, 0),
+        "largest_deficit_minute": diffs.index(worst) if worst < 0 else None,
+    }
+
+
+def head_to_head(
+    games: list[dict[str, Any]],
+    team_code: str,
+    opponent_code: str,
+    *,
+    limit: int = 5,
+) -> dict[str, Any] | None:
+    """The latest played meetings with one opponent, newest first."""
+    meetings = []
+    for game in games:
+        codes = {
+            clean_code(club_of(game.get("local")).get("code")),
+            clean_code(club_of(game.get("road")).get("code")),
+        }
+        if not game.get("played") or codes != {team_code, opponent_code}:
+            continue
+        s = summarize_game(game, team_code)
+        if s.get("team_score") is None:
+            continue
+        meetings.append(
+            {
+                "date": s["date"],
+                "season": (game.get("season") or {}).get("code"),
+                "round": s["round"],
+                "homeaway": s["homeaway"],
+                "team_score": s["team_score"],
+                "opponent_score": s["opponent_score"],
+                "won": s["won"],
+            }
+        )
+    if not meetings:
+        return None
+    meetings.sort(key=lambda m: m["date"] or "", reverse=True)
+    meetings = meetings[:limit]
+    wins = sum(1 for m in meetings if m["won"])
+    margins = [m["team_score"] - m["opponent_score"] for m in meetings]
+    return {
+        "opponent_abbr": opponent_code,
+        "wins": wins,
+        "losses": len(meetings) - wins,
+        "average_margin": round(sum(margins) / len(margins), 1),
+        "meetings": meetings,
+    }
+
+
+def round_scoreboard(all_games: list[dict[str, Any]], rounds: list[int]) -> dict[str, Any]:
+    """Every game of the given rounds, for the card's Round tab."""
+    crests: dict[str, str] = {}
+    out = []
+    for number in rounds:
+        games = []
+        for game in all_games:
+            if game.get("round") != number:
+                continue
+            local, road = game.get("local") or {}, game.get("road") or {}
+            lc, rc = club_of(local), club_of(road)
+            for club in (lc, rc):
+                crest = (club.get("images") or {}).get("crest")
+                if crest:
+                    crests[clean_code(club.get("code"))] = crest
+            start = game_start(game)
+            played = bool(game.get("played"))
+            games.append(
+                {
+                    "game_code": game.get("gameCode"),
+                    "date": start.isoformat() if start else None,
+                    "home": clean_code(lc.get("code")),
+                    "away": clean_code(rc.get("code")),
+                    "home_score": to_int(local.get("score")) if played else None,
+                    "away_score": to_int(road.get("score")) if played else None,
+                    "played": played,
+                }
+            )
+        if games:
+            games.sort(key=lambda g: (g["date"] or "", g["game_code"] or 0))
+            out.append({"round": number, "games": games})
+    return {"rounds": out, "crests": crests}

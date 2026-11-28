@@ -2,6 +2,10 @@
 
 Fixtures in tests/fixtures/ are trimmed copies of real EuroLeague API
 responses captured on 27 Nov 2026 (same field names and value formats).
+Two are partly built: team_traditional.json has Olympiacos's real averages
+and each stat's real league worst, best, average and rank, with the other
+clubs' values spread to match; games_E2025/E2024.json hold the real scores
+of the last four Olympiacos-ASVEL meetings under placeholder game codes.
 """
 
 from __future__ import annotations
@@ -53,6 +57,8 @@ def mock_api(
     aioclient_mock.get(f"{comp}/seasons/E2026/clubs", json=load("clubs.json"))
     aioclient_mock.get(f"{comp}/seasons/E2026/rounds", json=load("rounds.json"))
     aioclient_mock.get(f"{comp}/seasons/E2026/games", json=games)
+    for past in ("E2025", "E2024"):
+        aioclient_mock.get(f"{comp}/seasons/{past}/games", json=load(f"games_{past}.json"))
     v3 = f"{API_BASE}/v3/competitions/E"
     aioclient_mock.get(
         re.compile(rf"{re.escape(v3)}/seasons/E2026/rounds/\d+/basicstandings"),
@@ -60,6 +66,7 @@ def mock_api(
     )
     aioclient_mock.get(f"{v3}/seasons/E2026/clubs/OLY/stats", json=load("team_stats_oly.json"))
     aioclient_mock.get(f"{v3}/statistics/players/leaders", json=load("leaders.json"))
+    aioclient_mock.get(f"{v3}/statistics/teams/traditional", json=load("team_traditional.json"))
     feeds = feeds or {}
     suffix = "live" if live else "final"
     aioclient_mock.get(f"{LIVE_BASE}/Header", json=feeds.get("Header", load(f"header_140_{suffix}.json")))
@@ -69,3 +76,4 @@ def mock_api(
         f"{LIVE_BASE}/PlayByPlay", json=feeds.get("PlayByPlay", load(f"pbp_140_{suffix}.json"))
     )
     aioclient_mock.get(f"{LIVE_BASE}/Points", json=load("points_140.json"))
+    aioclient_mock.get(f"{LIVE_BASE}/Evolution", json=feeds.get("Evolution", load("evolution_140.json")))

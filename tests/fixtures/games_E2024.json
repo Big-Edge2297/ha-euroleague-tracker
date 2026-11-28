@@ -1,0 +1,125 @@
+{
+ "data": [
+  {
+   "id": "fixture-246",
+   "identifier": "E2024_246",
+   "gameCode": 246,
+   "season": {
+    "code": "E2024"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 31,
+   "roundAlias": "Round 31",
+   "roundName": "Round 31",
+   "played": true,
+   "date": "2025-03-25T19:00:00",
+   "utcDate": "2025-03-25T19:00:00Z",
+   "local": {
+    "club": {
+     "code": "ASV",
+     "name": "LDLC ASVEL Villeurbanne",
+     "abbreviatedName": "LDLC ASVEL",
+     "editorialName": "LDLC ASVEL",
+     "tvCode": "ASV",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/e33c6d1a-95ca-4dbc-b8cb-0201812104cc.png"
+     }
+    },
+    "score": 81,
+    "standingsScore": 81,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 70,
+    "standingsScore": 70,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": null,
+   "gameStatus": "Confirmed"
+  },
+  {
+   "id": "fixture-68",
+   "identifier": "E2024_68",
+   "gameCode": 68,
+   "season": {
+    "code": "E2024"
+   },
+   "phaseType": {
+    "code": "RS",
+    "alias": "REGULAR SEASON",
+    "name": "Regular Season"
+   },
+   "round": 9,
+   "roundAlias": "Round 9",
+   "roundName": "Round 9",
+   "played": true,
+   "date": "2024-11-12T19:15:00",
+   "utcDate": "2024-11-12T19:15:00Z",
+   "local": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 94,
+    "standingsScore": 94,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "ASV",
+     "name": "LDLC ASVEL Villeurbanne",
+     "abbreviatedName": "LDLC ASVEL",
+     "editorialName": "LDLC ASVEL",
+     "tvCode": "ASV",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/e33c6d1a-95ca-4dbc-b8cb-0201812104cc.png"
+     }
+    },
+    "score": 92,
+    "standingsScore": 92,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "SUNEL ARENA",
+    "code": "AVT1",
+    "capacity": 8300,
+    "address": "Konstantinoupoleos 59, Ano Liosia, 13342 Athens, Greece"
+   },
+   "gameStatus": "Confirmed"
+  }
+ ]
+}
