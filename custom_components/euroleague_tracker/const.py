@@ -74,6 +74,12 @@ CARD_FILENAME: Final = "euroleague-tracker-card.js"
 
 # Approximate primary club colours, used for the card's "team" theme.
 # Users can override these with `team_color` in the card config.
+# The clubs whose short name in the API carries a sponsor word.
+SHORT_NAMES: Final = {
+    "ASV": "ASVEL",
+    "BAR": "Barcelona",
+}
+
 TEAM_COLORS: Final = {
     "ASV": "#00843D",
     "BAR": "#A50044",

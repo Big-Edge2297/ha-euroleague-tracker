@@ -207,7 +207,7 @@ def test_pre_game_attributes():
         now=datetime(2026, 11, 27, 15, tzinfo=UTC),
         standings=_standings(),
     )
-    assert attrs["opponent_name"] == "LDLC ASVEL"
+    assert attrs["opponent_name"] == "ASVEL"
     assert attrs["kickoff_in"] == "in 7 days"
     assert attrs["date"] == "2026-12-04T19:15:00+00:00"
     assert (attrs["team_record"], attrs["opponent_record"]) == ("11-3", "4-10")

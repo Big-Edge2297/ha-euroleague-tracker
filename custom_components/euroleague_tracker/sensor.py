@@ -12,6 +12,7 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import COMPETITIONS, STATE_IN, STATE_NOT_FOUND, STATE_POST, STATE_PRE, TEAM_COLORS
 from .coordinator import EuroLeagueConfigEntry, EuroLeagueCoordinator, TrackerData
+from .crest import crest_url
 from .entity import EuroLeagueEntityMixin
 from .parser import ordinal
 
@@ -227,26 +228,25 @@ SIMPLE_SENSORS: tuple[TrackerSensorDescription, ...] = (
         key="game_status",
         device_class=SensorDeviceClass.ENUM,
         options=list(GAME_STATUS.values()),
-        icon="mdi:scoreboard",
+        icon="mdi:progress-clock",
         value_fn=lambda d, _: GAME_STATUS.get(d.state),
     ),
     TrackerSensorDescription(
         key="team_score",
-        icon="mdi:numeric",
+        icon="mdi:scoreboard",
         value_fn=lambda d, _: _in_game(d, "team_score"),
-        picture_fn=lambda d: d.game.get("team_logo"),
     ),
     TrackerSensorDescription(
         key="opponent_score",
-        icon="mdi:numeric",
+        icon="mdi:scoreboard-outline",
         value_fn=lambda d, _: _in_game(d, "opponent_score"),
-        picture_fn=lambda d: d.game.get("opponent_logo"),
     ),
     TrackerSensorDescription(
         key="opponent",
         icon="mdi:account-group",
         value_fn=lambda d, _: d.game.get("opponent_name"),
-        picture_fn=lambda d: d.game.get("opponent_logo"),
+        # On a light disc, so dark crests (ASVEL, Partizan…) show on dark themes.
+        picture_fn=lambda d: crest_url(d.game.get("opponent_abbr")),
         attrs_fn=lambda d, _: {
             "opponent_abbr": d.game.get("opponent_abbr"),
             "homeaway": d.game.get("opponent_homeaway"),
@@ -257,13 +257,11 @@ SIMPLE_SENSORS: tuple[TrackerSensorDescription, ...] = (
     TrackerSensorDescription(
         key="last_result",
         icon="mdi:history",
-        entity_registry_enabled_default=False,
         value_fn=lambda d, _: d.last_result,
     ),
     TrackerSensorDescription(
         key="record",
         icon="mdi:counter",
-        entity_registry_enabled_default=False,
         value_fn=lambda d, code: (
             f"{row['wins']}-{row['losses']}" if (row := _standings_row(d, code)) else None
         ),

@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.4.2 (2026-11-28)
+
+### Card
+- The countdown pill on the next game is in your team's colour (white with the team colour on the team-colour theme).
+- In the next-game comparison, the side that's ahead on each row (last 5, home/away, last 10, point difference) is bold; a tie highlights neither.
+- The Round tab groups games under a heading per day, with only the time next to each game; your game shows its live score and clock while it's on.
+- Your team's row in the standings has the same coloured edge as in the Round tab and the bracket.
+- Softer playoff and play-in colours, so your team's colour stands out (and the play-in numbers are now easier to read).
+- "8,300 seats" instead of "cap. 8,300".
+
+### Entities and device
+- Club names without sponsor words: "ASVEL" instead of "LDLC ASVEL", "Barcelona" instead of "FC Barcelona".
+- The Opponent sensor's crest is served on a light disc, so dark crests (ASVEL, Partizan, Virtus, Beşiktaş, Paris) show on dark themes.
+- Only the Opponent sensor shows a crest; the score sensors have scoreboard icons. Live and Game status have icons of their own.
+- The device shows "Olympiacos Piraeus · EuroLeague" instead of the team code, and Visit opens your team's page on the EuroLeague site.
+- Record and Last result are enabled by default on new installs.
+- The calendar is called Schedule on new installs (existing entity IDs don't change).
+
 ## v0.4.1 (2026-11-28)
 
 ### Fixed

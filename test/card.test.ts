@@ -102,8 +102,8 @@ test("next game: kick-off in the user's time zone, positions, records and countd
   assert.match(text($(el, ".pill")), /^in 7 days$/);
   assert.match(text($(el, ".when")), /Fri 4 Dec 21:15/, "19:15 UTC is 21:15 in Nicosia");
   const teams = $$(el, ".team").map(text);
-  assert.deepEqual(teams, ["Olympiacos 1st · 11-3", "LDLC ASVEL 19th · 4-10"], "crests are images, so no code text");
-  assert.match(t, /Sunel Arena · cap\. 8,300/);
+  assert.deepEqual(teams, ["Olympiacos 1st · 11-3", "ASVEL 19th · 4-10"], "crests are images, so no code text");
+  assert.match(t, /Sunel Arena · 8,300 seats/);
 });
 
 test("next game: last five (oldest first), home and away records, last ten and point difference", async () => {
@@ -247,7 +247,7 @@ test("standings_rows shows a window around your team", async () => {
   Object.assign(asvel.attributes, { team_abbr: "ASV" });
   const bottom = await mount({ view: "standings", standings_rows: 5 }, makeHass("pre", { game: asvel }));
   assert.deepEqual($$(bottom, ".srow:not(.header) .pos").map(text), ["16", "17", "18", "19", "20"]);
-  assert.equal(text($(bottom, ".srow.me .tn")), "LDLC ASVEL");
+  assert.equal(text($(bottom, ".srow.me .tn")), "ASVEL");
 });
 
 // ---------------------------------------------------------------------- stats
@@ -430,8 +430,9 @@ test("round: arrows step through rounds; fixtures show tip-off times", async () 
   next.click();
   await el.updateComplete;
   assert.match(text($(el, ".head")), /^Round 15 · fixtures 3 – 4 Dec$/);
-  const mine = text($(el, ".bgame.me"));
-  assert.equal(mine, "OLY ASV Fri 4 Dec · 21:15");
+  // Grouped under a heading per day, with only the time next to each game.
+  assert.deepEqual($$(el, ".day").map(text), ["Thursday 3 Dec", "Friday 4 Dec"]);
+  assert.equal(text($(el, ".bgame.me")), "OLY ASV 21:15");
   assert.equal(($$(el, ".nav")[1] as HTMLButtonElement).disabled, true);
   for (let i = 0; i < 2; i++) {
     ($$(el, ".nav")[0] as HTMLElement).click();
@@ -679,4 +680,47 @@ test("round: a round on one day shows that day", async () => {
   r14.games.forEach((g: any) => (g.date = "2026-11-25T19:15:00+00:00"));
   const el = await mount({ view: "round" }, hass);
   assert.match(text($(el, ".head")), /results 25 Nov$/);
+});
+
+// ---------------------------------------------------------- v0.4.2 polish
+
+test("next game: the countdown pill is in the team colour", async () => {
+  const el = await game("pre");
+  const pill = $(el, ".pill.countdown") as HTMLElement;
+  assert.equal(text(pill), "in 7 days");
+});
+
+test("next game: the side that's ahead on each row is bold", async () => {
+  const el = await game("pre");
+  const lead = $$(el, ".compare .lead").map(text);
+  const trail = $$(el, ".compare .trail").map(text);
+  // Olympiacos (left, at home) lead every row against ASVEL.
+  assert.deepEqual(lead, ["L W W W W", "5-2", "8-2", "+116"]);
+  assert.deepEqual(trail, ["L L L L L", "1-5", "2-8", "−115"]);
+  assert.ok($$(el, ".compare .r.trail").length === 4);
+});
+
+test("next game: the opponent's side is bold where it leads; a tie highlights neither", async () => {
+  const hass = makeHass("pre");
+  const table = hass.states[IDS.standings].attributes.table;
+  const asv = table.find((r: any) => r.code === "ASV");
+  Object.assign(asv, { last5: ["W", "W", "W", "W", "W"], away_record: "6-1", last10: "8-2" });
+  const el = await mount({}, hass);
+  const rows = $$(el, ".compare > span");
+  const cls = (i: number) => rows[i].className.replace(/\s+/g, " ").trim();
+  assert.equal(cls(0), "trail"); // Last 5: ASVEL 5 wins to 4
+  assert.equal(cls(2), "r lead");
+  assert.equal(cls(3), "trail"); // Home 5-2 (71%) v away 6-1 (86%)
+  assert.equal(cls(5), "r lead");
+  assert.equal(cls(6), ""); // Last 10: 8-2 each
+  assert.equal(cls(8), "r");
+});
+
+test("round: your live game shows its score and clock in place of the time", async () => {
+  const hass = makeHass("live");
+  const r14 = hass.states[IDS.standings].attributes.scoreboard.rounds.find((r: any) => r.round === 14);
+  const g = r14.games.find((x: any) => x.game_code === 140);
+  Object.assign(g, { played: false, home_score: null, away_score: null });
+  const el = await mount({ view: "round" }, hass);
+  assert.equal(text($(el, ".bgame.me")), "OLY 63 HTA 58 Q3 04:21");
 });

@@ -94,17 +94,17 @@ Each team adds a device. For Olympiacos in the EuroLeague (entity ids start with
 | `binary_sensor.…_live` | on | On while the game is being played |
 | `sensor.…_next_game` | 4 Dec, 21:15 | A timestamp: use it in time triggers |
 | `sensor.…_team_score`, `sensor.…_opponent_score` | 63, 58 | During and after a game |
-| `sensor.…_opponent` | LDLC ASVEL | With the opponent's crest as its picture |
-| `calendar.…_games` | on during a game | Every game of the season; results in the description |
+| `sensor.…_opponent` | ASVEL | With the opponent's crest on a light disc as its picture, so dark crests show on any theme |
+| `calendar.…_schedule` | on during a game | Every game of the season; results in the description (installed before v0.4.2: `calendar.…_games`) |
 | `sensor.…_standings_position` | 1 | The full table, the playoff race, the round scoreboard and, in the postseason, the bracket |
 | `sensor.…_season_stats` | 90.4 pts/game | Per-game averages, league ranks, attack and defence, form, shot zones and league leader ranks |
-| `sensor.…_last_result` * | W 104-79 vs HTA | |
-| `sensor.…_record` * | 11-3 | |
+| `sensor.…_last_result` | W 104-79 vs HTA | |
+| `sensor.…_record` | 11-3 | |
 | `sensor.…_streak` * | W4 | |
 | `sensor.…_point_difference` * | +116 | |
 | `sensor.…_games_behind_playoffs` * | 0 | Games behind 6th; `games_behind_play_in` (10th) as an attribute |
 
-\* Disabled at first, to keep your entity list short: enable them from the integration's entity list.
+\* Disabled at first, to keep your entity list short: enable them from the integration's entity list. (Record and Last result are on from v0.4.2 for new installs; on an earlier install, enable them the same way.)
 
 <details>
 <summary>All game sensor attributes</summary>

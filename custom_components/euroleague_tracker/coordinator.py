@@ -46,6 +46,7 @@ from .const import (
     ZONE_FETCHES_PER_UPDATE,
     zone_store_key,
 )
+from .crest import crests_from, remember_crests
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -300,6 +301,7 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
         self._fire_events(self.data, data)
         for basket in baskets:
             self._schedule(self._send_basket, basket, data.game)
+        remember_crests(self.hass, crests_from(data))
         self.update_interval = self._next_interval(state, game, now)
         if self._zones_pending:
             # More finished games' shots still to read: come back soon for them.

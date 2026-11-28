@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+
 from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 from homeassistant.helpers.entity import Entity
 
@@ -17,10 +19,18 @@ def device_info(coordinator: EuroLeagueCoordinator) -> DeviceInfo:
         identifiers={(DOMAIN, entry.unique_id or entry.entry_id)},
         name=f"{team} ({competition})",
         manufacturer=NAME,
-        model=coordinator.team_code,
+        model=f"{team} · {competition}",
+        model_id=coordinator.team_code,
         entry_type=DeviceEntryType.SERVICE,
-        configuration_url="https://www.euroleaguebasketball.net/",
+        configuration_url=team_page(coordinator.competition, team, coordinator.team_code),
     )
+
+
+def team_page(competition: str, team: str, code: str) -> str:
+    """The club's page on the EuroLeague site (it finds the page by the code)."""
+    section = "eurocup" if competition == "U" else "euroleague"
+    slug = re.sub(r"[^a-z0-9]+", "-", team.lower()).strip("-") or "team"
+    return f"https://www.euroleaguebasketball.net/{section}/teams/{slug}/{code.lower()}/"
 
 
 class EuroLeagueEntityMixin(Entity):

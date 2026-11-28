@@ -28,8 +28,6 @@ from .conftest import load, mock_api
 PREFIX = "olympiacos_piraeus_euroleague"
 # key -> entity id suffix (the id comes from the translated name)
 DISABLED = {
-    "last_result": "last_result",
-    "record": "record",
     "streak": "streak",
     "point_diff": "point_difference",
     "games_behind_playoffs": "games_behind_playoffs",
@@ -108,8 +106,13 @@ async def test_entities_before_tip_off(hass: HomeAssistant, aioclient_mock, free
     assert hass.states.get(f"binary_sensor.{PREFIX}_live").state == "off"
     assert hass.states.get(f"sensor.{PREFIX}_team_score").state == "unknown"
     opponent = hass.states.get(f"sensor.{PREFIX}_opponent")
-    assert opponent.state == "LDLC ASVEL"
-    assert opponent.attributes["entity_picture"] == ASVEL_CREST
+    assert opponent.state == "ASVEL"
+    # The crest on a light disc, served by the integration (dark crests stay visible).
+    assert opponent.attributes["entity_picture"] == "/api/euroleague_tracker/crest/ASV"
+    assert "entity_picture" not in hass.states.get(f"sensor.{PREFIX}_team_score").attributes
+    # Record and Last result are on from the start.
+    assert hass.states.get(f"sensor.{PREFIX}_record").state == "11-3"
+    assert hass.states.get(f"sensor.{PREFIX}_last_result").state == "W 104-79 vs HTA"
     assert opponent.attributes["record"] == "4-10"
     for key in ("team_scored", "opponent_scored", "game_events"):
         assert hass.states.get(f"event.{PREFIX}_{key}").state == "unknown"  # nothing fired yet
@@ -136,8 +139,6 @@ async def test_disabled_sensors_when_enabled(hass: HomeAssistant, aioclient_mock
     await hass.async_block_till_done()
 
     value = lambda key: hass.states.get(f"sensor.{PREFIX}_{key}").state  # noqa: E731
-    assert value("last_result") == "W 104-79 vs HTA"
-    assert value("record") == "11-3"
     assert value("streak") == "W4"
     assert value("point_difference") == "116"
     assert value("games_behind_playoffs") == "0.0"
@@ -291,3 +292,80 @@ async def test_other_bus_events_still_fire(hass: HomeAssistant, aioclient_mock, 
         "quarter_end",
         "lead_change",
     )
+
+
+# ------------------------------------------------- v0.4.2 device and crests
+
+
+async def test_device_page_icons_and_calendar_name(hass: HomeAssistant, aioclient_mock, freezer):
+    from homeassistant.helpers import device_registry as dr
+
+    freezer.move_to("2026-11-27T15:00:00+00:00")
+    mock_api(aioclient_mock)
+    await _setup(hass, _entry())
+    device = dr.async_get(hass).async_get_device({(DOMAIN, "E_OLY")})
+    assert device.model == "Olympiacos Piraeus · EuroLeague"
+    assert device.model_id == "OLY"
+    assert (
+        device.configuration_url
+        == "https://www.euroleaguebasketball.net/euroleague/teams/olympiacos-piraeus/oly/"
+    )
+    registry = er.async_get(hass)
+    icon = lambda eid: hass.states.get(eid).attributes.get("icon")  # noqa: E731
+    assert icon(f"binary_sensor.{PREFIX}_live") == "mdi:broadcast"
+    assert icon(f"sensor.{PREFIX}_team_score") == "mdi:scoreboard"
+    assert icon(f"sensor.{PREFIX}_opponent_score") == "mdi:scoreboard-outline"
+    assert icon(f"sensor.{PREFIX}_game_status") == "mdi:progress-clock"
+    # New installs name the calendar "Schedule".
+    calendar = registry.async_get_entity_id("calendar", DOMAIN, "E_OLY_games")
+    assert calendar == f"calendar.{PREFIX}_schedule"
+
+
+async def test_crest_view_serves_crests_on_a_light_disc(
+    hass: HomeAssistant, aioclient_mock, freezer, hass_client_no_auth
+):
+    import base64
+
+    freezer.move_to("2026-11-27T15:00:00+00:00")
+    mock_api(aioclient_mock)
+    png = b"\x89PNG\r\n\x1a\n" + b"0" * 64
+    aioclient_mock.get(ASVEL_CREST, content=png)
+    await _setup(hass, _entry())
+    client = await hass_client_no_auth()
+
+    resp = await client.get("/api/euroleague_tracker/crest/ASV")
+    assert resp.status == 200
+    assert resp.content_type == "image/svg+xml"
+    assert resp.headers["X-Content-Type-Options"] == "nosniff"
+    assert "default-src 'none'" in resp.headers["Content-Security-Policy"]
+    body = await resp.text()
+    assert '<circle cx="50" cy="50" r="50" fill="#ffffff"/>' in body
+    assert f"data:image/png;base64,{base64.b64encode(png).decode()}" in body
+    # Fetched once, then served from memory.
+    fetched = lambda: sum(str(c[1]) == ASVEL_CREST for c in aioclient_mock.mock_calls)  # noqa: E731
+    assert (await client.get("/api/euroleague_tracker/crest/ASV")).status == 200
+    assert fetched() == 1
+
+    # Unknown clubs, odd codes and anything that isn't a plain raster image are refused.
+    assert (await client.get("/api/euroleague_tracker/crest/XYZ")).status == 404
+    assert (await client.get("/api/euroleague_tracker/crest/as%3Cv")).status == 404
+    assert (await client.get("/api/euroleague_tracker/crest/..%2F..%2Fconfig")).status in (400, 404)
+
+
+async def test_crest_view_refuses_other_hosts_and_non_images(hass: HomeAssistant):
+    from custom_components.euroleague_tracker import crest
+
+    assert crest.allowed_source("https://media-cdn.cortextech.io/a.png")
+    assert not crest.allowed_source("http://media-cdn.cortextech.io/a.png")  # not https
+    assert not crest.allowed_source("https://evil.example/a.png")
+    assert not crest.allowed_source("https://media-cdn.cortextech.io.evil.example/a.png")
+    assert not crest.allowed_source("javascript:alert(1)")
+    assert crest.crest_url("ASV") == "/api/euroleague_tracker/crest/ASV"
+    assert crest.crest_url("../x") is None and crest.crest_url(None) is None
+    assert crest.sniff(b"<svg onload=alert(1)>") is None
+    assert crest.sniff(b"<html>") is None
+    assert crest.sniff(b"\xff\xd8\xff\xe0rest") == "image/jpeg"
+    crest.remember_crests(
+        hass, {"EVL": "https://evil.example/x.png", "OK1": "https://media-cdn.cortextech.io/x.png"}
+    )
+    assert hass.data["euroleague_tracker"]["crests"] == {"OK1": "https://media-cdn.cortextech.io/x.png"}

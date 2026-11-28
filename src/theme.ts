@@ -57,8 +57,9 @@ export function themeVars(theme: ThemeName, teamColor: string): Record<string, s
     "--elt-crest-plate": "rgba(255, 255, 255, 0.92)",
     "--elt-win-bg": "#2E7D32",
     "--elt-win-fg": "#FFFFFF",
-    "--elt-zone-playoffs": "#1F4FA8",
-    "--elt-zone-playin": "#B26A00",
+    // A step softer than the team accent; both keep white numbers readable (4.5:1+).
+    "--elt-zone-playoffs": "#3F63A8",
+    "--elt-zone-playin": "#93681C",
     "--elt-zone-fg": "#FFFFFF",
   };
   switch (theme) {

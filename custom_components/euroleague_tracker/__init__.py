@@ -18,6 +18,7 @@ from homeassistant.loader import async_get_integration
 from .api import EuroLeagueApi
 from .const import CARD_FILENAME, CONF_COMPETITION, DOMAIN, FRONTEND_URL_BASE, zone_store_key
 from .coordinator import EuroLeagueConfigEntry, EuroLeagueCoordinator
+from .crest import CrestView
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -26,8 +27,9 @@ CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
-    """Serve the bundled card and load it on every dashboard."""
+    """Serve the bundled card and load it on every dashboard, and the crest images."""
     await _register_card(hass)
+    hass.http.register_view(CrestView(hass))
     return True
 
 

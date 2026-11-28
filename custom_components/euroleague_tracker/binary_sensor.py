@@ -27,7 +27,7 @@ async def async_setup_entry(
 
 
 class LiveSensor(EuroLeagueEntityMixin, CoordinatorEntity[EuroLeagueCoordinator], BinarySensorEntity):
-    _attr_icon = "mdi:basketball"
+    _attr_icon = "mdi:broadcast"
 
     def __init__(self, coordinator: EuroLeagueCoordinator) -> None:
         super().__init__(coordinator)

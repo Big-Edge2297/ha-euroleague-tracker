@@ -20,6 +20,7 @@ from typing import Any
 from .const import (
     PLAY_IN_SPOTS,
     PLAYOFF_SPOTS,
+    SHORT_NAMES,
     STATE_IN,
     STATE_NOT_FOUND,
     STATE_POST,
@@ -67,6 +68,13 @@ PBP_SCORING = {"2FGM", "3FGM", "FTM"}
 
 
 # --------------------------------------------------------------------- utils
+
+
+def short_name(club: dict[str, Any] | None) -> str:
+    """The club's everyday name: 'LDLC ASVEL' -> 'ASVEL' (sponsor words dropped)."""
+    club = club or {}
+    code = clean_code(club.get("code"))
+    return SHORT_NAMES.get(code) or club.get("abbreviatedName") or club.get("name") or code
 
 
 def clean_code(value: Any) -> str:
@@ -231,7 +239,7 @@ def parse_standings(payload: dict[str, Any]) -> list[dict[str, Any]]:
                 "position": pos,
                 "position_change": (team.get("positionChange") or "").lower() or None,
                 "code": clean_code(club.get("code")),
-                "name": club.get("abbreviatedName") or club.get("name"),
+                "name": short_name(club),
                 "full_name": club.get("name"),
                 "crest": (club.get("images") or {}).get("crest"),
                 "played": to_int(team.get("gamesPlayed")),
@@ -630,7 +638,7 @@ def summarize_game(game: dict[str, Any], team_code: str) -> dict[str, Any]:
         "date": start.isoformat() if start else None,
         "homeaway": "home" if home else "away",
         "opponent_abbr": clean_code(club_of(them).get("code")),
-        "opponent_name": club_of(them).get("abbreviatedName") or club_of(them).get("name"),
+        "opponent_name": short_name(club_of(them)),
         "opponent_logo": (club_of(them).get("images") or {}).get("crest"),
         "venue": (game.get("venue") or {}).get("name"),
     }
@@ -684,7 +692,7 @@ def build_game_attributes(
 
     attrs.update(
         {
-            "event_name": f"{club_of(road).get('abbreviatedName')} @ {club_of(local).get('abbreviatedName')}",
+            "event_name": f"{short_name(club_of(road))} @ {short_name(club_of(local))}",
             "date": start.isoformat() if start else None,
             "kickoff_in": humanize_delta(start, now) if start else None,
             "venue": venue.get("name"),
@@ -694,7 +702,7 @@ def build_game_attributes(
             "overunder": None,
             "team_abbr": us_code,
             "team_id": us_code,
-            "team_name": us_club.get("abbreviatedName") or us_club.get("name"),
+            "team_name": short_name(us_club),
             "team_long_name": us_club.get("name"),
             "team_record": record(us_code),
             "team_rank": None,
@@ -710,7 +718,7 @@ def build_game_attributes(
             "team_fouls": None,
             "opponent_abbr": them_code,
             "opponent_id": them_code,
-            "opponent_name": them_club.get("abbreviatedName") or them_club.get("name"),
+            "opponent_name": short_name(them_club),
             "opponent_long_name": them_club.get("name"),
             "opponent_record": record(them_code),
             "opponent_rank": None,
@@ -1442,8 +1450,8 @@ def calendar_events(
         if not start:
             continue
         local, road = club_of(g.get("local")), club_of(g.get("road"))
-        home_name = local.get("abbreviatedName") or local.get("name") or clean_code(local.get("code"))
-        away_name = road.get("abbreviatedName") or road.get("name") or clean_code(road.get("code"))
+        home_name = short_name(local)
+        away_name = short_name(road)
         label = (
             game_label(g, games) or g.get("roundName") or (f"Round {g['round']}" if g.get("round") else "")
         )

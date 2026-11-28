@@ -84,9 +84,21 @@ export const styles = css`
     color: var(--elt-fg);
     white-space: nowrap;
   }
-  .pill.live {
+  .pill.live,
+  .pill.countdown {
     background: var(--elt-accent);
     color: var(--elt-accent-fg);
+  }
+  .compare .lead {
+    font-weight: 700;
+    color: var(--elt-fg);
+  }
+  .compare .trail {
+    color: var(--elt-fg2);
+  }
+  .compare .lead .chip,
+  .compare .trail .chip {
+    font-weight: 700;
   }
   .pill.live .dot {
     width: 7px;
@@ -384,6 +396,7 @@ export const styles = css`
   .srow.me {
     background: var(--elt-surface);
     font-weight: 700;
+    box-shadow: inset 3px 0 0 var(--elt-accent);
   }
   .srow .tn {
     display: flex;
@@ -926,6 +939,34 @@ export const styles = css`
   .when-s {
     font-size: 12px;
     color: var(--elt-fg2);
+  }
+  .day {
+    font-size: 12px;
+    color: var(--elt-fg2);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 4px 0 2px;
+  }
+  .bgame.timed {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 2px 8px;
+  }
+  .bgame.timed .side {
+    grid-column: 1;
+  }
+  .bgame .t {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    font-size: 13px;
+    color: var(--elt-fg2);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .bgame .t.live {
+    color: var(--elt-accent);
+    font-weight: 700;
   }
   @container (max-width: 340px) {
     .board {

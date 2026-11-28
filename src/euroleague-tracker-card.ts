@@ -350,7 +350,7 @@ export class EuroLeagueTrackerCard extends LitElement {
       const won = a.team_winner === true;
       pill = html`<span class="pill ${won ? "win" : "loss"}">${a.clock ?? "Final"} · ${won ? "W" : "L"}</span>`;
     } else {
-      pill = html`<span class="pill">${a.kickoff_in ?? ""}</span>`;
+      pill = html`<span class="pill countdown">${a.kickoff_in ?? ""}</span>`;
     }
 
     return html`
@@ -464,16 +464,33 @@ export class EuroLeagueTrackerCard extends LitElement {
     const leftForm = L.last5 ?? (left === us ? a.team_form : a.opponent_form);
     const rightForm = R.last5 ?? (right === us ? a.team_form : a.opponent_form);
     if (!leftForm && !table.length) return nothing;
+    // The side that's ahead on each row is bold; a tie highlights neither.
+    const cls = (l: number | null, r: number | null): [string, string] =>
+      l == null || r == null || l === r ? ["", ""] : l > r ? ["lead", "trail"] : ["trail", "lead"];
+    const pct = (rec?: string) => {
+      const m = /^(\d+)-(\d+)$/.exec(rec ?? "");
+      if (!m) return null;
+      const games = Number(m[1]) + Number(m[2]);
+      return games ? Number(m[1]) / games : null;
+    };
+    const wins = (f: any) => (Array.isArray(f) ? f : String(f ?? "").split("")).filter((x: string) => x === "W").length;
+    const form = cls(leftForm ? wins(leftForm) : null, rightForm ? wins(rightForm) : null);
+    const ha = cls(pct(L.home_record), pct(R.away_record));
+    const ten = cls(pct(L.last10), pct(R.last10));
+    const diff = cls(L.point_diff ?? null, R.point_diff ?? null);
     return html`<div class="panel compare">
-      ${this._form(leftForm)}<span class="mid">Last 5</span><span class="r">${this._form(rightForm)}</span>
+      <span class=${form[0]}>${this._form(leftForm)}</span><span class="mid">Last 5</span
+      ><span class="r ${form[1]}">${this._form(rightForm)}</span>
       ${table.length
-        ? html`<span>${L.home_record ?? "–"}</span><span class="mid">Home / Away</span
-            ><span class="r">${R.away_record ?? "–"}</span> <span>${L.last10 ?? "–"}</span><span class="mid">Last 10</span
-            ><span class="r">${R.last10 ?? "–"}</span> <span>${signed(L.point_diff)}</span><span class="mid">Point diff</span
-            ><span class="r">${signed(R.point_diff)}</span>`
+        ? html`<span class=${ha[0]}>${L.home_record ?? "–"}</span><span class="mid">Home / Away</span
+            ><span class="r ${ha[1]}">${R.away_record ?? "–"}</span> <span class=${ten[0]}>${L.last10 ?? "–"}</span
+            ><span class="mid">Last 10</span><span class="r ${ten[1]}">${R.last10 ?? "–"}</span>
+            <span class=${diff[0]}>${signed(L.point_diff)}</span><span class="mid">Point diff</span
+            ><span class="r ${diff[1]}">${signed(R.point_diff)}</span>`
         : nothing}
     </div>`;
   }
+
 
   private _renderPlays(a: Attrs) {
     const rows = this._config.play_by_play_rows ?? 4;
@@ -546,7 +563,7 @@ export class EuroLeagueTrackerCard extends LitElement {
     if (a.neutral_site) parts.push("Neutral venue");
     if (a.venue) parts.push(titleCase(a.venue));
     if (state !== "PRE" && a.attendance) parts.push(`${Number(a.attendance).toLocaleString(this._locale().lang)} fans`);
-    if (state === "PRE" && a.capacity) parts.push(`cap. ${Number(a.capacity).toLocaleString(this._locale().lang)}`);
+    if (state === "PRE" && a.capacity) parts.push(`${Number(a.capacity).toLocaleString(this._locale().lang)} seats`);
     if (state === "IN" && (a.team_fouls ?? null) !== null) parts.push(`Fouls ${a.team_fouls}–${a.opponent_fouls}`);
     if (state === "POST" && a.next_game?.date) {
       parts.push(`Next: ${a.next_game.homeaway === "home" ? "vs" : "@"} ${a.next_game.opponent_abbr}, ${this._fmtDay(a.next_game.date)}`);
@@ -587,7 +604,7 @@ export class EuroLeagueTrackerCard extends LitElement {
     if (state === "PRE") {
       main = html`<span class="cmain">${left.code} vs ${right.code}</span>`;
       sub = [a.date ? `${this._fmtDay(a.date)} · ${this._fmtTime(a.date)}` : "", round].filter(Boolean).join(" · ");
-      pill = html`<span class="pill">${a.kickoff_in ?? ""}</span>`;
+      pill = html`<span class="pill countdown">${a.kickoff_in ?? ""}</span>`;
     } else {
       const l = left.score ?? 0;
       const r = right.score ?? 0;
@@ -740,6 +757,20 @@ export class EuroLeagueTrackerCard extends LitElement {
           </div>`
         : nothing}
     `;
+  }
+
+  /** A round's games under a heading per day ("Thursday 3 Dec"), in the user's time zone. */
+  private _roundDays(games: Attrs[]): [string, Attrs[]][] {
+    const { lang, tz } = this._locale();
+    const fmt = new Intl.DateTimeFormat(lang, { weekday: "long", day: "numeric", month: "short", timeZone: tz });
+    const days: [string, Attrs[]][] = [];
+    for (const g of games) {
+      const day = g.date ? fmt.format(new Date(g.date)) : "";
+      const last = days.at(-1);
+      if (last && last[0] === day) last[1].push(g);
+      else days.push([day, [g]]);
+    }
+    return days;
   }
 
   /** The days a round is played on: "3 – 4 Dec", "30 Nov – 2 Dec", "4 Dec". */
@@ -1325,16 +1356,38 @@ export class EuroLeagueTrackerCard extends LitElement {
         </div>
         <span class="pill">${this._fmtRange(current.games.map((g: Attrs) => g.date).filter(Boolean))}</span>
       </div>
-      <div class="board">
-        ${current.games.map((g: Attrs) => {
-          const mine = g.home === me || g.away === me;
-          const hw = (g.home_score ?? 0) > (g.away_score ?? 0);
-          return html`<div class="bgame ${mine ? "me" : ""}">
-            ${side(g.home, g.home_score, hw, g)} ${side(g.away, g.away_score, !hw, g)}
-            ${g.played || !g.date ? nothing : html`<div class="when-s">${this._fmtDay(g.date)} · ${this._fmtTime(g.date)}</div>`}
-          </div>`;
-        })}
-      </div>
+      ${this._roundDays(current.games).map(
+        ([day, games]) => html`${day ? html`<div class="day">${day}</div>` : nothing}
+          <div class="board">
+            ${games.map((g: Attrs) => {
+              const mine = g.home === me || g.away === me;
+              // Your game while it's live: its score and clock from the game sensor.
+              const liveMine = mine && g.game_code === a.game_code && this._state(this._config.entity)?.state === "IN";
+              const shown = liveMine
+                ? {
+                    ...g,
+                    played: true,
+                    home_score: g.home === me ? a.team_score : a.opponent_score,
+                    away_score: g.home === me ? a.opponent_score : a.team_score,
+                  }
+                : g;
+              const hw = (shown.home_score ?? 0) > (shown.away_score ?? 0);
+              const started = g.date && Date.parse(g.date) <= Date.now();
+              const t = g.played
+                ? nothing
+                : liveMine
+                  ? html`<span class="t live">${a.clock ?? "Live"}</span>`
+                  : started
+                    ? html`<span class="t live">Live</span>`
+                    : g.date
+                      ? html`<span class="t">${this._fmtTime(g.date)}</span>`
+                      : nothing;
+              return html`<div class="bgame timed ${mine ? "me" : ""}">
+                ${side(g.home, shown.home_score, hw, shown)} ${side(g.away, shown.away_score, !hw, shown)} ${t}
+              </div>`;
+            })}
+          </div>`,
+      )}
     `;
   }
 
