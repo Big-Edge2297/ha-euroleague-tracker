@@ -303,7 +303,9 @@ async def test_device_page_icons_and_calendar_name(hass: HomeAssistant, aioclien
     freezer.move_to("2026-11-27T15:00:00+00:00")
     mock_api(aioclient_mock)
     await _setup(hass, _entry())
-    device = dr.async_get(hass).async_get_device({(DOMAIN, "E_OLY")})
+    # Found through one of its entities (works on every supported Home Assistant).
+    game = er.async_get(hass).async_get(f"sensor.{PREFIX}_game")
+    device = dr.async_get(hass).async_get(game.device_id)
     assert device.model == "Olympiacos Piraeus · EuroLeague"
     assert device.model_id == "OLY"
     assert (
