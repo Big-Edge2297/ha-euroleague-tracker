@@ -26,7 +26,12 @@ jobs:
   screenshots:
     runs-on: ubuntu-latest
     steps:
+      # Always start from the newest main (a re-run or a queued run would
+      # otherwise render an older commit).
       - uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
       - uses: actions/setup-node@v7
         with:
           node-version: 26
@@ -38,6 +43,12 @@ jobs:
       - run: pip install playwright && python -m playwright install --with-deps chromium
       - run: python scripts/make_demo_states.py
       - run: python scripts/screenshots.py
+      # Files uploaded while this ran would make the push fail; catch up first.
+      - name: Catch up with main
+        run: >-
+          git -c user.name="github-actions[bot]"
+          -c user.email="41898282+github-actions[bot]@users.noreply.github.com"
+          pull --rebase --autostash origin main
       - uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "docs: update card screenshots"
