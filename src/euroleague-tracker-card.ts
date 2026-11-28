@@ -243,7 +243,7 @@ export class EuroLeagueTrackerCard extends LitElement {
 
   private _fmtTime(iso: string): string {
     const { lang, tz, hour12 } = this._locale();
-    return new Intl.DateTimeFormat(lang, { hour: "2-digit", minute: "2-digit", timeZone: tz, hour12 }).format(
+    return new Intl.DateTimeFormat(lang, { hour: "numeric", minute: "2-digit", timeZone: tz, hour12 }).format(
       new Date(iso),
     );
   }
@@ -742,6 +742,20 @@ export class EuroLeagueTrackerCard extends LitElement {
     `;
   }
 
+  /** The days a round is played on: "3 – 4 Dec", "30 Nov – 2 Dec", "4 Dec". */
+  private _fmtRange(dates: string[]): string {
+    if (!dates.length) return "";
+    const sorted = [...dates].sort();
+    const { lang, tz } = this._locale();
+    const fmt = new Intl.DateTimeFormat(lang, { day: "numeric", month: "short", timeZone: tz });
+    const first = new Date(sorted.at(0)!);
+    const last = new Date(sorted.at(-1)!);
+    if (fmt.format(first) === fmt.format(last)) return fmt.format(first);
+    return typeof fmt.formatRange === "function"
+      ? fmt.formatRange(first, last)
+      : `${fmt.format(first)} – ${fmt.format(last)}`;
+  }
+
   private _fmtShort(iso: string): string {
     const { lang, tz } = this._locale();
     return new Intl.DateTimeFormat(lang, { day: "numeric", month: "short", timeZone: tz }).format(new Date(iso));
@@ -988,7 +1002,9 @@ export class EuroLeagueTrackerCard extends LitElement {
     const row = (standings.table ?? []).find((r: Attrs) => r.code === (a.team_abbr ?? at.team_abbr));
     const right =
       this._statsTab === "shots" && at.shot_zones
-        ? `${at.shot_zones.games} games · ${at.shot_zones.attempts} shots`
+        ? at.shot_zones.total_games > at.shot_zones.games
+          ? `${at.shot_zones.games} of ${at.shot_zones.total_games} games · ${at.shot_zones.attempts} shots`
+          : `${at.shot_zones.games} games · ${at.shot_zones.attempts} shots`
         : this._statsTab === "players" && row
           ? `${row.wins}-${row.losses} · ${row.position}${ordinalSuffix(row.position)}`
           : pg.games_played
@@ -1307,7 +1323,7 @@ export class EuroLeagueTrackerCard extends LitElement {
         <div class="round-nav">
           ${arrow(-1)}<span class="round-title">Round ${current.round} · ${status}</span>${arrow(1)}
         </div>
-        <span class="pill">${current.games.length} games</span>
+        <span class="pill">${this._fmtRange(current.games.map((g: Attrs) => g.date).filter(Boolean))}</span>
       </div>
       <div class="board">
         ${current.games.map((g: Attrs) => {

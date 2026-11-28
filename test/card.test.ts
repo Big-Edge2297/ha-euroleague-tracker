@@ -119,7 +119,8 @@ test("next game: last five (oldest first), home and away records, last ten and p
 test("next game in 12-hour time when the user prefers it", async () => {
   const hass = makeHass("pre", { hass: { locale: { language: "en-US", time_format: "12", time_zone: "server" } } });
   const el = await mount({}, hass);
-  assert.match(text($(el, ".when .time")), /09:15\s?PM/i);
+  // No leading zero in 12-hour time.
+  assert.match(text($(el, ".when .time")), /^9:15\s?PM$/i);
 });
 
 // ----------------------------------------------------------------------- live
@@ -413,7 +414,8 @@ test("next game: head to head, newest first", async () => {
 
 test("round: every game of the round, yours highlighted", async () => {
   const el = await mount({ view: "round" }, makeHass("final"));
-  assert.match(text($(el, ".head")), /Round 14 · results 10 games/);
+  // The round's days, not a game count (always 10).
+  assert.match(text($(el, ".head")), /^Round 14 · results 25 – 26 Nov$/);
   const games = $$(el, ".bgame");
   assert.equal(games.length, 10);
   const mine = $$(el, ".bgame.me");
@@ -427,7 +429,7 @@ test("round: arrows step through rounds; fixtures show tip-off times", async () 
   const [prev, next] = $$(el, ".nav") as HTMLButtonElement[];
   next.click();
   await el.updateComplete;
-  assert.match(text($(el, ".head")), /Round 15 · fixtures/);
+  assert.match(text($(el, ".head")), /^Round 15 · fixtures 3 – 4 Dec$/);
   const mine = text($(el, ".bgame.me"));
   assert.equal(mine, "OLY ASV Fri 4 Dec · 21:15");
   assert.equal(($$(el, ".nav")[1] as HTMLButtonElement).disabled, true);
@@ -659,4 +661,22 @@ test("compact: one row in sections, a short editor and its own picker entry", ()
   assert.deepEqual(Compact.getStubConfig(makeHass()), { entity: IDS.game, theme: "auto" });
   const entry = (window as any).customCards.find((c: any) => c.type === "euroleague-tracker-compact-card");
   assert.equal(entry.name, "EuroLeague Tracker (compact)");
+});
+
+test("stats · shots: while the season's shots are still being read, it says so", async () => {
+  const hass = makeHass();
+  Object.assign(hass.states[IDS.stats].attributes.shot_zones, { games: 10, total_games: 14, attempts: 660 });
+  const el = await statsTab("Shots", hass);
+  assert.match(text($(el, ".head")), /10 of 14 games · 660 shots$/);
+  hass.states[IDS.stats].attributes.shot_zones.total_games = 10;
+  const done = await statsTab("Shots", hass);
+  assert.match(text($(done, ".head")), /10 games · 660 shots$/);
+});
+
+test("round: a round on one day shows that day", async () => {
+  const hass = makeHass("final");
+  const r14 = hass.states[IDS.standings].attributes.scoreboard.rounds.find((r: any) => r.round === 14);
+  r14.games.forEach((g: any) => (g.date = "2026-11-25T19:15:00+00:00"));
+  const el = await mount({ view: "round" }, hass);
+  assert.match(text($(el, ".head")), /results 25 Nov$/);
 });

@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.4.1 (2026-11-28)
+
+### Fixed
+- **Season shot zones fill in within minutes.** After the first ten games, the rest are read a minute later instead of fifteen, and the zones are saved so a restart doesn't read them again. While they fill in, the Shots tab says "10 of 14 games". The saved zones are deleted when you remove the integration.
+- **The Round tab shows the round's days** ("3 – 4 Dec") instead of a game count that was always 10.
+- **Times without a leading zero** in 12-hour format ("9:15 PM").
+- **Screenshots workflow:** starts from the newest main and catches up before committing, so an upload during a run no longer makes it fail.
+
 ## v0.4.0 (2026-11-28)
 
 ### New

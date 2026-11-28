@@ -127,7 +127,7 @@ The bulky attributes (`play_by_play`, `top_players`, `game_stats`, `quarter_scor
 - **League ranks** come from EuroLeague's per-game averages for every club. Rank 1 is the best; for turnovers that means the fewest.
 - **Attack and defence** are worked out from every game played this season, so overtime counts (the standings leave it out).
 - **Clinched and eliminated** are worked out from wins alone, counting every tie against your team, so they never appear too early.
-- **Shot zones** add up the shot locations from each of your team's finished games. Each game is read once, ten per update, so after the first start the zones fill in over the first hour. They are not read during a live game.
+- **Shot zones** add up the shot locations from each of your team's finished games. Each game is read once, ten at a time a minute apart, and saved, so after the first start the zones are complete within a few minutes and a restart doesn't read them again. While they fill in, the card says how many games are in so far ("10 of 14 games"). They are not read during a live game.
 
 </details>
 

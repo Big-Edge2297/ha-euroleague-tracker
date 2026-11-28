@@ -44,6 +44,15 @@ CACHE_LEADERS: Final = timedelta(hours=12)
 
 # Season shot zones: finished games' shots fetched per update (once each).
 ZONE_FETCHES_PER_UPDATE: Final = 10
+# While some are still to read, the next update comes this soon.
+ZONE_CATCH_UP: Final = timedelta(minutes=1)
+
+
+def zone_store_key(entry_id: str) -> str:
+    """Where an entry's season shot zones are saved (.storage/)."""
+    return f"{DOMAIN}.zones.{entry_id}"
+
+
 # Head to head looks this many seasons back (plus the current one).
 H2H_PAST_SEASONS: Final = 2
 

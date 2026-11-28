@@ -12,6 +12,7 @@ from homeassistant.core import CALLBACK_TYPE, HomeAssistant, callback
 from homeassistant.helpers import issue_registry as ir
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 from homeassistant.helpers.event import async_call_later
+from homeassistant.helpers.storage import Store
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from . import parser
@@ -41,7 +42,9 @@ from .const import (
     STATE_NOT_FOUND,
     STATE_POST,
     STATE_PRE,
+    ZONE_CATCH_UP,
     ZONE_FETCHES_PER_UPDATE,
+    zone_store_key,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -110,6 +113,10 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
         self._pending: list[CALLBACK_TYPE] = []
         # Season shot zones per finished game, and our games from past seasons.
         self._zones: dict[tuple[str, int], dict[str, list[int]]] = {}
+        # Saved on disk, so a restart doesn't read every game's shots again.
+        self._zone_store: Store[dict[str, Any]] = Store(hass, 1, zone_store_key(entry.entry_id))
+        self._zones_loaded = False
+        self._zones_pending = False
         self._past_games: dict[str, list[dict[str, Any]]] = {}
 
     # ------------------------------------------------------------- options
@@ -294,6 +301,9 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
         for basket in baskets:
             self._schedule(self._send_basket, basket, data.game)
         self.update_interval = self._next_interval(state, game, now)
+        if self._zones_pending:
+            # More finished games' shots still to read: come back soon for them.
+            self.update_interval = min(self.update_interval, ZONE_CATCH_UP)
         return data
 
     async def _standings(self, season_code: str, now: datetime) -> tuple[list, int | None]:
@@ -320,6 +330,7 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
             self._final_box_cache = {code: (box, pbp, shots, evo)}  # keep only the latest final
             if shots:
                 self._zones[(season_code, code)] = parser.zone_counts(shots, self.team_code)
+                self._save_zones()
         return box, pbp, shots, evo
 
     async def _season_zones(
@@ -328,12 +339,46 @@ class EuroLeagueCoordinator(DataUpdateCoordinator[TrackerData]):
         """Season shooting by zone. Each finished game's shots are fetched once,
         a few games per update so the first start stays quick, and never while
         a game is live (those updates must stay fast)."""
+        await self._load_zones()
         missing = [g["gameCode"] for g in played if (season_code, g["gameCode"]) not in self._zones]
+        fetched = False
         for code in missing[:ZONE_FETCHES_PER_UPDATE] if fetch else []:
             points = await self._safe(self.api.shots(season_code, code))
             if points:
                 self._zones[(season_code, code)] = parser.zone_counts(points, self.team_code)
-        return parser.merge_zones([z for (s, _), z in self._zones.items() if s == season_code])
+                fetched = True
+        if fetched:
+            self._save_zones()
+        codes = {g["gameCode"] for g in played}
+        self._zones_pending = fetch and any((season_code, c) not in self._zones for c in codes)
+        merged = parser.merge_zones(
+            [z for (s, c), z in self._zones.items() if s == season_code and c in codes]
+        )
+        if merged:
+            merged["total_games"] = len(codes)
+        return merged
+
+    async def _load_zones(self) -> None:
+        if self._zones_loaded:
+            return
+        self._zones_loaded = True
+        stored = await self._zone_store.async_load() or {}
+        if stored.get("team") != self.team_code:
+            return
+        for season, games in (stored.get("zones") or {}).items():
+            for code, counts in games.items():
+                if isinstance(counts, dict) and code.isdigit():
+                    self._zones[(season, int(code))] = counts
+
+    @callback
+    def _save_zones(self) -> None:
+        def data() -> dict[str, Any]:
+            zones: dict[str, dict[str, Any]] = {}
+            for (season, code), counts in self._zones.items():
+                zones.setdefault(season, {})[str(code)] = counts
+            return {"team": self.team_code, "zones": zones}
+
+        self._zone_store.async_delay_save(data, 10)
 
     async def _past_meetings(self, season: dict[str, Any]) -> list[dict[str, Any]]:
         """Our games from the two seasons before this one (fetched once each)."""

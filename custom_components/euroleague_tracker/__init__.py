@@ -11,11 +11,12 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.storage import Store
 from homeassistant.helpers.typing import ConfigType
 from homeassistant.loader import async_get_integration
 
 from .api import EuroLeagueApi
-from .const import CARD_FILENAME, CONF_COMPETITION, DOMAIN, FRONTEND_URL_BASE
+from .const import CARD_FILENAME, CONF_COMPETITION, DOMAIN, FRONTEND_URL_BASE, zone_store_key
 from .coordinator import EuroLeagueConfigEntry, EuroLeagueCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -55,6 +56,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: EuroLeagueConfigEntry) -
 
 async def async_unload_entry(hass: HomeAssistant, entry: EuroLeagueConfigEntry) -> bool:
     return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+
+
+async def async_remove_entry(hass: HomeAssistant, entry: EuroLeagueConfigEntry) -> None:
+    """Delete the saved shot zones when the integration is removed."""
+    await Store(hass, 1, zone_store_key(entry.entry_id)).async_remove()
 
 
 async def _async_reload(hass: HomeAssistant, entry: EuroLeagueConfigEntry) -> None:

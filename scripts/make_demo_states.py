@@ -158,7 +158,7 @@ stats = {
                 }
             ]
         )
-        | {"games": 14},
+        | {"games": 14, "total_games": 14},
         "friendly_name": "Olympiacos Season stats",
     },
 }

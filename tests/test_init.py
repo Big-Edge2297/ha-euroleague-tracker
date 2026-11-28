@@ -79,6 +79,7 @@ async def test_setup_pre_game(hass: HomeAssistant, aioclient_mock, freezer: Froz
     assert len(form) == 14 and form[0]["round"] == 1 and form[-1]["margin"] == 25
     # The finished games' shots are read for the season zones, ten per update.
     assert stats.attributes["shot_zones"]["games"] == 10
+    assert stats.attributes["shot_zones"]["total_games"] == 14
 
     h2h = game.attributes["head_to_head"]
     assert (h2h["wins"], h2h["losses"], h2h["average_margin"]) == (3, 1, 5.5)
@@ -176,3 +177,54 @@ async def test_access_refused_raises_repair_issue(hass: HomeAssistant, aioclient
     await hass.async_block_till_done()
     assert entry.state is ConfigEntryState.SETUP_RETRY
     assert ir.async_get(hass).async_get_issue(DOMAIN, "api_access_refused") is not None
+
+
+async def test_shot_zones_catch_up_and_survive_a_restart(
+    hass: HomeAssistant, aioclient_mock, freezer: FrozenDateTimeFactory, hass_storage
+):
+    """The rest of the games are read a minute later, and saved for restarts."""
+    from datetime import timedelta
+
+    from pytest_homeassistant_custom_component.common import async_fire_time_changed
+
+    from custom_components.euroleague_tracker.const import zone_store_key
+
+    freezer.move_to("2026-11-27T15:00:00+00:00")
+    mock_api(aioclient_mock)
+    entry = _entry()
+    entry.add_to_hass(hass)
+    assert await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+    coordinator = entry.runtime_data
+    stats = _entity(hass, "stats")
+    assert hass.states.get(stats).attributes["shot_zones"]["games"] == 10
+    assert coordinator.update_interval == timedelta(minutes=1)
+
+    freezer.tick(timedelta(minutes=1))
+    async_fire_time_changed(hass)
+    await hass.async_block_till_done()
+    zones = hass.states.get(stats).attributes["shot_zones"]
+    assert (zones["games"], zones["total_games"]) == (14, 14)
+    assert coordinator.update_interval == timedelta(minutes=15)
+
+    # Saved a few seconds later; a restart reads no shots again.
+    freezer.tick(timedelta(seconds=15))
+    async_fire_time_changed(hass)
+    await hass.async_block_till_done()
+    saved = hass_storage[zone_store_key(entry.entry_id)]["data"]
+    assert saved["team"] == "OLY" and len(saved["zones"]["E2026"]) == 14
+
+    points_calls = lambda: sum("/api/Points" in str(c[1]) for c in aioclient_mock.mock_calls)  # noqa: E731
+    before = points_calls()
+    assert await hass.config_entries.async_reload(entry.entry_id)
+    await hass.async_block_till_done()
+    freezer.tick(timedelta(minutes=15))
+    async_fire_time_changed(hass)
+    await hass.async_block_till_done()
+    assert hass.states.get(stats).attributes["shot_zones"]["games"] == 14
+    assert points_calls() == before
+
+    # Removing the integration deletes the saved zones.
+    assert await hass.config_entries.async_remove(entry.entry_id)
+    await hass.async_block_till_done()
+    assert zone_store_key(entry.entry_id) not in hass_storage
