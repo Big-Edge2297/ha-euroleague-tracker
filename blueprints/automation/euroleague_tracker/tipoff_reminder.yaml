@@ -1,0 +1,58 @@
+blueprint:
+  name: EuroLeague Tracker – tip-off reminder
+  description: >-
+    Get a notification on your phone a set time before your team's next game,
+    with the opponent and where it is played.
+  domain: automation
+  author: Big-Edge2297
+  homeassistant:
+    min_version: "2025.1.0"
+  source_url: https://github.com/Big-Edge2297/ha-euroleague-tracker/blob/main/blueprints/automation/euroleague_tracker/tipoff_reminder.yaml
+  input:
+    next_game:
+      name: Next game
+      description: The *Next game* sensor of the team you follow.
+      selector:
+        entity:
+          filter:
+            - integration: euroleague_tracker
+              domain: sensor
+              device_class: timestamp
+    minutes:
+      name: Minutes before tip-off
+      default: 30
+      selector:
+        number:
+          min: 5
+          max: 240
+          step: 5
+          unit_of_measurement: min
+    phone:
+      name: Phone
+      description: A phone with the Home Assistant app.
+      selector:
+        device:
+          filter:
+            - integration: mobile_app
+
+mode: single
+
+trigger_variables:
+  next_game: !input next_game
+  minutes: !input minutes
+
+triggers:
+  - trigger: template
+    value_template: >-
+      {% set t = states(next_game) | as_datetime(none) %}
+      {{ t is not none and t - timedelta(minutes=minutes | int) <= now() < t }}
+
+actions:
+  - variables:
+      a: "{{ states[next_game].attributes }}"
+  - domain: mobile_app
+    type: notify
+    device_id: !input phone
+    title: "Tip-off in {{ minutes | int }} minutes"
+    message: >-
+      {{ 'vs' if a.homeaway == 'home' else '@' }} {{ a.opponent }}{{ ', ' ~ a.venue if a.venue else '' }}

@@ -1,0 +1,112 @@
+{
+ "data": [
+  {
+   "seasonCode": "E2025",
+   "phaseTypeCode": "RS",
+   "round": 36,
+   "index": 36,
+   "name": "Round 36",
+   "minGameStartDate": "2026-04-06T00:00:00",
+   "maxGameStartDate": "2026-04-08T23:59:59"
+  },
+  {
+   "seasonCode": "E2025",
+   "phaseTypeCode": "RS",
+   "round": 37,
+   "index": 37,
+   "name": "Round 37",
+   "minGameStartDate": "2026-04-09T00:00:00",
+   "maxGameStartDate": "2026-04-12T23:59:59"
+  },
+  {
+   "seasonCode": "E2025",
+   "phaseTypeCode": "RS",
+   "round": 38,
+   "index": 38,
+   "name": "Round 38",
+   "minGameStartDate": "2026-04-13T00:00:00",
+   "maxGameStartDate": "2026-04-18T23:59:59"
+  },
+  {
+   "seasonCode": "E2025",
+   "phaseTypeCode": "PI",
+   "round": 39,
+   "index": 39,
+   "name": "Round 1",
+   "minGameStartDate": "2026-04-18T00:00:00",
+   "maxGameStartDate": "2026-04-21T23:59:59"
+  },
+  {
+   "seasonCode": "E2025",
+   "phaseTypeCode": "PI",
+   "round": 40,
+   "index": 40,
+   "name": "Round 2",
+   "minGameStartDate": "2026-04-22T00:00:00",
+   "maxGameStartDate": "2026-04-24T23:59:59"
+  },
+  {
+   "seasonCode": "E2025",
+   "phaseTypeCode": "PO",
+   "round": 41,
+   "index": 41,
+   "name": "Game 1",
+   "minGameStartDate": "2026-04-25T00:00:00",
+   "maxGameStartDate": "2026-04-29T23:59:59"
+  },
+  {
+   "seasonCode": "E2025",
+   "phaseTypeCode": "PO",
+   "round": 42,
+   "index": 42,
+   "name": "Game 2",
+   "minGameStartDate": "2026-04-30T00:00:00",
+   "maxGameStartDate": "2026-05-03T23:59:59"
+  },
+  {
+   "seasonCode": "E2025",
+   "phaseTypeCode": "PO",
+   "round": 43,
+   "index": 43,
+   "name": "Game 3",
+   "minGameStartDate": "2026-05-04T00:00:00",
+   "maxGameStartDate": "2026-05-06T23:59:59"
+  },
+  {
+   "seasonCode": "E2025",
+   "phaseTypeCode": "PO",
+   "round": 44,
+   "index": 44,
+   "name": "Game 4",
+   "minGameStartDate": "2026-05-07T00:00:00",
+   "maxGameStartDate": "2026-05-10T23:59:59"
+  },
+  {
+   "seasonCode": "E2025",
+   "phaseTypeCode": "PO",
+   "round": 45,
+   "index": 45,
+   "name": "Game 5",
+   "minGameStartDate": "2026-05-11T00:00:00",
+   "maxGameStartDate": "2026-05-17T23:59:59"
+  },
+  {
+   "seasonCode": "E2025",
+   "phaseTypeCode": "FF",
+   "round": 46,
+   "index": 46,
+   "name": "Semifinal",
+   "minGameStartDate": "2026-05-15T00:00:00",
+   "maxGameStartDate": "2026-05-22T23:59:59"
+  },
+  {
+   "seasonCode": "E2025",
+   "phaseTypeCode": "FF",
+   "round": 47,
+   "index": 47,
+   "name": "Final",
+   "minGameStartDate": "2026-05-23T00:00:00",
+   "maxGameStartDate": "2026-05-25T23:59:59"
+  }
+ ]
+}

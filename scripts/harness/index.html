@@ -35,13 +35,13 @@
     standings: "sensor.olympiacos_piraeus_euroleague_standings_position",
     stats: "sensor.olympiacos_piraeus_euroleague_season_stats",
   };
-  const hassFor = (gameKey) => ({
+  const hassFor = (gameKey, standingsKey = "standings") => ({
     language: "en",
     locale: { language: "en-GB", time_format: "24", time_zone: "server" },
     config: { time_zone: "Asia/Nicosia" },
     states: {
       [ids.game]: { entity_id: ids.game, ...demo[gameKey] },
-      [ids.standings]: { entity_id: ids.standings, ...demo.standings },
+      [ids.standings]: { entity_id: ids.standings, ...demo[standingsKey] },
       [ids.stats]: { entity_id: ids.stats, ...demo.stats },
     },
   });
@@ -56,6 +56,10 @@
     ["stats-players", "final", "stats", { statsTab: "players" }],
     ["stats-shots", "final", "stats", { statsTab: "shots" }],
     ["round", "final", "round"],
+    ["bracket", "po_final", "standings", { standings: "standings_post" }],
+    ["playoff-game", "po_final", "game", { standings: "standings_post" }],
+    ["final-four", "ff_pre", "game", { standings: "standings_post" }],
+    ["compact", "pre", "compact", { compact: ["pre", "live", "final", "po_final"] }],
     ["tabs", "live", "tabs"],
   ];
   const themes = ["dark", "light", "team"];
@@ -67,11 +71,15 @@
       wrap.id = `${name}-${theme}`;
       const frame = document.createElement("div");
       frame.className = "frame";
-      const card = document.createElement("euroleague-tracker-card");
-      card.setConfig({ type: "custom:euroleague-tracker-card", entity: ids.game, view, theme, play_by_play_rows: 4 });
-      card.hass = hassFor(gameKey);
-      if (extra.statsTab) card._statsTab = extra.statsTab;
-      frame.appendChild(card);
+      for (const key of extra.compact ?? [gameKey]) {
+        const tag = view === "compact" ? "euroleague-tracker-compact-card" : "euroleague-tracker-card";
+        const card = document.createElement(tag);
+        card.setConfig({ type: `custom:${tag}`, entity: ids.game, view, theme, play_by_play_rows: 4 });
+        card.hass = hassFor(key, extra.standings);
+        if (extra.statsTab) card._statsTab = extra.statsTab;
+        if (view === "compact") card.style.cssText = "display:block;margin-bottom:8px";
+        frame.appendChild(card);
+      }
       wrap.appendChild(frame);
       root.appendChild(wrap);
     }

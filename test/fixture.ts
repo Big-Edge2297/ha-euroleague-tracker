@@ -9,7 +9,7 @@ export const IDS = {
   stats: "sensor.olympiacos_piraeus_euroleague_season_stats",
 };
 
-export type GameKey = "pre" | "live" | "final";
+export type GameKey = "pre" | "live" | "final" | "po_final" | "ff_pre";
 
 const clone = <T>(v: T): T => JSON.parse(JSON.stringify(v));
 
@@ -17,7 +17,10 @@ export function gameState(key: GameKey) {
   return clone((demo as any)[key]);
 }
 
-export function makeHass(gameKey: GameKey = "pre", overrides: { game?: any; states?: Record<string, any>; hass?: any } = {}) {
+export function makeHass(
+  gameKey: GameKey = "pre",
+  overrides: { game?: any; states?: Record<string, any>; hass?: any; standings?: "standings" | "standings_post" } = {},
+) {
   const game = overrides.game ?? gameState(gameKey);
   return {
     language: "en",
@@ -25,7 +28,7 @@ export function makeHass(gameKey: GameKey = "pre", overrides: { game?: any; stat
     config: { time_zone: "Asia/Nicosia" },
     states: {
       [IDS.game]: { entity_id: IDS.game, ...game },
-      [IDS.standings]: { entity_id: IDS.standings, ...clone((demo as any).standings) },
+      [IDS.standings]: { entity_id: IDS.standings, ...clone((demo as any)[overrides.standings ?? "standings"]) },
       [IDS.stats]: { entity_id: IDS.stats, ...clone((demo as any).stats) },
       ...(overrides.states ?? {}),
     },

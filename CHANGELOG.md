@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.4.0 (2026-11-27)
+
+### New
+- **Play-in, playoffs and Final Four.** Postseason games get their real names ("Play-in · 7th v 8th", "Playoffs · Game 3", "Final Four · Championship game"), the best-of-five series score with every game of the series, both seeds, and a neutral venue at the Final Four (seeds instead of home and away). "If necessary" games of a decided series are skipped, and the standings stay at the final regular-season table.
+- **Bracket**: once the regular season ends, the Standings view shows the play-in, the four series and the Final Four, with the table one tap away.
+- **Playoff race** on the standings: how many games clear of (or behind) the playoff and play-in lines, dashed lines in the table, and clinched or out of reach once it is certain.
+- **Calendar** entity with every game of the season, results added as they come in.
+- **Compact card** (`custom:euroleague-tracker-compact-card`): next game, live score or result on one line for sections dashboards. Tap for the details.
+- **Blueprints**, with one-click import buttons: flash the lights when your team scores, a final-score notification and a tip-off reminder.
+- New sensor attributes: `phase_code`, `series`, `team_seed`, `opponent_seed`, `neutral_site` on the game sensor; `playoff_race` and `bracket` on the standings sensor.
+
 ## v0.3.0 (2026-11-27)
 
 ### New

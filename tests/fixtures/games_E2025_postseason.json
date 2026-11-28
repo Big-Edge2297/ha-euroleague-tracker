@@ -1,0 +1,1611 @@
+{
+ "data": [
+  {
+   "id": "E2025_381",
+   "identifier": "E2025_381",
+   "gameCode": 381,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group A",
+    "rawName": "A"
+   },
+   "phaseType": {
+    "code": "PI",
+    "alias": "PLAY-IN",
+    "name": "Play-In",
+    "isGroupPhase": false
+   },
+   "round": 39,
+   "roundAlias": "Round 39",
+   "roundName": "Round 39",
+   "played": true,
+   "date": "2026-04-21T18:00:00",
+   "utcDate": "2026-04-21T18:00:00Z",
+   "local": {
+    "club": {
+     "code": "PAN",
+     "name": "Panathinaikos AKTOR Athens",
+     "abbreviatedName": "Panathinaikos",
+     "editorialName": "Panathinaikos",
+     "tvCode": "PAN",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/e3dff28a-9ec6-4faf-9d96-ecbc68f75780.png"
+     }
+    },
+    "score": 87,
+    "standingsScore": 87,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "MCO",
+     "name": "AS Monaco",
+     "abbreviatedName": "Monaco",
+     "editorialName": "Monaco",
+     "tvCode": "MCO",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/89ed276a-2ba3-413f-8ea2-b3be209ca129.png"
+     }
+    },
+    "score": 79,
+    "standingsScore": 79,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "TELEKOM CENTER ATHENS",
+    "code": "AUM6",
+    "capacity": 18500,
+    "address": "37 Kifisias Avenue, 15123 Marousi"
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_382",
+   "identifier": "E2025_382",
+   "gameCode": 382,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group B",
+    "rawName": "B"
+   },
+   "phaseType": {
+    "code": "PI",
+    "alias": "PLAY-IN",
+    "name": "Play-In",
+    "isGroupPhase": false
+   },
+   "round": 39,
+   "roundAlias": "Round 39",
+   "roundName": "Round 39",
+   "played": true,
+   "date": "2026-04-21T18:45:00",
+   "utcDate": "2026-04-21T18:45:00Z",
+   "local": {
+    "club": {
+     "code": "BAR",
+     "name": "FC Barcelona",
+     "abbreviatedName": "Barcelona",
+     "editorialName": "Barcelona",
+     "tvCode": "BAR",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/35dfa503-e417-481f-963a-bdf6f013763e.png"
+     }
+    },
+    "score": 80,
+    "standingsScore": 80,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "RED",
+     "name": "Crvena Zvezda Meridianbet Belgrade",
+     "abbreviatedName": "Crvena Zvezda",
+     "editorialName": "Crvena Zvezda",
+     "tvCode": "RED",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/d2eef4a8-62df-4fdd-9076-276004268515.png"
+     }
+    },
+    "score": 72,
+    "standingsScore": 72,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "PALAU BLAUGRANA",
+    "code": "PB",
+    "capacity": null,
+    "address": null
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_383",
+   "identifier": "E2025_383",
+   "gameCode": 383,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group C",
+    "rawName": "C"
+   },
+   "phaseType": {
+    "code": "PI",
+    "alias": "PLAY-IN",
+    "name": "Play-In",
+    "isGroupPhase": false
+   },
+   "round": 40,
+   "roundAlias": "Round 40",
+   "roundName": "Round 40",
+   "played": true,
+   "date": "2026-04-24T17:30:00",
+   "utcDate": "2026-04-24T17:30:00Z",
+   "local": {
+    "club": {
+     "code": "MCO",
+     "name": "AS Monaco",
+     "abbreviatedName": "Monaco",
+     "editorialName": "Monaco",
+     "tvCode": "MCO",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/89ed276a-2ba3-413f-8ea2-b3be209ca129.png"
+     }
+    },
+    "score": 79,
+    "standingsScore": 79,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "BAR",
+     "name": "FC Barcelona",
+     "abbreviatedName": "Barcelona",
+     "editorialName": "Barcelona",
+     "tvCode": "BAR",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/35dfa503-e417-481f-963a-bdf6f013763e.png"
+     }
+    },
+    "score": 70,
+    "standingsScore": 70,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "SALLE GASTON MEDECIN",
+    "code": "AUR2",
+    "capacity": null,
+    "address": null
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_385",
+   "identifier": "E2025_385",
+   "gameCode": 385,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group PLAYOFF B",
+    "rawName": "PLAYOFF B"
+   },
+   "phaseType": {
+    "code": "PO",
+    "alias": "PLAYOFFS",
+    "name": "Playoffs",
+    "isGroupPhase": false
+   },
+   "round": 41,
+   "roundAlias": "Round 41",
+   "roundName": "Round 41",
+   "played": true,
+   "date": "2026-04-28T17:45:00",
+   "utcDate": "2026-04-28T17:45:00Z",
+   "local": {
+    "club": {
+     "code": "ULK",
+     "name": "Fenerbahce Beko Istanbul",
+     "abbreviatedName": "Fenerbahce",
+     "editorialName": "Fenerbahce",
+     "tvCode": "ULK",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png"
+     }
+    },
+    "score": 89,
+    "standingsScore": 89,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "ZAL",
+     "name": "Zalgiris Kaunas",
+     "abbreviatedName": "Zalgiris",
+     "editorialName": "Zalgiris",
+     "tvCode": "ZAL",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/0aa09358-3847-4c4e-b228-3582ee4e536d.png"
+     }
+    },
+    "score": 78,
+    "standingsScore": 78,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "ULKER SPORTS AND EVENT HALL",
+    "code": "AMY",
+    "capacity": null,
+    "address": null
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_384",
+   "identifier": "E2025_384",
+   "gameCode": 384,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group PLAYOFF A ",
+    "rawName": "PLAYOFF A "
+   },
+   "phaseType": {
+    "code": "PO",
+    "alias": "PLAYOFFS",
+    "name": "Playoffs",
+    "isGroupPhase": false
+   },
+   "round": 41,
+   "roundAlias": "Round 41",
+   "roundName": "Round 41",
+   "played": true,
+   "date": "2026-04-28T18:00:00",
+   "utcDate": "2026-04-28T18:00:00Z",
+   "local": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 91,
+    "standingsScore": 91,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "MCO",
+     "name": "AS Monaco",
+     "abbreviatedName": "Monaco",
+     "editorialName": "Monaco",
+     "tvCode": "MCO",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/89ed276a-2ba3-413f-8ea2-b3be209ca129.png"
+     }
+    },
+    "score": 70,
+    "standingsScore": 70,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "PEACE AND FRIENDSHIP STADIUM",
+    "code": "ASF6",
+    "capacity": null,
+    "address": null
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_387",
+   "identifier": "E2025_387",
+   "gameCode": 387,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group PLAYOFF D",
+    "rawName": "PLAYOFF D"
+   },
+   "phaseType": {
+    "code": "PO",
+    "alias": "PLAYOFFS",
+    "name": "Playoffs",
+    "isGroupPhase": false
+   },
+   "round": 41,
+   "roundAlias": "Round 41",
+   "roundName": "Round 41",
+   "played": true,
+   "date": "2026-04-28T18:45:00",
+   "utcDate": "2026-04-28T18:45:00Z",
+   "local": {
+    "club": {
+     "code": "PAM",
+     "name": "Valencia Basket",
+     "abbreviatedName": "Valencia",
+     "editorialName": "Valencia",
+     "tvCode": "VBC",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHL/bc3e00b2-fea4-40be-a7ec-1e633129bde3.png"
+     }
+    },
+    "score": 67,
+    "standingsScore": 67,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "PAN",
+     "name": "Panathinaikos AKTOR Athens",
+     "abbreviatedName": "Panathinaikos",
+     "editorialName": "Panathinaikos",
+     "tvCode": "PAN",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/e3dff28a-9ec6-4faf-9d96-ecbc68f75780.png"
+     }
+    },
+    "score": 68,
+    "standingsScore": 68,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "ROIG ARENA",
+    "code": "AVJ1",
+    "capacity": null,
+    "address": null
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_386",
+   "identifier": "E2025_386",
+   "gameCode": 386,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group PLAYOFF C",
+    "rawName": "PLAYOFF C"
+   },
+   "phaseType": {
+    "code": "PO",
+    "alias": "PLAYOFFS",
+    "name": "Playoffs",
+    "isGroupPhase": false
+   },
+   "round": 41,
+   "roundAlias": "Round 41",
+   "roundName": "Round 41",
+   "played": true,
+   "date": "2026-04-29T18:45:00",
+   "utcDate": "2026-04-29T18:45:00Z",
+   "local": {
+    "club": {
+     "code": "MAD",
+     "name": "Real Madrid",
+     "abbreviatedName": "Real",
+     "editorialName": "Real",
+     "tvCode": "MAD",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png"
+     }
+    },
+    "score": 86,
+    "standingsScore": 86,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "HTA",
+     "name": "Hapoel IBI Tel Aviv",
+     "abbreviatedName": "Hapoel Tel Aviv",
+     "editorialName": "Hapoel Tel Aviv",
+     "tvCode": "HTA",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/cbb1c3ad-03d5-426a-b5ef-2832a4eee484.png"
+     }
+    },
+    "score": 82,
+    "standingsScore": 82,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "MOVISTAR ARENA",
+    "code": "ATI7",
+    "capacity": null,
+    "address": null
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_389",
+   "identifier": "E2025_389",
+   "gameCode": 389,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group PLAYOFF B",
+    "rawName": "PLAYOFF B"
+   },
+   "phaseType": {
+    "code": "PO",
+    "alias": "PLAYOFFS",
+    "name": "Playoffs",
+    "isGroupPhase": false
+   },
+   "round": 42,
+   "roundAlias": "Round 42",
+   "roundName": "Round 42",
+   "played": true,
+   "date": "2026-04-30T17:45:00",
+   "utcDate": "2026-04-30T17:45:00Z",
+   "local": {
+    "club": {
+     "code": "ULK",
+     "name": "Fenerbahce Beko Istanbul",
+     "abbreviatedName": "Fenerbahce",
+     "editorialName": "Fenerbahce",
+     "tvCode": "ULK",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png"
+     }
+    },
+    "score": 86,
+    "standingsScore": 86,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "ZAL",
+     "name": "Zalgiris Kaunas",
+     "abbreviatedName": "Zalgiris",
+     "editorialName": "Zalgiris",
+     "tvCode": "ZAL",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/0aa09358-3847-4c4e-b228-3582ee4e536d.png"
+     }
+    },
+    "score": 74,
+    "standingsScore": 74,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "ULKER SPORTS AND EVENT HALL",
+    "code": "AMY",
+    "capacity": null,
+    "address": null
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_388",
+   "identifier": "E2025_388",
+   "gameCode": 388,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group PLAYOFF A ",
+    "rawName": "PLAYOFF A "
+   },
+   "phaseType": {
+    "code": "PO",
+    "alias": "PLAYOFFS",
+    "name": "Playoffs",
+    "isGroupPhase": false
+   },
+   "round": 42,
+   "roundAlias": "Round 42",
+   "roundName": "Round 42",
+   "played": true,
+   "date": "2026-04-30T18:00:00",
+   "utcDate": "2026-04-30T18:00:00Z",
+   "local": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 94,
+    "standingsScore": 94,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "MCO",
+     "name": "AS Monaco",
+     "abbreviatedName": "Monaco",
+     "editorialName": "Monaco",
+     "tvCode": "MCO",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/89ed276a-2ba3-413f-8ea2-b3be209ca129.png"
+     }
+    },
+    "score": 64,
+    "standingsScore": 64,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "PEACE AND FRIENDSHIP STADIUM",
+    "code": "ASF6",
+    "capacity": null,
+    "address": null
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_391",
+   "identifier": "E2025_391",
+   "gameCode": 391,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group PLAYOFF D",
+    "rawName": "PLAYOFF D"
+   },
+   "phaseType": {
+    "code": "PO",
+    "alias": "PLAYOFFS",
+    "name": "Playoffs",
+    "isGroupPhase": false
+   },
+   "round": 42,
+   "roundAlias": "Round 42",
+   "roundName": "Round 42",
+   "played": true,
+   "date": "2026-04-30T18:45:00",
+   "utcDate": "2026-04-30T18:45:00Z",
+   "local": {
+    "club": {
+     "code": "PAM",
+     "name": "Valencia Basket",
+     "abbreviatedName": "Valencia",
+     "editorialName": "Valencia",
+     "tvCode": "VBC",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHL/bc3e00b2-fea4-40be-a7ec-1e633129bde3.png"
+     }
+    },
+    "score": 105,
+    "standingsScore": 105,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "PAN",
+     "name": "Panathinaikos AKTOR Athens",
+     "abbreviatedName": "Panathinaikos",
+     "editorialName": "Panathinaikos",
+     "tvCode": "PAN",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/e3dff28a-9ec6-4faf-9d96-ecbc68f75780.png"
+     }
+    },
+    "score": 107,
+    "standingsScore": 107,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "ROIG ARENA",
+    "code": "AVJ1",
+    "capacity": null,
+    "address": null
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_390",
+   "identifier": "E2025_390",
+   "gameCode": 390,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group PLAYOFF C",
+    "rawName": "PLAYOFF C"
+   },
+   "phaseType": {
+    "code": "PO",
+    "alias": "PLAYOFFS",
+    "name": "Playoffs",
+    "isGroupPhase": false
+   },
+   "round": 42,
+   "roundAlias": "Round 42",
+   "roundName": "Round 42",
+   "played": true,
+   "date": "2026-05-01T18:45:00",
+   "utcDate": "2026-05-01T18:45:00Z",
+   "local": {
+    "club": {
+     "code": "MAD",
+     "name": "Real Madrid",
+     "abbreviatedName": "Real",
+     "editorialName": "Real",
+     "tvCode": "MAD",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png"
+     }
+    },
+    "score": 102,
+    "standingsScore": 102,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "HTA",
+     "name": "Hapoel IBI Tel Aviv",
+     "abbreviatedName": "Hapoel Tel Aviv",
+     "editorialName": "Hapoel Tel Aviv",
+     "tvCode": "HTA",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/cbb1c3ad-03d5-426a-b5ef-2832a4eee484.png"
+     }
+    },
+    "score": 75,
+    "standingsScore": 75,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "MOVISTAR ARENA",
+    "code": "ATI7",
+    "capacity": null,
+    "address": null
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_394",
+   "identifier": "E2025_394",
+   "gameCode": 394,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group PLAYOFF C",
+    "rawName": "PLAYOFF C"
+   },
+   "phaseType": {
+    "code": "PO",
+    "alias": "PLAYOFFS",
+    "name": "Playoffs",
+    "isGroupPhase": false
+   },
+   "round": 43,
+   "roundAlias": "Round 43",
+   "roundName": "Round 43",
+   "played": true,
+   "date": "2026-05-05T16:00:00",
+   "utcDate": "2026-05-05T16:00:00Z",
+   "local": {
+    "club": {
+     "code": "HTA",
+     "name": "Hapoel IBI Tel Aviv",
+     "abbreviatedName": "Hapoel Tel Aviv",
+     "editorialName": "Hapoel Tel Aviv",
+     "tvCode": "HTA",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/cbb1c3ad-03d5-426a-b5ef-2832a4eee484.png"
+     }
+    },
+    "score": 76,
+    "standingsScore": 76,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "MAD",
+     "name": "Real Madrid",
+     "abbreviatedName": "Real",
+     "editorialName": "Real",
+     "tvCode": "MAD",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png"
+     }
+    },
+    "score": 69,
+    "standingsScore": 69,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "ARENA BOTEVGRAD",
+    "code": "AVN1",
+    "capacity": null,
+    "address": null
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_392",
+   "identifier": "E2025_392",
+   "gameCode": 392,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group PLAYOFF A ",
+    "rawName": "PLAYOFF A "
+   },
+   "phaseType": {
+    "code": "PO",
+    "alias": "PLAYOFFS",
+    "name": "Playoffs",
+    "isGroupPhase": false
+   },
+   "round": 43,
+   "roundAlias": "Round 43",
+   "roundName": "Round 43",
+   "played": true,
+   "date": "2026-05-05T17:45:00",
+   "utcDate": "2026-05-05T17:45:00Z",
+   "local": {
+    "club": {
+     "code": "MCO",
+     "name": "AS Monaco",
+     "abbreviatedName": "Monaco",
+     "editorialName": "Monaco",
+     "tvCode": "MCO",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/89ed276a-2ba3-413f-8ea2-b3be209ca129.png"
+     }
+    },
+    "score": 82,
+    "standingsScore": 82,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 105,
+    "standingsScore": 105,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "SALLE GASTON MEDECIN",
+    "code": "AUR2",
+    "capacity": null,
+    "address": null
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_393",
+   "identifier": "E2025_393",
+   "gameCode": 393,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group PLAYOFF B",
+    "rawName": "PLAYOFF B"
+   },
+   "phaseType": {
+    "code": "PO",
+    "alias": "PLAYOFFS",
+    "name": "Playoffs",
+    "isGroupPhase": false
+   },
+   "round": 43,
+   "roundAlias": "Round 43",
+   "roundName": "Round 43",
+   "played": true,
+   "date": "2026-05-06T17:00:00",
+   "utcDate": "2026-05-06T17:00:00Z",
+   "local": {
+    "club": {
+     "code": "ZAL",
+     "name": "Zalgiris Kaunas",
+     "abbreviatedName": "Zalgiris",
+     "editorialName": "Zalgiris",
+     "tvCode": "ZAL",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/0aa09358-3847-4c4e-b228-3582ee4e536d.png"
+     }
+    },
+    "score": 81,
+    "standingsScore": 81,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "ULK",
+     "name": "Fenerbahce Beko Istanbul",
+     "abbreviatedName": "Fenerbahce",
+     "editorialName": "Fenerbahce",
+     "tvCode": "ULK",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png"
+     }
+    },
+    "score": 78,
+    "standingsScore": 78,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "ZALGIRIO ARENA",
+    "code": "ATJ",
+    "capacity": null,
+    "address": null
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_395",
+   "identifier": "E2025_395",
+   "gameCode": 395,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group PLAYOFF D",
+    "rawName": "PLAYOFF D"
+   },
+   "phaseType": {
+    "code": "PO",
+    "alias": "PLAYOFFS",
+    "name": "Playoffs",
+    "isGroupPhase": false
+   },
+   "round": 43,
+   "roundAlias": "Round 43",
+   "roundName": "Round 43",
+   "played": true,
+   "date": "2026-05-06T18:15:00",
+   "utcDate": "2026-05-06T18:15:00Z",
+   "local": {
+    "club": {
+     "code": "PAN",
+     "name": "Panathinaikos AKTOR Athens",
+     "abbreviatedName": "Panathinaikos",
+     "editorialName": "Panathinaikos",
+     "tvCode": "PAN",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/e3dff28a-9ec6-4faf-9d96-ecbc68f75780.png"
+     }
+    },
+    "score": 87,
+    "standingsScore": 87,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "PAM",
+     "name": "Valencia Basket",
+     "abbreviatedName": "Valencia",
+     "editorialName": "Valencia",
+     "tvCode": "VBC",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHL/bc3e00b2-fea4-40be-a7ec-1e633129bde3.png"
+     }
+    },
+    "score": 91,
+    "standingsScore": 91,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "TELEKOM CENTER ATHENS",
+    "code": "AUM6",
+    "capacity": 18500,
+    "address": "37 Kifisias Avenue, 15123 Marousi"
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_398",
+   "identifier": "E2025_398",
+   "gameCode": 398,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group PLAYOFF C",
+    "rawName": "PLAYOFF C"
+   },
+   "phaseType": {
+    "code": "PO",
+    "alias": "PLAYOFFS",
+    "name": "Playoffs",
+    "isGroupPhase": false
+   },
+   "round": 44,
+   "roundAlias": "Round 44",
+   "roundName": "Round 44",
+   "played": true,
+   "date": "2026-05-07T18:00:00",
+   "utcDate": "2026-05-07T18:00:00Z",
+   "local": {
+    "club": {
+     "code": "HTA",
+     "name": "Hapoel IBI Tel Aviv",
+     "abbreviatedName": "Hapoel Tel Aviv",
+     "editorialName": "Hapoel Tel Aviv",
+     "tvCode": "HTA",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/cbb1c3ad-03d5-426a-b5ef-2832a4eee484.png"
+     }
+    },
+    "score": 81,
+    "standingsScore": 81,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "MAD",
+     "name": "Real Madrid",
+     "abbreviatedName": "Real",
+     "editorialName": "Real",
+     "tvCode": "MAD",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png"
+     }
+    },
+    "score": 87,
+    "standingsScore": 87,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "ARENA BOTEVGRAD",
+    "code": "AVN1",
+    "capacity": null,
+    "address": null
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_397",
+   "identifier": "E2025_397",
+   "gameCode": 397,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group PLAYOFF B",
+    "rawName": "PLAYOFF B"
+   },
+   "phaseType": {
+    "code": "PO",
+    "alias": "PLAYOFFS",
+    "name": "Playoffs",
+    "isGroupPhase": false
+   },
+   "round": 44,
+   "roundAlias": "Round 44",
+   "roundName": "Round 44",
+   "played": true,
+   "date": "2026-05-08T17:00:00",
+   "utcDate": "2026-05-08T17:00:00Z",
+   "local": {
+    "club": {
+     "code": "ZAL",
+     "name": "Zalgiris Kaunas",
+     "abbreviatedName": "Zalgiris",
+     "editorialName": "Zalgiris",
+     "tvCode": "ZAL",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/0aa09358-3847-4c4e-b228-3582ee4e536d.png"
+     }
+    },
+    "score": 90,
+    "standingsScore": 90,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "ULK",
+     "name": "Fenerbahce Beko Istanbul",
+     "abbreviatedName": "Fenerbahce",
+     "editorialName": "Fenerbahce",
+     "tvCode": "ULK",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png"
+     }
+    },
+    "score": 94,
+    "standingsScore": 94,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "ZALGIRIO ARENA",
+    "code": "ATJ",
+    "capacity": null,
+    "address": null
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_399",
+   "identifier": "E2025_399",
+   "gameCode": 399,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group PLAYOFF D",
+    "rawName": "PLAYOFF D"
+   },
+   "phaseType": {
+    "code": "PO",
+    "alias": "PLAYOFFS",
+    "name": "Playoffs",
+    "isGroupPhase": false
+   },
+   "round": 44,
+   "roundAlias": "Round 44",
+   "roundName": "Round 44",
+   "played": true,
+   "date": "2026-05-08T18:15:00",
+   "utcDate": "2026-05-08T18:15:00Z",
+   "local": {
+    "club": {
+     "code": "PAN",
+     "name": "Panathinaikos AKTOR Athens",
+     "abbreviatedName": "Panathinaikos",
+     "editorialName": "Panathinaikos",
+     "tvCode": "PAN",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/e3dff28a-9ec6-4faf-9d96-ecbc68f75780.png"
+     }
+    },
+    "score": 86,
+    "standingsScore": 86,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "PAM",
+     "name": "Valencia Basket",
+     "abbreviatedName": "Valencia",
+     "editorialName": "Valencia",
+     "tvCode": "VBC",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHL/bc3e00b2-fea4-40be-a7ec-1e633129bde3.png"
+     }
+    },
+    "score": 89,
+    "standingsScore": 89,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "TELEKOM CENTER ATHENS",
+    "code": "AUM6",
+    "capacity": 18500,
+    "address": "37 Kifisias Avenue, 15123 Marousi"
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_403",
+   "identifier": "E2025_403",
+   "gameCode": 403,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group PLAYOFF D",
+    "rawName": "PLAYOFF D"
+   },
+   "phaseType": {
+    "code": "PO",
+    "alias": "PLAYOFFS",
+    "name": "Playoffs",
+    "isGroupPhase": false
+   },
+   "round": 45,
+   "roundAlias": "Round 45",
+   "roundName": "Round 45",
+   "played": true,
+   "date": "2026-05-13T19:00:00",
+   "utcDate": "2026-05-13T19:00:00Z",
+   "local": {
+    "club": {
+     "code": "PAM",
+     "name": "Valencia Basket",
+     "abbreviatedName": "Valencia",
+     "editorialName": "Valencia",
+     "tvCode": "VBC",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHL/bc3e00b2-fea4-40be-a7ec-1e633129bde3.png"
+     }
+    },
+    "score": 81,
+    "standingsScore": 81,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "PAN",
+     "name": "Panathinaikos AKTOR Athens",
+     "abbreviatedName": "Panathinaikos",
+     "editorialName": "Panathinaikos",
+     "tvCode": "PAN",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/e3dff28a-9ec6-4faf-9d96-ecbc68f75780.png"
+     }
+    },
+    "score": 64,
+    "standingsScore": 64,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "ROIG ARENA",
+    "code": "AVJ1",
+    "capacity": null,
+    "address": null
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_404",
+   "identifier": "E2025_404",
+   "gameCode": 404,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group SEMIFINAL A",
+    "rawName": "SEMIFINAL A"
+   },
+   "phaseType": {
+    "code": "FF",
+    "alias": "FINAL FOUR",
+    "name": "Final Four",
+    "isGroupPhase": false
+   },
+   "round": 46,
+   "roundAlias": "Round 46",
+   "roundName": "Round 46",
+   "played": true,
+   "date": "2026-05-22T15:00:00",
+   "utcDate": "2026-05-22T15:00:00Z",
+   "local": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 79,
+    "standingsScore": 79,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "ULK",
+     "name": "Fenerbahce Beko Istanbul",
+     "abbreviatedName": "Fenerbahce",
+     "editorialName": "Fenerbahce",
+     "tvCode": "ULK",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png"
+     }
+    },
+    "score": 61,
+    "standingsScore": 61,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "TELEKOM CENTER ATHENS",
+    "code": "AUM6",
+    "capacity": 18500,
+    "address": "37 Kifisias Avenue, 15123 Marousi"
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_405",
+   "identifier": "E2025_405",
+   "gameCode": 405,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group SEMIFINAL B",
+    "rawName": "SEMIFINAL B"
+   },
+   "phaseType": {
+    "code": "FF",
+    "alias": "FINAL FOUR",
+    "name": "Final Four",
+    "isGroupPhase": false
+   },
+   "round": 46,
+   "roundAlias": "Round 46",
+   "roundName": "Round 46",
+   "played": true,
+   "date": "2026-05-22T18:00:00",
+   "utcDate": "2026-05-22T18:00:00Z",
+   "local": {
+    "club": {
+     "code": "PAM",
+     "name": "Valencia Basket",
+     "abbreviatedName": "Valencia",
+     "editorialName": "Valencia",
+     "tvCode": "VBC",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHL/bc3e00b2-fea4-40be-a7ec-1e633129bde3.png"
+     }
+    },
+    "score": 90,
+    "standingsScore": 90,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "MAD",
+     "name": "Real Madrid",
+     "abbreviatedName": "Real",
+     "editorialName": "Real",
+     "tvCode": "MAD",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png"
+     }
+    },
+    "score": 105,
+    "standingsScore": 105,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "TELEKOM CENTER ATHENS",
+    "code": "AUM6",
+    "capacity": 18500,
+    "address": "37 Kifisias Avenue, 15123 Marousi"
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  },
+  {
+   "id": "E2025_406",
+   "identifier": "E2025_406",
+   "gameCode": 406,
+   "season": {
+    "code": "E2025"
+   },
+   "group": {
+    "name": "Group CHAMPIONSHIP GAME ",
+    "rawName": "CHAMPIONSHIP GAME "
+   },
+   "phaseType": {
+    "code": "FF",
+    "alias": "FINAL FOUR",
+    "name": "Final Four",
+    "isGroupPhase": false
+   },
+   "round": 47,
+   "roundAlias": "Round 47",
+   "roundName": "Round 47",
+   "played": true,
+   "date": "2026-05-24T18:00:00",
+   "utcDate": "2026-05-24T18:00:00Z",
+   "local": {
+    "club": {
+     "code": "OLY",
+     "name": "Olympiacos Piraeus",
+     "abbreviatedName": "Olympiacos",
+     "editorialName": "Olympiacos",
+     "tvCode": "OLY",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png"
+     }
+    },
+    "score": 92,
+    "standingsScore": 92,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "road": {
+    "club": {
+     "code": "MAD",
+     "name": "Real Madrid",
+     "abbreviatedName": "Real",
+     "editorialName": "Real",
+     "tvCode": "MAD",
+     "isVirtual": false,
+     "images": {
+      "crest": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png"
+     }
+    },
+    "score": 85,
+    "standingsScore": 85,
+    "partials": {
+     "extraPeriods": {}
+    }
+   },
+   "audience": null,
+   "venue": {
+    "name": "TELEKOM CENTER ATHENS",
+    "code": "AUM6",
+    "capacity": 18500,
+    "address": "37 Kifisias Avenue, 15123 Marousi"
+   },
+   "isNeutralVenue": false,
+   "gameStatus": "Result",
+   "winner": {
+    "code": "OLY",
+    "name": "Olympiacos Piraeus"
+   }
+  }
+ ],
+ "total": 22
+}

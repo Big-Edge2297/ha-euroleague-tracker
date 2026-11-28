@@ -14,9 +14,10 @@ const CARD_VERSION = (() => {
 })();
 const ATTRIBUTION_PREFIX = "Data provided by the EuroLeague API";
 
-type View = "tabs" | "game" | "standings" | "stats" | "round";
+type View = "tabs" | "game" | "standings" | "stats" | "round" | "compact";
 type Tab = "game" | "standings" | "stats" | "round";
 type StatsTab = "team" | "players" | "shots";
+const POSTSEASON = ["PI", "PO", "FF"];
 
 interface CardConfig {
   type: string;
@@ -85,6 +86,7 @@ export class EuroLeagueTrackerCard extends LitElement {
     _config: { state: true },
     _tab: { state: true },
     _statsTab: { state: true },
+    _standingsTab: { state: true },
     _round: { state: true },
     _broken: { state: true },
   };
@@ -93,6 +95,7 @@ export class EuroLeagueTrackerCard extends LitElement {
   private _config!: CardConfig;
   private _tab: Tab = "game";
   private _statsTab: StatsTab = "team";
+  private _standingsTab: "bracket" | "table" = "bracket";
   private _round: number | null = null;
   private _broken: Set<string> = new Set();
 
@@ -117,7 +120,7 @@ export class EuroLeagueTrackerCard extends LitElement {
     return this._tab === "standings" || this._tab === "stats" ? 12 : this._tab === "round" ? 9 : 8;
   }
 
-  getGridOptions() {
+  getGridOptions(): Record<string, number | string> {
     return { columns: 12, min_columns: 6, rows: "auto" };
   }
 
@@ -285,6 +288,12 @@ export class EuroLeagueTrackerCard extends LitElement {
       .map(([k, v]) => `${k}:${v}`)
       .join(";");
     const tab: Tab = this._config.view === "tabs" ? this._tab : (this._config.view as Tab) ?? "game";
+    if (this._config.view === "compact") {
+      return html`<ha-card style=${style} class="compact-card" @click=${this._moreInfo} tabindex="0" role="button"
+        aria-label=${`${a.team_name ?? "Game"}: more details`} @keydown=${(e: KeyboardEvent) => (e.key === "Enter" || e.key === " ") && this._moreInfo()}
+        >${this._renderCompact(game.state, a)}</ha-card
+      >`;
+    }
 
     return html`<ha-card style=${style}>
       ${theme === "team" && a.team_logo && !this._broken.has(a.team_logo)
@@ -346,11 +355,17 @@ export class EuroLeagueTrackerCard extends LitElement {
 
     return html`
       <div class="head">
-        <span class="eyebrow">${competition}${round ? ` · ${round}` : ""}</span>
+        <span class="eyebrow"
+          >${POSTSEASON.includes(a.phase_code) && round ? round : `${competition}${round ? ` · ${round}` : ""}`}</span
+        >
         ${pill}
       </div>
-      ${this._renderMatchup(state, a)}
-      ${state === "PRE" ? this._renderPreCompare(a) : this._renderQuarters(state, a)}
+      ${this._renderMatchup(state, a)} ${this._renderSeries(state, a)}
+      ${state === "PRE"
+        ? a.phase_code === "FF"
+          ? this._renderRoad(a)
+          : this._renderPreCompare(a)
+        : this._renderQuarters(state, a)}
       ${state === "PRE" ? this._renderH2H(a) : this._renderFlow(state, a)}
       ${state === "IN" ? this._renderPlays(a) : nothing}
       ${state !== "PRE" ? this._renderPlayers(state, a) : nothing}
@@ -369,6 +384,7 @@ export class EuroLeagueTrackerCard extends LitElement {
       position: a[`${who}_position`],
       homeaway: a[`${who}_homeaway`],
       score: a[`${who}_score`],
+      seed: a[`${who}_seed`],
     };
   }
 
@@ -378,6 +394,11 @@ export class EuroLeagueTrackerCard extends LitElement {
     const them = this._side(a, "opponent");
     const [left, right] = us.homeaway === "away" ? [them, us] : [us, them];
     const sub = (s: ReturnType<typeof this._side>) => {
+      if (s.seed && POSTSEASON.includes(a.phase_code)) {
+        // No home or away at the Final Four; seeds matter more than records.
+        const seed = `${s.seed}${ordinalSuffix(s.seed)} seed`;
+        return a.neutral_site ? seed : [seed, s.homeaway === "home" ? "Home" : "Away"].join(" · ");
+      }
       if (state === "PRE") {
         const pos = s.position ? `${s.position}${ordinalSuffix(s.position)}` : null;
         return [pos, s.record].filter(Boolean).join(" · ");
@@ -522,6 +543,7 @@ export class EuroLeagueTrackerCard extends LitElement {
 
   private _renderFoot(state: string, a: Attrs) {
     const parts: string[] = [];
+    if (a.neutral_site) parts.push("Neutral venue");
     if (a.venue) parts.push(titleCase(a.venue));
     if (state !== "PRE" && a.attendance) parts.push(`${Number(a.attendance).toLocaleString(this._locale().lang)} fans`);
     if (state === "PRE" && a.capacity) parts.push(`cap. ${Number(a.capacity).toLocaleString(this._locale().lang)}`);
@@ -532,13 +554,287 @@ export class EuroLeagueTrackerCard extends LitElement {
     return parts.length ? html`<div class="foot">${parts.join(" · ")}</div>` : nothing;
   }
 
+
+  // --------------------------------------------------------------- compact
+
+  private _moreInfo = () => {
+    this.dispatchEvent(
+      new CustomEvent("hass-more-info", { detail: { entityId: this._config.entity }, bubbles: true, composed: true }),
+    );
+  };
+
+  private _renderCompact(state: string, a: Attrs) {
+    if (state === "NOT_FOUND" || !a.team_abbr) {
+      return html`<div class="compact"><div class="cm"><span class="cs">${a.api_message ?? "No game found."}</span></div></div>`;
+    }
+    const us = this._side(a, "team");
+    const them = this._side(a, "opponent");
+    const [left, right] = us.homeaway === "away" ? [them, us] : [us, them];
+    const crest = (s: ReturnType<typeof this._side>) =>
+      s.logo && !this._broken.has(s.logo)
+        ? html`<img
+            class="c-crest"
+            src=${s.logo}
+            alt=""
+            referrerpolicy="no-referrer"
+            @error=${() => (this._broken = new Set([...this._broken, s.logo]))}
+          />`
+        : html`<span class="c-crest fallback">${s.code}</span>`;
+    let main: TemplateResult;
+    let sub: string;
+    let pill: TemplateResult;
+    const round = a.round_name ?? (a.round ? `Round ${a.round}` : "");
+    if (state === "PRE") {
+      main = html`<span class="cmain">${left.code} vs ${right.code}</span>`;
+      sub = [a.date ? `${this._fmtDay(a.date)} · ${this._fmtTime(a.date)}` : "", round].filter(Boolean).join(" · ");
+      pill = html`<span class="pill">${a.kickoff_in ?? ""}</span>`;
+    } else {
+      const l = left.score ?? 0;
+      const r = right.score ?? 0;
+      main = html`<span class="cmain score-line"
+        >${left.code} <b class=${l < r ? "trailing" : ""}>${l}</b> – <b class=${r < l ? "trailing" : ""}>${r}</b> ${right.code}</span
+      >`;
+      if (state === "IN") {
+        sub = a.last_play ?? round;
+        pill = html`<span class="pill live"><span class="dot"></span>${a.clock ?? "LIVE"}</span>`;
+      } else {
+        const won = a.team_winner === true;
+        sub =
+          a.series?.status ??
+          (a.next_game?.date
+            ? `Next: ${a.next_game.homeaway === "home" ? "vs" : "@"} ${a.next_game.opponent_abbr}, ${this._fmtDay(a.next_game.date)}`
+            : round);
+        if (a.series?.status) sub = `${round} · ${sub}`;
+        pill = html`<span class="pill ${won ? "win" : "loss"}">Final · ${won ? "W" : "L"}</span>`;
+      }
+    }
+    return html`<div class="compact">
+      <div class="crests">${crest(left)}${crest(right)}</div>
+      <div class="cm">${main}<span class="cs">${sub}</span></div>
+      ${pill}
+    </div>`;
+  }
+
+  // ------------------------------------------------------------ postseason
+
+  private _renderSeries(state: string, a: Attrs) {
+    const se = a.series;
+    if (!se?.games?.length) return nothing;
+    const n = se.best_of ?? 5;
+    const cells = Array.from({ length: n }, (_, i) => se.games[i]);
+    return html`<div class="panel series">
+      <div class="head">
+        <b class="series-status">${se.status}</b>
+        <span class="eyebrow">Best of ${n}</span>
+      </div>
+      <div class="series-games">
+        ${cells.map((g: Attrs | undefined, i) => {
+          if (!g) {
+            return html`<div class="sg none"><span class="n">G${i + 1}</span><span class="r">${se.decided ? "not needed" : "if needed"}</span></div>`;
+          }
+          if (!g.played) {
+            const current = g.game_number === se.game_number && state !== "POST";
+            return html`<div class="sg ${current ? "current" : ""}">
+              <span class="n">G${i + 1}</span><span class="r">${g.date ? this._fmtDay(g.date) : ""}</span>
+            </div>`;
+          }
+          return html`<div class="sg ${g.game_number === se.game_number ? "current" : ""}">
+            <span class="n">G${i + 1}</span
+            ><span class="r"><span class="chip small ${g.won ? "W" : "L"}">${g.won ? "W" : "L"}</span>${g.team_score}-${g.opponent_score}</span>
+          </div>`;
+        })}
+      </div>
+    </div>`;
+  }
+
+  /** Final Four preview: each side's way there, from the bracket. */
+  private _renderRoad(a: Attrs) {
+    const st = this._state(this._standingsId())?.attributes ?? {};
+    const b: Attrs | null = st.bracket ?? null;
+    const table: Attrs[] = st.table ?? [];
+    if (!b) return nothing;
+    const us = this._side(a, "team");
+    const them = this._side(a, "opponent");
+    const [left, right] = us.homeaway === "away" ? [them, us] : [us, them];
+    const result = (code: string, g: Attrs | undefined) => {
+      if (!g?.played) return "–";
+      const mine = g.home === code;
+      const other = mine ? g.away : g.home;
+      const [x, y] = mine ? [g.home_score, g.away_score] : [g.away_score, g.home_score];
+      return `${x > y ? "W" : "L"} ${x}-${y} ${other}`;
+    };
+    const semi = (code: string) => b.final_four?.semifinals?.find((g: Attrs) => g.home === code || g.away === code);
+    const series = (code: string) => {
+      const s = (b.playoffs ?? []).find((p: Attrs) => p.top?.code === code || p.bottom?.code === code);
+      if (!s) return "–";
+      const [me, other] = s.top.code === code ? [s.top, s.bottom] : [s.bottom, s.top];
+      return `${me.wins}-${other?.wins ?? 0} ${other?.code ?? ""}`;
+    };
+    const rec = (code: string) => {
+      const r = table.find((t) => t.code === code);
+      return r ? `${r.wins}-${r.losses}` : "–";
+    };
+    const isFinal = /Championship/.test(a.round_name ?? "");
+    const rows: [string, string, string][] = [
+      ...(isFinal ? ([["Semifinal", result(left.code, semi(left.code)), result(right.code, semi(right.code))]] as [string, string, string][]) : []),
+      ["Playoffs", series(left.code), series(right.code)],
+      ["Regular season", rec(left.code), rec(right.code)],
+    ];
+    return html`<div class="panel compare">
+      ${rows.map(([k, l, r]) => html`<span>${l}</span><span class="mid">${k}</span><span class="r">${r}</span>`)}
+    </div>`;
+  }
+
+  private _renderBracket(st: Attrs) {
+    const b: Attrs = st.bracket;
+    const me = st.team_abbr;
+    const seeds: Attrs = b.seeds ?? {};
+    const side = (code: string, score: any, win: boolean, seed?: number) =>
+      html`<div class="bside ${win ? "w" : "dim"}">
+        <span class="seed">${seed ?? seeds[code] ?? ""}</span>${this._mini(code, st)}<span class="c">${code}</span
+        ><span class="s">${score ?? ""}</span>
+      </div>`;
+    const game = (g: Attrs, label: string) =>
+      html`<div class="bbox ${g.home === me || g.away === me ? "me" : ""}">
+        <div class="bl">${label}</div>
+        ${side(g.home, g.played ? g.home_score : null, g.winner === g.home)}
+        ${side(g.away, g.played ? g.away_score : null, g.winner === g.away)}
+      </div>`;
+    const ff = b.final_four ?? {};
+    return html`
+      ${b.play_in?.length
+        ? html`<div>
+            <div class="section-title">Play-in</div>
+            <div class="bgrid three">${b.play_in.map((g: Attrs) => game(g, g.label ?? "Play-in"))}</div>
+          </div>`
+        : nothing}
+      ${b.playoffs?.length
+        ? html`<div>
+            <div class="section-title">Playoffs · best of ${b.playoffs[0].best_of ?? 5}</div>
+            <div class="bgrid">
+              ${b.playoffs.map((s: Attrs) => {
+                const mine = s.top?.code === me || s.bottom?.code === me;
+                const label = s.winner
+                  ? `${s.winner} win ${Math.max(s.top.wins, s.bottom?.wins ?? 0)}-${Math.min(s.top.wins, s.bottom?.wins ?? 0)}`
+                  : s.top.wins === (s.bottom?.wins ?? 0)
+                    ? `Tied ${s.top.wins}-${s.top.wins}`
+                    : `${s.top.wins > (s.bottom?.wins ?? 0) ? s.top.code : s.bottom.code} lead ${Math.max(s.top.wins, s.bottom?.wins ?? 0)}-${Math.min(s.top.wins, s.bottom?.wins ?? 0)}`;
+                return html`<div class="bbox ${mine ? "me" : ""}">
+                  <div class="bl">Playoff ${s.group} · ${label}</div>
+                  ${side(s.top.code, s.top.wins, s.winner === s.top.code, s.top.seed)}
+                  ${s.bottom ? side(s.bottom.code, s.bottom.wins, s.winner === s.bottom.code, s.bottom.seed) : nothing}
+                </div>`;
+              })}
+            </div>
+          </div>`
+        : nothing}
+      ${ff.semifinals?.length || ff.final
+        ? html`<div>
+            <div class="head" style="margin-bottom:6px">
+              <span class="section-title" style="margin:0">Final Four</span>
+              <span class="foot">${ff.venue ? titleCase(ff.venue) : ""}</span>
+            </div>
+            <div class="bgrid">${(ff.semifinals ?? []).map((g: Attrs) => game(g, `Semifinal${g.date ? ` · ${this._fmtShort(g.date)}` : ""}`))}</div>
+            ${ff.final ? html`<div style="margin-top:6px">${game(ff.final, `Championship game${ff.final.date ? ` · ${this._fmtShort(ff.final.date)}` : ""}`)}</div>` : nothing}
+            ${ff.third_place ? html`<div style="margin-top:6px">${game(ff.third_place, "Third place")}</div>` : nothing}
+          </div>`
+        : nothing}
+    `;
+  }
+
+  private _fmtShort(iso: string): string {
+    const { lang, tz } = this._locale();
+    return new Intl.DateTimeFormat(lang, { day: "numeric", month: "short", timeZone: tz }).format(new Date(iso));
+  }
+
+  /** A small crest from the standings table or the round scoreboard. */
+  private _mini(code: string, st: Attrs) {
+    const url = (st.table ?? []).find((r: Attrs) => r.code === code)?.crest ?? st.scoreboard?.crests?.[code];
+    return url && !this._broken.has(url)
+      ? html`<img
+          class="mini-crest"
+          src=${url}
+          alt=""
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          @error=${() => (this._broken = new Set([...this._broken, url]))}
+        />`
+      : html`<span class="mini-crest fallback" aria-hidden="true"></span>`;
+  }
+
+  private _renderRace(st: Attrs) {
+    const race: Attrs | null = st.playoff_race ?? null;
+    if (!race?.playoffs) return nothing;
+    const tile = (k: string, line: Attrs | null) => {
+      if (!line) return nothing;
+      const n = line.games;
+      const games = `${Number.isInteger(n) ? n : n.toFixed(1)} game${n === 1 ? "" : "s"}`;
+      const main =
+        line.status === "clinched"
+          ? "Clinched"
+          : line.status === "eliminated"
+            ? "Out of reach"
+            : line.inside
+              ? n === 0
+                ? "On the line"
+                : `${games} clear`
+              : `${games} behind`;
+      const sub = line.status === "clinched" || line.status === "eliminated" ? "" : `${line.inside ? "of" : ""} ${line.line + (line.inside ? 1 : 0)}${ordinalSuffix(line.line + (line.inside ? 1 : 0))} (${line.rival})`;
+      return html`<div class="tile small race ${line.status}">
+        <div class="k">${k}</div>
+        <div class="v">${main}</div>
+        <div class="note">${sub.trim()}</div>
+      </div>`;
+    };
+    return html`<div class="facts" style="margin-top:0">
+      ${tile("Playoff line", race.playoffs)} ${tile("Play-in line", race.play_in)}
+      <div class="tile small">
+        <div class="k">Games left</div>
+        <div class="v">${race.games_remaining}</div>
+        <div class="note">${race.last_game_date ? `until ${this._fmtShort(race.last_game_date)}` : ""}</div>
+      </div>
+    </div>`;
+  }
+
   // ----------------------------------------------------------- standings
 
   private _renderStandings(a: Attrs) {
     const st = this._state(this._standingsId());
-    const table: Attrs[] = st?.attributes?.table ?? [];
-    if (!table.length) return html`<div class="empty-state">Standings aren't available yet.</div>`;
-    const me = a.team_abbr ?? st?.attributes?.team_abbr;
+    const at: Attrs = st?.attributes ?? {};
+    const table: Attrs[] = at.table ?? [];
+    const bracket = at.bracket?.playoffs?.length || at.bracket?.play_in?.length ? at.bracket : null;
+    if (!table.length && !bracket) return html`<div class="empty-state">Standings aren't available yet.</div>`;
+    const showBracket = bracket && this._standingsTab === "bracket";
+    const champion = bracket?.champion;
+    return html`
+      <div class="head">
+        <span class="eyebrow"
+          >${at.competition ?? "EuroLeague"} ${bracket ? `${seasonLabel(at.season)} · postseason` : "standings"}</span
+        >
+        ${champion
+          ? html`<span class="pill live">Champion ${champion}</span>`
+          : html`<span class="pill">${at.round ? `After round ${at.round}` : ""}</span>`}
+      </div>
+      ${bracket
+        ? html`<div class="subtabs" role="tablist">
+            ${(["bracket", "table"] as const).map(
+              (key) =>
+                html`<button
+                  role="tab"
+                  aria-selected=${this._standingsTab === key ? "true" : "false"}
+                  @click=${() => (this._standingsTab = key)}
+                >
+                  ${key === "bracket" ? "Bracket" : "Table"}
+                </button>`,
+            )}
+          </div>`
+        : this._renderRace(at)}
+      ${showBracket ? this._renderBracket({ ...at, team_abbr: a.team_abbr ?? at.team_abbr }) : this._renderTable(a, at, table)}
+    `;
+  }
+
+  private _renderTable(a: Attrs, at: Attrs, table: Attrs[]) {
+    const me = a.team_abbr ?? at.team_abbr;
     let rows = table;
     const limit = this._config.standings_rows;
     if (limit && limit < table.length) {
@@ -546,26 +842,30 @@ export class EuroLeagueTrackerCard extends LitElement {
       const start = Math.min(Math.max(0, idx - Math.floor(limit / 2)), table.length - limit);
       rows = table.slice(start, start + limit);
     }
+    const cut = (r: Attrs, i: number) => {
+      const next = rows[i + 1];
+      if (!next || ![6, 10].includes(r.position)) return nothing;
+      return html`<div class="cutline" role="presentation">
+        <span></span>${r.position === 6 ? "Playoff line" : "Play-in line"}<span></span>
+      </div>`;
+    };
     return html`
-      <div class="head">
-        <span class="eyebrow">${st?.attributes?.competition ?? "EuroLeague"} standings</span>
-        <span class="pill">${st?.attributes?.round ? `After round ${st.attributes.round}` : ""}</span>
-      </div>
       <div class="standings" role="table">
         <div class="srow header" role="row">
           <span>#</span><span>Team</span><span class="num">W-L</span><span class="num">+/−</span
           ><span class="num">Last 5</span>
         </div>
         ${rows.map(
-          (r) => html`<div class="srow ${r.code === me ? "me" : ""}" role="row">
-            <span class="pos ${r.zone ?? ""}">${r.position}</span>
-            <span class="tn">${r.crest && !this._broken.has(r.crest) ? this._crest(r.crest, r.code, "") : nothing}<span
-                >${r.name}</span
-              ></span>
-            <span class="num">${r.wins}-${r.losses}</span>
-            <span class="num">${signed(r.point_diff)}</span>
-            ${this._form(r.last5, true)}
-          </div>`,
+          (r, i) => html`<div class="srow ${r.code === me ? "me" : ""}" role="row">
+              <span class="pos ${r.zone ?? ""}">${r.position}</span>
+              <span class="tn">${r.crest && !this._broken.has(r.crest) ? this._crest(r.crest, r.code, "") : nothing}<span
+                  >${r.name}</span
+                ></span>
+              <span class="num">${r.wins}-${r.losses}</span>
+              <span class="num">${signed(r.point_diff)}</span>
+              ${this._form(r.last5, true)}
+            </div>
+            ${cut(r, i)}`,
         )}
       </div>
       <div class="legend">
@@ -1063,12 +1363,54 @@ if (!customElements.get("euroleague-tracker-card")) {
   customElements.define("euroleague-tracker-card", EuroLeagueTrackerCard);
 }
 
+/** One row for sections dashboards: next game, live score or result. Tap for details. */
+export class EuroLeagueTrackerCompactCard extends EuroLeagueTrackerCard {
+  setConfig(config: CardConfig): void {
+    super.setConfig({ ...config, view: "compact" });
+  }
+
+  getCardSize(): number {
+    return 1;
+  }
+
+  getGridOptions(): Record<string, number | string> {
+    return { columns: 12, min_columns: 6, rows: 1, min_rows: 1 };
+  }
+
+  static getConfigForm() {
+    const full = EuroLeagueTrackerCard.getConfigForm();
+    const keep = new Set(["entity", "theme", "team_color"]);
+    const flat: any[] = [];
+    const walk = (items: any[]) => items.forEach((i) => (i.schema ? walk(i.schema) : keep.has(i.name) && flat.push(i)));
+    walk(full.schema);
+    return { schema: flat, computeLabel: full.computeLabel };
+  }
+
+  static getStubConfig(hass: any) {
+    const { entity, theme } = EuroLeagueTrackerCard.getStubConfig(hass);
+    return { entity, theme };
+  }
+}
+
+if (!customElements.get("euroleague-tracker-compact-card")) {
+  customElements.define("euroleague-tracker-compact-card", EuroLeagueTrackerCompactCard);
+}
+
 (window as any).customCards = (window as any).customCards || [];
 if (!(window as any).customCards.some((c: any) => c.type === "euroleague-tracker-card")) {
   (window as any).customCards.push({
     type: "euroleague-tracker-card",
     name: "EuroLeague Tracker",
     description: "Live score, next game, standings and stats for your EuroLeague team.",
+    preview: true,
+    documentationURL: "https://github.com/Big-Edge2297/ha-euroleague-tracker",
+  });
+}
+if (!(window as any).customCards.some((c: any) => c.type === "euroleague-tracker-compact-card")) {
+  (window as any).customCards.push({
+    type: "euroleague-tracker-compact-card",
+    name: "EuroLeague Tracker (compact)",
+    description: "Next game, live score or result on one line. Tap for the details.",
     preview: true,
     documentationURL: "https://github.com/Big-Edge2297/ha-euroleague-tracker",
   });

@@ -1,0 +1,77 @@
+blueprint:
+  name: EuroLeague Tracker – flash the lights when your team scores
+  description: >-
+    Flash lights in your team's colour when it scores. Pick which baskets
+    count: free throws, twos, threes or any mix. Set **Delay live events by**
+    in the integration's options to line the flash up with your TV.
+  domain: automation
+  author: Big-Edge2297
+  homeassistant:
+    min_version: "2025.1.0"
+  source_url: https://github.com/Big-Edge2297/ha-euroleague-tracker/blob/main/blueprints/automation/euroleague_tracker/score_lights.yaml
+  input:
+    scored:
+      name: Team scored
+      description: The *Team scored* event entity of the team you follow (or *Opponent scored*).
+      selector:
+        entity:
+          filter:
+            - integration: euroleague_tracker
+              domain: event
+    shots:
+      name: Baskets
+      description: Which baskets flash the lights.
+      default: [three_pointer]
+      selector:
+        select:
+          multiple: true
+          options:
+            - label: Free throws
+              value: free_throw
+            - label: Two-pointers
+              value: two_pointer
+            - label: Three-pointers
+              value: three_pointer
+    lights:
+      name: Lights
+      selector:
+        target:
+          entity:
+            - domain: light
+    color:
+      name: Colour
+      default: [198, 40, 40]
+      selector:
+        color_rgb: {}
+    flash:
+      name: Flash
+      default: short
+      selector:
+        select:
+          options:
+            - label: Short
+              value: short
+            - label: Long
+              value: long
+
+mode: queued
+max: 10
+
+variables:
+  shots: !input shots
+
+triggers:
+  - trigger: state
+    entity_id: !input scored
+    not_from: unavailable
+
+conditions:
+  - condition: template
+    value_template: "{{ trigger.to_state.attributes.event_type in shots }}"
+
+actions:
+  - action: light.turn_on
+    target: !input lights
+    data:
+      rgb_color: !input color
+      flash: !input flash

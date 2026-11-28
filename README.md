@@ -1,4 +1,4 @@
-# **Euroleague Tracker**
+# **EuroLeague Tracker**
 
 <p align="center">
 

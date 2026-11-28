@@ -1,0 +1,60 @@
+blueprint:
+  name: EuroLeague Tracker – final score notification
+  description: >-
+    Send a notification to your phone with the result when your team's game
+    ends, for example "Win! Olympiacos 104 – 79 HTA".
+  domain: automation
+  author: Big-Edge2297
+  homeassistant:
+    min_version: "2025.1.0"
+  source_url: https://github.com/Big-Edge2297/ha-euroleague-tracker/blob/main/blueprints/automation/euroleague_tracker/final_score.yaml
+  input:
+    game_events:
+      name: Game events
+      description: The *Game events* event entity of the team you follow.
+      selector:
+        entity:
+          filter:
+            - integration: euroleague_tracker
+              domain: event
+    phone:
+      name: Phone
+      description: A phone with the Home Assistant app.
+      selector:
+        device:
+          filter:
+            - integration: mobile_app
+    win_title:
+      name: Title after a win
+      default: Win!
+      selector:
+        text: {}
+    loss_title:
+      name: Title after a loss
+      default: Final score
+      selector:
+        text: {}
+
+mode: single
+
+variables:
+  win_title: !input win_title
+  loss_title: !input loss_title
+
+triggers:
+  - trigger: state
+    entity_id: !input game_events
+    not_from: unavailable
+
+conditions:
+  - condition: template
+    value_template: "{{ trigger.to_state.attributes.event_type == 'game_final' }}"
+
+actions:
+  - variables:
+      a: "{{ trigger.to_state.attributes }}"
+  - domain: mobile_app
+    type: notify
+    device_id: !input phone
+    title: "{{ win_title if a.won else loss_title }}"
+    message: "{{ a.team }} {{ a.team_score }} – {{ a.opponent_score }} {{ a.opponent }}"

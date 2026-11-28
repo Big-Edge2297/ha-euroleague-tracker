@@ -527,3 +527,136 @@ test("the card registers itself in the card picker", () => {
   assert.equal(entry.name, "EuroLeague Tracker");
   assert.equal(entry.preview, true);
 });
+
+// ------------------------------------------------------- v0.4.0 postseason
+
+const post = (key: GameKey, config: Record<string, unknown> = {}) =>
+  mount(config, makeHass(key, { standings: "standings_post" }));
+
+test("playoffs: round label, seeds and the series score (real 2025-26 Game 3)", async () => {
+  const el = await post("po_final");
+  assert.equal(text($(el, ".eyebrow")), "Playoffs · Game 3");
+  assert.deepEqual($$(el, ".team-sub").map(text), ["8th seed · Home", "1st seed · Away"]);
+  assert.match(text($(el, ".series .head")), /^OLY win the series 3-0 Best of 5$/);
+  assert.deepEqual($$(el, ".series .sg").map(text), [
+    "G1 W 91-70",
+    "G2 W 94-64",
+    "G3 W 105-82",
+    "G4 not needed",
+    "G5 not needed",
+  ]);
+  assert.equal(text($(el, ".series .sg.current")), "G3 W 105-82");
+});
+
+test("playoffs: a series still open shows the coming games", async () => {
+  const hass = makeHass("po_final", { standings: "standings_post" });
+  const se = hass.states[IDS.game].attributes.series;
+  se.games = se.games.slice(0, 2);
+  se.games.push({ game_number: 3, played: false, date: "2026-05-05T17:45:00+00:00" });
+  Object.assign(se, { decided: false, status: "OLY lead 2-0", game_number: 3 });
+  hass.states[IDS.game].state = "PRE";
+  const el = await mount({}, hass);
+  assert.deepEqual($$(el, ".series .sg").map(text).slice(2), ["G3 Tue 5 May", "G4 if needed", "G5 if needed"]);
+  assert.equal(text($(el, ".series .sg.current")), "G3 Tue 5 May");
+});
+
+test("Final Four: neutral venue, seeds instead of home and away, the road there", async () => {
+  const el = await post("ff_pre");
+  assert.equal(text($(el, ".eyebrow")), "Final Four · Championship game");
+  assert.deepEqual($$(el, ".team-sub").map(text), ["1st seed", "3rd seed"]);
+  assert.equal(
+    text($(el, ".compare")),
+    "W 79-61 ULK Semifinal W 105-90 PAM 3-0 MCO Playoffs 3-1 HTA 26-12 Regular season 24-14",
+  );
+  assert.match(text($(el, ".foot")), /^Neutral venue · Telekom Center Athens/);
+});
+
+test("standings: the bracket once the regular season is over, the table one tap away", async () => {
+  const el = await post("po_final", { view: "standings" });
+  assert.match(text($(el, ".head")), /EuroLeague 2025-26 · postseason Champion OLY/);
+  assert.deepEqual($$(el, ".subtabs button").map(text), ["Bracket", "Table"]);
+  const boxes = $$(el, ".bbox").map(text);
+  assert.deepEqual(boxes.slice(0, 3), ["7th v 8th 7 PAN 87 8 MCO 79", "9th v 10th 9 BAR 80 10 RED 72", "for 8th place 8 MCO 79 9 BAR 70"]);
+  assert.deepEqual(boxes.slice(3, 7), [
+    "Playoff A · OLY win 3-0 1 OLY 3 8 MCO 0",
+    "Playoff B · ULK win 3-1 4 ULK 3 5 ZAL 1",
+    "Playoff C · MAD win 3-1 3 MAD 3 6 HTA 1",
+    "Playoff D · PAM win 3-2 2 PAM 3 7 PAN 2",
+  ]);
+  assert.deepEqual(boxes.slice(7), [
+    "Semifinal · 22 May 1 OLY 79 4 ULK 61",
+    "Semifinal · 22 May 2 PAM 90 3 MAD 105",
+    "Championship game · 24 May 1 OLY 92 3 MAD 85",
+  ]);
+  // Olympiacos's boxes are marked: series A, semifinal, final.
+  assert.equal($$(el, ".bbox.me").length, 3);
+  ($$(el, ".subtabs button")[1] as HTMLElement).click();
+  await el.updateComplete;
+  assert.equal($$(el, ".srow:not(.header)").length, 20);
+});
+
+test("standings: the playoff race with both lines in the table", async () => {
+  const el = await mount({ view: "standings" });
+  assert.deepEqual($$(el, ".tile.race").map(text), [
+    "Playoff line 3 games clear of 7th (RED)",
+    "Play-in line 3 games clear of 11th (PRS)",
+  ]);
+  assert.match(cardText(el), /Games left 24 until 18 Apr/);
+  assert.deepEqual($$(el, ".cutline").map(text), ["Playoff line", "Play-in line"]);
+  assert.equal($(el, ".subtabs"), null);
+});
+
+test("standings: clinched and out-of-reach read plainly", async () => {
+  const hass = makeHass();
+  const race = hass.states[IDS.standings].attributes.playoff_race;
+  race.playoffs = { line: 6, status: "clinched", inside: true, games: 9, rival: "RED" };
+  race.play_in = { line: 10, status: "out", inside: false, games: 1.5, rival: "ZAL" };
+  const el = await mount({ view: "standings" }, hass);
+  assert.deepEqual($$(el, ".tile.race").map(text), ["Playoff line Clinched", "Play-in line 1.5 games behind 10th (ZAL)"]);
+});
+
+// ------------------------------------------------------------ compact card
+
+async function compact(key: GameKey, config: Record<string, unknown> = {}) {
+  const el = document.createElement("euroleague-tracker-compact-card") as Card;
+  el.setConfig({ type: "custom:euroleague-tracker-compact-card", entity: IDS.game, ...config } as any);
+  el.hass = makeHass(key);
+  document.body.appendChild(el);
+  await el.updateComplete;
+  return el;
+}
+
+test("compact: next game, live score and result on one line", async () => {
+  const pre = await compact("pre");
+  assert.equal($$(pre, ".crests img.c-crest").length, 2);
+  assert.equal(text($(pre, ".compact")), "OLY vs ASV Fri 4 Dec · 21:15 · Round 15 in 7 days");
+  assert.equal(text($(await compact("live"), ".compact")), "OLY 63 – 58 HTA Sasha Vezenkov: Two Pointer (11 pt) Q3 04:21");
+  assert.equal(text($(await compact("final"), ".compact")), "OLY 104 – 79 HTA Next: vs ASV, Fri 4 Dec Final · W");
+  assert.equal(
+    text($(await compact("po_final"), ".compact")),
+    "MCO 82 – 105 OLY Playoffs · Game 3 · OLY win the series 3-0 Final · W",
+  );
+});
+
+test("compact: tapping opens the game sensor's details", async () => {
+  const el = await compact("pre");
+  const seen: string[] = [];
+  el.addEventListener("hass-more-info", (e: any) => seen.push(e.detail.entityId));
+  ($(el, "ha-card") as HTMLElement).click();
+  ($(el, "ha-card") as HTMLElement).dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+  assert.deepEqual(seen, [IDS.game, IDS.game]);
+  assert.equal($(el, "ha-card")!.getAttribute("role"), "button");
+});
+
+test("compact: one row in sections, a short editor and its own picker entry", () => {
+  const Compact = customElements.get("euroleague-tracker-compact-card") as any;
+  const el = new Compact();
+  assert.deepEqual(el.getGridOptions(), { columns: 12, min_columns: 6, rows: 1, min_rows: 1 });
+  assert.deepEqual(
+    Compact.getConfigForm().schema.map((s: any) => s.name),
+    ["entity", "theme", "team_color"],
+  );
+  assert.deepEqual(Compact.getStubConfig(makeHass()), { entity: IDS.game, theme: "auto" });
+  const entry = (window as any).customCards.find((c: any) => c.type === "euroleague-tracker-compact-card");
+  assert.equal(entry.name, "EuroLeague Tracker (compact)");
+});

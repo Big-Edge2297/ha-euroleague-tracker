@@ -932,6 +932,197 @@ export const styles = css`
       grid-template-columns: minmax(0, 1fr);
     }
   }
+  .cutline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--elt-fg2);
+    margin: 2px 0;
+  }
+  .cutline span {
+    flex: 1;
+    border-top: 1px dashed var(--elt-muted);
+  }
+  .tile.race.clinched .v {
+    color: var(--elt-accent);
+  }
+  .tile.race.eliminated .v {
+    color: var(--elt-fg2);
+  }
+  .tile .note:empty {
+    display: none;
+  }
+  .series {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .series-status {
+    font-size: 15px;
+  }
+  .series-games {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .sg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 0;
+    border-radius: 6px;
+    background: var(--elt-surface);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .series .sg {
+    background: var(--elt-bg);
+  }
+  .sg.current {
+    box-shadow: inset 0 0 0 2px var(--elt-accent);
+  }
+  .sg .n {
+    color: var(--elt-fg2);
+  }
+  .sg .r {
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .sg.none {
+    background: transparent !important;
+    border: 1px dashed var(--elt-divider);
+  }
+  .sg.none .r {
+    font-weight: 400;
+    font-size: 11px;
+    color: var(--elt-muted);
+  }
+  .bgrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .bgrid.three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .bbox {
+    background: var(--elt-surface);
+    border-radius: 8px;
+    padding: 7px 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .bbox.me {
+    box-shadow: inset 3px 0 0 var(--elt-accent);
+  }
+  .bbox .bl {
+    font-size: 11px;
+    color: var(--elt-fg2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .bside {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+  }
+  .bside.w {
+    font-weight: 700;
+  }
+  .bside.dim {
+    color: var(--elt-fg2);
+  }
+  .bside .seed {
+    width: 14px;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--elt-fg2);
+    text-align: right;
+  }
+  .bside .c {
+    flex: 1;
+  }
+  .bgrid.three .mini-crest {
+    display: none;
+  }
+  ha-card.compact-card {
+    padding: 10px 14px;
+    cursor: pointer;
+    justify-content: center;
+    min-height: 56px;
+    box-sizing: border-box;
+  }
+  ha-card.compact-card:focus-visible {
+    outline: 2px solid var(--elt-accent);
+  }
+  .compact {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+  .compact .crests {
+    display: flex;
+    gap: 4px;
+    flex: none;
+  }
+  .c-crest {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 50%;
+    background: var(--elt-crest-plate);
+    padding: 3px;
+    box-sizing: border-box;
+  }
+  .c-crest.fallback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    background: var(--elt-surface);
+  }
+  .compact .cm {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .compact .cmain {
+    font-size: 15px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-variant-numeric: tabular-nums;
+  }
+  .compact .score-line {
+    font-size: 17px;
+  }
+  .compact .score-line b {
+    font-weight: 700;
+  }
+  .compact .score-line b.trailing {
+    color: var(--elt-fg2);
+  }
+  .compact .cs {
+    font-size: 12px;
+    color: var(--elt-fg2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .empty-state {
     font-size: 14px;
     color: var(--elt-fg2);

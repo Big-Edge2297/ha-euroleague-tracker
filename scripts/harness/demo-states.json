@@ -2008,6 +2008,25 @@
      "PRS": "https://media-cdn.incrowdsports.com/a033e5b3-0de7-48a3-98d9-d9a4b9df1f39.png"
     }
    },
+   "playoff_race": {
+    "games_remaining": 24,
+    "last_game_date": "2027-04-18T00:00:00+00:00",
+    "playoffs": {
+     "line": 6,
+     "status": "in",
+     "inside": true,
+     "games": 3.0,
+     "rival": "RED"
+    },
+    "play_in": {
+     "line": 10,
+     "status": "in",
+     "inside": true,
+     "games": 3.0,
+     "rival": "PRS"
+    }
+   },
+   "bracket": null,
    "friendly_name": "Olympiacos Standings position"
   }
  },
@@ -2504,6 +2523,1178 @@
     }
    },
    "friendly_name": "Olympiacos Season stats"
+  }
+ },
+ "po_final": {
+  "state": "POST",
+  "attributes": {
+   "attribution": "Data provided by the EuroLeague API (unofficial integration)",
+   "friendly_name": "Olympiacos Game",
+   "sport": "basketball",
+   "league": "EUROLEAGUE",
+   "league_logo": null,
+   "season": "E2025",
+   "api_message": null,
+   "last_update": "2026-05-05T21:00:00+00:00",
+   "event_name": "Olympiacos @ Monaco",
+   "date": "2026-05-05T17:45:00+00:00",
+   "kickoff_in": "3 hours ago",
+   "venue": "SALLE GASTON MEDECIN",
+   "location": null,
+   "tv_network": null,
+   "odds": null,
+   "overunder": null,
+   "team_abbr": "OLY",
+   "team_id": "OLY",
+   "team_name": "Olympiacos",
+   "team_long_name": "Olympiacos Piraeus",
+   "team_record": "26-12",
+   "team_rank": null,
+   "team_position": 1,
+   "team_homeaway": "away",
+   "team_logo": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png",
+   "team_colors": [
+    "#C62828",
+    "#FFFFFF"
+   ],
+   "team_form": [
+    "L",
+    "W",
+    "W",
+    "W",
+    "W"
+   ],
+   "team_score": 105,
+   "team_win_probability": null,
+   "team_winner": true,
+   "team_timeouts": null,
+   "team_fouls": null,
+   "opponent_abbr": "MCO",
+   "opponent_id": "MCO",
+   "opponent_name": "Monaco",
+   "opponent_long_name": "AS Monaco",
+   "opponent_record": "22-16",
+   "opponent_rank": null,
+   "opponent_position": 8,
+   "opponent_homeaway": "home",
+   "opponent_logo": "https://media-cdn.incrowdsports.com/89ed276a-2ba3-413f-8ea2-b3be209ca129.png",
+   "opponent_colors": [
+    "#444444",
+    "#FFFFFF"
+   ],
+   "opponent_form": [
+    "L",
+    "L",
+    "W",
+    "W",
+    "W"
+   ],
+   "opponent_score": 82,
+   "opponent_win_probability": null,
+   "opponent_winner": false,
+   "opponent_timeouts": null,
+   "opponent_fouls": null,
+   "quarter": 4,
+   "clock": "Final",
+   "possession": null,
+   "last_play": null,
+   "competition": "EuroLeague",
+   "round": 43,
+   "round_name": "Playoffs \u00b7 Game 3",
+   "phase": "Playoffs",
+   "game_code": 392,
+   "attendance": null,
+   "capacity": null,
+   "quarter_scores": null,
+   "top_players": null,
+   "game_stats": null,
+   "play_by_play": null,
+   "shots": null,
+   "coach": null,
+   "previous_game": {
+    "game_code": 388,
+    "round": 42,
+    "date": "2026-04-30T18:00:00+00:00",
+    "homeaway": "home",
+    "opponent_abbr": "MCO",
+    "opponent_name": "Monaco",
+    "opponent_logo": "https://media-cdn.incrowdsports.com/89ed276a-2ba3-413f-8ea2-b3be209ca129.png",
+    "venue": "PEACE AND FRIENDSHIP STADIUM",
+    "team_score": 94,
+    "opponent_score": 64,
+    "won": true
+   },
+   "next_game": null,
+   "phase_code": "PO",
+   "neutral_site": false,
+   "series": {
+    "group": "PLAYOFF A",
+    "best_of": 5,
+    "game_number": 3,
+    "wins": 3,
+    "opponent_wins": 0,
+    "decided": true,
+    "status": "OLY win the series 3-0",
+    "games": [
+     {
+      "game_number": 1,
+      "date": "2026-04-28T18:00:00+00:00",
+      "homeaway": "home",
+      "played": true,
+      "team_score": 91,
+      "opponent_score": 70,
+      "won": true
+     },
+     {
+      "game_number": 2,
+      "date": "2026-04-30T18:00:00+00:00",
+      "homeaway": "home",
+      "played": true,
+      "team_score": 94,
+      "opponent_score": 64,
+      "won": true
+     },
+     {
+      "game_number": 3,
+      "date": "2026-05-05T17:45:00+00:00",
+      "homeaway": "away",
+      "played": true,
+      "team_score": 105,
+      "opponent_score": 82,
+      "won": true
+     }
+    ]
+   },
+   "team_seed": 1,
+   "opponent_seed": 8,
+   "team_color": "#C62828",
+   "score_flow": null,
+   "head_to_head": null
+  }
+ },
+ "ff_pre": {
+  "state": "PRE",
+  "attributes": {
+   "attribution": "Data provided by the EuroLeague API (unofficial integration)",
+   "friendly_name": "Olympiacos Game",
+   "sport": "basketball",
+   "league": "EUROLEAGUE",
+   "league_logo": null,
+   "season": "E2025",
+   "api_message": null,
+   "last_update": "2026-05-22T20:00:00+00:00",
+   "event_name": "Real @ Olympiacos",
+   "date": "2026-05-24T18:00:00+00:00",
+   "kickoff_in": "in 2 days",
+   "venue": "TELEKOM CENTER ATHENS",
+   "location": "37 Kifisias Avenue, 15123 Marousi",
+   "tv_network": null,
+   "odds": null,
+   "overunder": null,
+   "team_abbr": "OLY",
+   "team_id": "OLY",
+   "team_name": "Olympiacos",
+   "team_long_name": "Olympiacos Piraeus",
+   "team_record": "26-12",
+   "team_rank": null,
+   "team_position": 1,
+   "team_homeaway": "home",
+   "team_logo": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png",
+   "team_colors": [
+    "#C62828",
+    "#FFFFFF"
+   ],
+   "team_form": [
+    "L",
+    "W",
+    "W",
+    "W",
+    "W"
+   ],
+   "team_score": null,
+   "team_win_probability": null,
+   "team_winner": null,
+   "team_timeouts": null,
+   "team_fouls": null,
+   "opponent_abbr": "MAD",
+   "opponent_id": "MAD",
+   "opponent_name": "Real",
+   "opponent_long_name": "Real Madrid",
+   "opponent_record": "24-14",
+   "opponent_rank": null,
+   "opponent_position": 3,
+   "opponent_homeaway": "away",
+   "opponent_logo": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png",
+   "opponent_colors": [
+    "#3D2B7A",
+    "#FFFFFF"
+   ],
+   "opponent_form": [
+    "W",
+    "L",
+    "L",
+    "W",
+    "W"
+   ],
+   "opponent_score": null,
+   "opponent_win_probability": null,
+   "opponent_winner": null,
+   "opponent_timeouts": null,
+   "opponent_fouls": null,
+   "quarter": null,
+   "clock": null,
+   "possession": null,
+   "last_play": null,
+   "competition": "EuroLeague",
+   "round": 47,
+   "round_name": "Final Four \u00b7 Championship game",
+   "phase": "Final Four",
+   "game_code": 406,
+   "attendance": null,
+   "capacity": 18500,
+   "quarter_scores": null,
+   "top_players": null,
+   "game_stats": null,
+   "play_by_play": null,
+   "shots": null,
+   "coach": null,
+   "previous_game": {
+    "game_code": 404,
+    "round": 46,
+    "date": "2026-05-22T15:00:00+00:00",
+    "homeaway": "home",
+    "opponent_abbr": "ULK",
+    "opponent_name": "Fenerbahce",
+    "opponent_logo": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png",
+    "venue": "TELEKOM CENTER ATHENS",
+    "team_score": 79,
+    "opponent_score": 61,
+    "won": true
+   },
+   "next_game": null,
+   "phase_code": "FF",
+   "neutral_site": true,
+   "series": null,
+   "team_seed": 1,
+   "opponent_seed": 3,
+   "team_color": "#C62828",
+   "score_flow": null,
+   "head_to_head": null
+  }
+ },
+ "standings_post": {
+  "state": "1",
+  "attributes": {
+   "attribution": "Data provided by the EuroLeague API (unofficial integration)",
+   "team_abbr": "OLY",
+   "competition": "EuroLeague",
+   "season": "E2025",
+   "round": 38,
+   "table": [
+    {
+     "position": 1,
+     "position_change": "equal",
+     "code": "OLY",
+     "name": "Olympiacos",
+     "full_name": "Olympiacos Piraeus",
+     "crest": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png",
+     "played": 38,
+     "wins": 26,
+     "losses": 12,
+     "win_pct": "68.4%",
+     "points_for": 3406,
+     "points_against": 3144,
+     "point_diff": 262,
+     "home_record": "16-3",
+     "away_record": "10-9",
+     "last10": "8-2",
+     "last5": [
+      "L",
+      "W",
+      "W",
+      "W",
+      "W"
+     ],
+     "zone": "playoffs"
+    },
+    {
+     "position": 2,
+     "position_change": "equal",
+     "code": "PAM",
+     "name": "Valencia",
+     "full_name": "Valencia Basket",
+     "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHL/bc3e00b2-fea4-40be-a7ec-1e633129bde3.png",
+     "played": 38,
+     "wins": 25,
+     "losses": 13,
+     "win_pct": "65.8%",
+     "points_for": 3418,
+     "points_against": 3243,
+     "point_diff": 175,
+     "home_record": "16-3",
+     "away_record": "9-10",
+     "last10": "7-3",
+     "last5": [
+      "L",
+      "W",
+      "W",
+      "W",
+      "W"
+     ],
+     "zone": "playoffs"
+    },
+    {
+     "position": 3,
+     "position_change": "equal",
+     "code": "MAD",
+     "name": "Real",
+     "full_name": "Real Madrid",
+     "crest": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png",
+     "played": 38,
+     "wins": 24,
+     "losses": 14,
+     "win_pct": "63.2%",
+     "points_for": 3342,
+     "points_against": 3156,
+     "point_diff": 186,
+     "home_record": "18-1",
+     "away_record": "6-13",
+     "last10": "7-3",
+     "last5": [
+      "W",
+      "L",
+      "L",
+      "W",
+      "W"
+     ],
+     "zone": "playoffs"
+    },
+    {
+     "position": 4,
+     "position_change": "equal",
+     "code": "ULK",
+     "name": "Fenerbahce",
+     "full_name": "Fenerbahce Beko Istanbul",
+     "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png",
+     "played": 38,
+     "wins": 24,
+     "losses": 14,
+     "win_pct": "63.2%",
+     "points_for": 3114,
+     "points_against": 3061,
+     "point_diff": 53,
+     "home_record": "14-5",
+     "away_record": "10-9",
+     "last10": "3-7",
+     "last5": [
+      "L",
+      "L",
+      "L",
+      "L",
+      "W"
+     ],
+     "zone": "playoffs"
+    },
+    {
+     "position": 5,
+     "position_change": "equal",
+     "code": "ZAL",
+     "name": "Zalgiris",
+     "full_name": "Zalgiris Kaunas",
+     "crest": "https://media-cdn.incrowdsports.com/0aa09358-3847-4c4e-b228-3582ee4e536d.png",
+     "played": 38,
+     "wins": 23,
+     "losses": 15,
+     "win_pct": "60.5%",
+     "points_for": 3304,
+     "points_against": 3125,
+     "point_diff": 179,
+     "home_record": "14-5",
+     "away_record": "9-10",
+     "last10": "7-3",
+     "last5": [
+      "W",
+      "W",
+      "L",
+      "W",
+      "W"
+     ],
+     "zone": "playoffs"
+    },
+    {
+     "position": 6,
+     "position_change": "equal",
+     "code": "HTA",
+     "name": "Hapoel Tel Aviv",
+     "full_name": "Hapoel IBI Tel Aviv",
+     "crest": "https://media-cdn.incrowdsports.com/cbb1c3ad-03d5-426a-b5ef-2832a4eee484.png",
+     "played": 38,
+     "wins": 23,
+     "losses": 15,
+     "win_pct": "60.5%",
+     "points_for": 3329,
+     "points_against": 3211,
+     "point_diff": 118,
+     "home_record": "13-6",
+     "away_record": "10-9",
+     "last10": "6-4",
+     "last5": [
+      "W",
+      "W",
+      "L",
+      "W",
+      "L"
+     ],
+     "zone": "playoffs"
+    },
+    {
+     "position": 7,
+     "position_change": "equal",
+     "code": "PAN",
+     "name": "Panathinaikos",
+     "full_name": "Panathinaikos AKTOR Athens",
+     "crest": "https://media-cdn.incrowdsports.com/e3dff28a-9ec6-4faf-9d96-ecbc68f75780.png",
+     "played": 38,
+     "wins": 22,
+     "losses": 16,
+     "win_pct": "57.9%",
+     "points_for": 3314,
+     "points_against": 3228,
+     "point_diff": 86,
+     "home_record": "13-6",
+     "away_record": "9-10",
+     "last10": "6-4",
+     "last5": [
+      "W",
+      "L",
+      "W",
+      "L",
+      "W"
+     ],
+     "zone": "play_in"
+    },
+    {
+     "position": 8,
+     "position_change": "equal",
+     "code": "MCO",
+     "name": "Monaco",
+     "full_name": "AS Monaco",
+     "crest": "https://media-cdn.incrowdsports.com/89ed276a-2ba3-413f-8ea2-b3be209ca129.png",
+     "played": 38,
+     "wins": 22,
+     "losses": 16,
+     "win_pct": "57.9%",
+     "points_for": 3417,
+     "points_against": 3282,
+     "point_diff": 135,
+     "home_record": "14-5",
+     "away_record": "8-11",
+     "last10": "6-4",
+     "last5": [
+      "L",
+      "L",
+      "W",
+      "W",
+      "W"
+     ],
+     "zone": "play_in"
+    },
+    {
+     "position": 9,
+     "position_change": "equal",
+     "code": "BAR",
+     "name": "Barcelona",
+     "full_name": "FC Barcelona",
+     "crest": "https://media-cdn.incrowdsports.com/35dfa503-e417-481f-963a-bdf6f013763e.png",
+     "played": 38,
+     "wins": 21,
+     "losses": 17,
+     "win_pct": "55.3%",
+     "points_for": 3167,
+     "points_against": 3147,
+     "point_diff": 20,
+     "home_record": "12-7",
+     "away_record": "9-10",
+     "last10": "4-6",
+     "last5": [
+      "W",
+      "L",
+      "L",
+      "L",
+      "W"
+     ],
+     "zone": "play_in"
+    },
+    {
+     "position": 10,
+     "position_change": "equal",
+     "code": "RED",
+     "name": "Crvena Zvezda",
+     "full_name": "Crvena Zvezda Meridianbet Belgrade",
+     "crest": "https://media-cdn.incrowdsports.com/d2eef4a8-62df-4fdd-9076-276004268515.png",
+     "played": 38,
+     "wins": 21,
+     "losses": 17,
+     "win_pct": "55.3%",
+     "points_for": 3287,
+     "points_against": 3245,
+     "point_diff": 42,
+     "home_record": "13-6",
+     "away_record": "8-11",
+     "last10": "5-5",
+     "last5": [
+      "L",
+      "L",
+      "W",
+      "W",
+      "L"
+     ],
+     "zone": "play_in"
+    },
+    {
+     "position": 11,
+     "position_change": "equal",
+     "code": "DUB",
+     "name": "Dubai",
+     "full_name": "Dubai Basketball",
+     "crest": "https://media-cdn.incrowdsports.com/1efae090-16e2-4963-ae47-4b94f249c244.png",
+     "played": 38,
+     "wins": 19,
+     "losses": 19,
+     "win_pct": "50.0%",
+     "points_for": 3324,
+     "points_against": 3325,
+     "point_diff": -1,
+     "home_record": "13-6",
+     "away_record": "6-13",
+     "last10": "5-5",
+     "last5": [
+      "L",
+      "W",
+      "W",
+      "L",
+      "L"
+     ],
+     "zone": null
+    },
+    {
+     "position": 12,
+     "position_change": "equal",
+     "code": "TEL",
+     "name": "Maccabi",
+     "full_name": "Maccabi Rapyd Tel Aviv",
+     "crest": "https://media-cdn.cortextech.io/1b533342-78f5-4932-b714-a7d80b5826b5.png",
+     "played": 38,
+     "wins": 18,
+     "losses": 20,
+     "win_pct": "47.4%",
+     "points_for": 3386,
+     "points_against": 3486,
+     "point_diff": -100,
+     "home_record": "11-8",
+     "away_record": "7-12",
+     "last10": "5-5",
+     "last5": [
+      "W",
+      "L",
+      "L",
+      "L",
+      "L"
+     ],
+     "zone": null
+    },
+    {
+     "position": 13,
+     "position_change": "equal",
+     "code": "MUN",
+     "name": "Bayern",
+     "full_name": "FC Bayern Munich",
+     "crest": "https://media-cdn.incrowdsports.com/817b0e58-d595-4b09-ab0b-1e7cc26249ff.png",
+     "played": 38,
+     "wins": 17,
+     "losses": 21,
+     "win_pct": "44.7%",
+     "points_for": 3063,
+     "points_against": 3168,
+     "point_diff": -105,
+     "home_record": "12-7",
+     "away_record": "5-14",
+     "last10": "5-5",
+     "last5": [
+      "W",
+      "W",
+      "W",
+      "W",
+      "L"
+     ],
+     "zone": null
+    },
+    {
+     "position": 14,
+     "position_change": "equal",
+     "code": "MIL",
+     "name": "Milan",
+     "full_name": "EA7 Emporio Armani Milan",
+     "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHH/5c2f0ab6-f86a-4df0-b2f3-f9ab92f7267b.png",
+     "played": 38,
+     "wins": 17,
+     "losses": 21,
+     "win_pct": "44.7%",
+     "points_for": 3246,
+     "points_against": 3294,
+     "point_diff": -48,
+     "home_record": "11-8",
+     "away_record": "6-13",
+     "last10": "3-7",
+     "last5": [
+      "W",
+      "L",
+      "L",
+      "L",
+      "L"
+     ],
+     "zone": null
+    },
+    {
+     "position": 15,
+     "position_change": "equal",
+     "code": "PAR",
+     "name": "Partizan",
+     "full_name": "Partizan Mozzart Bet Belgrade",
+     "crest": "https://media-cdn.incrowdsports.com/2681304e-77dd-4331-88b1-683078c0fb49.png",
+     "played": 38,
+     "wins": 16,
+     "losses": 22,
+     "win_pct": "42.1%",
+     "points_for": 3052,
+     "points_against": 3242,
+     "point_diff": -190,
+     "home_record": "11-8",
+     "away_record": "5-14",
+     "last10": "7-3",
+     "last5": [
+      "W",
+      "W",
+      "L",
+      "L",
+      "W"
+     ],
+     "zone": null
+    },
+    {
+     "position": 16,
+     "position_change": "equal",
+     "code": "PRS",
+     "name": "Paris",
+     "full_name": "Paris Basketball",
+     "crest": "https://media-cdn.incrowdsports.com/a033e5b3-0de7-48a3-98d9-d9a4b9df1f39.png",
+     "played": 38,
+     "wins": 15,
+     "losses": 23,
+     "win_pct": "39.5%",
+     "points_for": 3422,
+     "points_against": 3456,
+     "point_diff": -34,
+     "home_record": "8-11",
+     "away_record": "7-12",
+     "last10": "5-5",
+     "last5": [
+      "W",
+      "W",
+      "L",
+      "W",
+      "L"
+     ],
+     "zone": null
+    },
+    {
+     "position": 17,
+     "position_change": "equal",
+     "code": "VIR",
+     "name": "Virtus",
+     "full_name": "Virtus Bologna",
+     "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezvk/a92d4c3b-9f9c-4163-8a10-bcf8fc15893e.png",
+     "played": 38,
+     "wins": 14,
+     "losses": 24,
+     "win_pct": "36.8%",
+     "points_for": 3110,
+     "points_against": 3285,
+     "point_diff": -175,
+     "home_record": "9-10",
+     "away_record": "5-14",
+     "last10": "2-8",
+     "last5": [
+      "L",
+      "L",
+      "L",
+      "L",
+      "W"
+     ],
+     "zone": null
+    },
+    {
+     "position": 18,
+     "position_change": "equal",
+     "code": "BAS",
+     "name": "Baskonia",
+     "full_name": "Kosner Baskonia Vitoria-Gasteiz",
+     "crest": "https://media-cdn.cortextech.io/cbc49cb0-99ce-4462-bdb7-56983ee03cf4.png",
+     "played": 38,
+     "wins": 13,
+     "losses": 25,
+     "win_pct": "34.2%",
+     "points_for": 3321,
+     "points_against": 3483,
+     "point_diff": -162,
+     "home_record": "11-8",
+     "away_record": "2-17",
+     "last10": "4-6",
+     "last5": [
+      "W",
+      "W",
+      "W",
+      "W",
+      "L"
+     ],
+     "zone": null
+    },
+    {
+     "position": 19,
+     "position_change": "equal",
+     "code": "IST",
+     "name": "Anadolu Efes",
+     "full_name": "Anadolu Efes Istanbul",
+     "crest": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCgOCxM/a844756c-a58d-4666-93b8-48f7337bc79d.png",
+     "played": 38,
+     "wins": 12,
+     "losses": 26,
+     "win_pct": "31.6%",
+     "points_for": 2991,
+     "points_against": 3151,
+     "point_diff": -160,
+     "home_record": "7-12",
+     "away_record": "5-14",
+     "last10": "3-7",
+     "last5": [
+      "L",
+      "L",
+      "W",
+      "W",
+      "L"
+     ],
+     "zone": null
+    },
+    {
+     "position": 20,
+     "position_change": "equal",
+     "code": "ASV",
+     "name": "ASVEL",
+     "full_name": "LDLC ASVEL Villeurbanne",
+     "crest": "https://media-cdn.incrowdsports.com/e33c6d1a-95ca-4dbc-b8cb-0201812104cc.png",
+     "played": 38,
+     "wins": 8,
+     "losses": 30,
+     "win_pct": "21.1%",
+     "points_for": 2989,
+     "points_against": 3270,
+     "point_diff": -281,
+     "home_record": "6-13",
+     "away_record": "2-17",
+     "last10": "1-9",
+     "last5": [
+      "L",
+      "L",
+      "L",
+      "L",
+      "L"
+     ],
+     "zone": null
+    }
+   ],
+   "scoreboard": {
+    "rounds": [
+     {
+      "round": 45,
+      "games": [
+       {
+        "game_code": 403,
+        "date": "2026-05-13T19:00:00+00:00",
+        "home": "PAM",
+        "away": "PAN",
+        "home_score": 81,
+        "away_score": 64,
+        "played": true
+       }
+      ]
+     },
+     {
+      "round": 46,
+      "games": [
+       {
+        "game_code": 404,
+        "date": "2026-05-22T15:00:00+00:00",
+        "home": "OLY",
+        "away": "ULK",
+        "home_score": 79,
+        "away_score": 61,
+        "played": true
+       },
+       {
+        "game_code": 405,
+        "date": "2026-05-22T18:00:00+00:00",
+        "home": "PAM",
+        "away": "MAD",
+        "home_score": 90,
+        "away_score": 105,
+        "played": true
+       }
+      ]
+     },
+     {
+      "round": 47,
+      "games": [
+       {
+        "game_code": 406,
+        "date": "2026-05-24T18:00:00+00:00",
+        "home": "OLY",
+        "away": "MAD",
+        "home_score": 92,
+        "away_score": 85,
+        "played": true
+       }
+      ]
+     }
+    ],
+    "crests": {
+     "PAM": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjChWbHL/bc3e00b2-fea4-40be-a7ec-1e633129bde3.png",
+     "PAN": "https://media-cdn.incrowdsports.com/e3dff28a-9ec6-4faf-9d96-ecbc68f75780.png",
+     "OLY": "https://media-cdn.incrowdsports.com/789423ac-3cdf-4b89-b11c-b458aa5f59a6.png",
+     "ULK": "https://media-cdn.cortextech.io/1dU3kpCqReRp93/1BSdBWIjCiezrk/aa39750a-6203-49ee-a87d-edd0c6f0397d.png",
+     "MAD": "https://media-cdn.incrowdsports.com/371b0d9b-9250-4c09-bda7-0686cf024657.png"
+    }
+   },
+   "playoff_race": null,
+   "bracket": {
+    "play_in": [
+     {
+      "game_code": 381,
+      "date": "2026-04-21T18:00:00+00:00",
+      "home": "PAN",
+      "away": "MCO",
+      "home_score": 87,
+      "away_score": 79,
+      "played": true,
+      "winner": "PAN",
+      "group": "A",
+      "label": "7th v 8th"
+     },
+     {
+      "game_code": 382,
+      "date": "2026-04-21T18:45:00+00:00",
+      "home": "BAR",
+      "away": "RED",
+      "home_score": 80,
+      "away_score": 72,
+      "played": true,
+      "winner": "BAR",
+      "group": "B",
+      "label": "9th v 10th"
+     },
+     {
+      "game_code": 383,
+      "date": "2026-04-24T17:30:00+00:00",
+      "home": "MCO",
+      "away": "BAR",
+      "home_score": 79,
+      "away_score": 70,
+      "played": true,
+      "winner": "MCO",
+      "group": "C",
+      "label": "for 8th place"
+     }
+    ],
+    "playoffs": [
+     {
+      "group": "A",
+      "top": {
+       "code": "OLY",
+       "seed": 1,
+       "wins": 3
+      },
+      "bottom": {
+       "code": "MCO",
+       "seed": 8,
+       "wins": 0
+      },
+      "best_of": 5,
+      "winner": "OLY",
+      "games": [
+       {
+        "game_code": 384,
+        "date": "2026-04-28T18:00:00+00:00",
+        "home": "OLY",
+        "away": "MCO",
+        "home_score": 91,
+        "away_score": 70,
+        "played": true,
+        "winner": "OLY"
+       },
+       {
+        "game_code": 388,
+        "date": "2026-04-30T18:00:00+00:00",
+        "home": "OLY",
+        "away": "MCO",
+        "home_score": 94,
+        "away_score": 64,
+        "played": true,
+        "winner": "OLY"
+       },
+       {
+        "game_code": 392,
+        "date": "2026-05-05T17:45:00+00:00",
+        "home": "MCO",
+        "away": "OLY",
+        "home_score": 82,
+        "away_score": 105,
+        "played": true,
+        "winner": "OLY"
+       }
+      ]
+     },
+     {
+      "group": "B",
+      "top": {
+       "code": "ULK",
+       "seed": 4,
+       "wins": 3
+      },
+      "bottom": {
+       "code": "ZAL",
+       "seed": 5,
+       "wins": 1
+      },
+      "best_of": 5,
+      "winner": "ULK",
+      "games": [
+       {
+        "game_code": 385,
+        "date": "2026-04-28T17:45:00+00:00",
+        "home": "ULK",
+        "away": "ZAL",
+        "home_score": 89,
+        "away_score": 78,
+        "played": true,
+        "winner": "ULK"
+       },
+       {
+        "game_code": 389,
+        "date": "2026-04-30T17:45:00+00:00",
+        "home": "ULK",
+        "away": "ZAL",
+        "home_score": 86,
+        "away_score": 74,
+        "played": true,
+        "winner": "ULK"
+       },
+       {
+        "game_code": 393,
+        "date": "2026-05-06T17:00:00+00:00",
+        "home": "ZAL",
+        "away": "ULK",
+        "home_score": 81,
+        "away_score": 78,
+        "played": true,
+        "winner": "ZAL"
+       },
+       {
+        "game_code": 397,
+        "date": "2026-05-08T17:00:00+00:00",
+        "home": "ZAL",
+        "away": "ULK",
+        "home_score": 90,
+        "away_score": 94,
+        "played": true,
+        "winner": "ULK"
+       }
+      ]
+     },
+     {
+      "group": "C",
+      "top": {
+       "code": "MAD",
+       "seed": 3,
+       "wins": 3
+      },
+      "bottom": {
+       "code": "HTA",
+       "seed": 6,
+       "wins": 1
+      },
+      "best_of": 5,
+      "winner": "MAD",
+      "games": [
+       {
+        "game_code": 386,
+        "date": "2026-04-29T18:45:00+00:00",
+        "home": "MAD",
+        "away": "HTA",
+        "home_score": 86,
+        "away_score": 82,
+        "played": true,
+        "winner": "MAD"
+       },
+       {
+        "game_code": 390,
+        "date": "2026-05-01T18:45:00+00:00",
+        "home": "MAD",
+        "away": "HTA",
+        "home_score": 102,
+        "away_score": 75,
+        "played": true,
+        "winner": "MAD"
+       },
+       {
+        "game_code": 394,
+        "date": "2026-05-05T16:00:00+00:00",
+        "home": "HTA",
+        "away": "MAD",
+        "home_score": 76,
+        "away_score": 69,
+        "played": true,
+        "winner": "HTA"
+       },
+       {
+        "game_code": 398,
+        "date": "2026-05-07T18:00:00+00:00",
+        "home": "HTA",
+        "away": "MAD",
+        "home_score": 81,
+        "away_score": 87,
+        "played": true,
+        "winner": "MAD"
+       }
+      ]
+     },
+     {
+      "group": "D",
+      "top": {
+       "code": "PAM",
+       "seed": 2,
+       "wins": 3
+      },
+      "bottom": {
+       "code": "PAN",
+       "seed": 7,
+       "wins": 2
+      },
+      "best_of": 5,
+      "winner": "PAM",
+      "games": [
+       {
+        "game_code": 387,
+        "date": "2026-04-28T18:45:00+00:00",
+        "home": "PAM",
+        "away": "PAN",
+        "home_score": 67,
+        "away_score": 68,
+        "played": true,
+        "winner": "PAN"
+       },
+       {
+        "game_code": 391,
+        "date": "2026-04-30T18:45:00+00:00",
+        "home": "PAM",
+        "away": "PAN",
+        "home_score": 105,
+        "away_score": 107,
+        "played": true,
+        "winner": "PAN"
+       },
+       {
+        "game_code": 395,
+        "date": "2026-05-06T18:15:00+00:00",
+        "home": "PAN",
+        "away": "PAM",
+        "home_score": 87,
+        "away_score": 91,
+        "played": true,
+        "winner": "PAM"
+       },
+       {
+        "game_code": 399,
+        "date": "2026-05-08T18:15:00+00:00",
+        "home": "PAN",
+        "away": "PAM",
+        "home_score": 86,
+        "away_score": 89,
+        "played": true,
+        "winner": "PAM"
+       },
+       {
+        "game_code": 403,
+        "date": "2026-05-13T19:00:00+00:00",
+        "home": "PAM",
+        "away": "PAN",
+        "home_score": 81,
+        "away_score": 64,
+        "played": true,
+        "winner": "PAM"
+       }
+      ]
+     }
+    ],
+    "final_four": {
+     "semifinals": [
+      {
+       "game_code": 404,
+       "date": "2026-05-22T15:00:00+00:00",
+       "home": "OLY",
+       "away": "ULK",
+       "home_score": 79,
+       "away_score": 61,
+       "played": true,
+       "winner": "OLY"
+      },
+      {
+       "game_code": 405,
+       "date": "2026-05-22T18:00:00+00:00",
+       "home": "PAM",
+       "away": "MAD",
+       "home_score": 90,
+       "away_score": 105,
+       "played": true,
+       "winner": "MAD"
+      }
+     ],
+     "final": {
+      "game_code": 406,
+      "date": "2026-05-24T18:00:00+00:00",
+      "home": "OLY",
+      "away": "MAD",
+      "home_score": 92,
+      "away_score": 85,
+      "played": true,
+      "winner": "OLY"
+     },
+     "third_place": null,
+     "venue": "TELEKOM CENTER ATHENS"
+    },
+    "champion": "OLY",
+    "seeds": {
+     "OLY": 1,
+     "PAM": 2,
+     "MAD": 3,
+     "ULK": 4,
+     "ZAL": 5,
+     "HTA": 6,
+     "PAN": 7,
+     "MCO": 8,
+     "BAR": 9,
+     "RED": 10
+    }
+   },
+   "friendly_name": "Olympiacos Standings position"
   }
  }
 }
