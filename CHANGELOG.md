@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.4.0 (2026-11-27)
+## v0.4.0 (2026-11-28)
 
 ### New
 - **Play-in, playoffs and Final Four.** Postseason games get their real names ("Play-in · 7th v 8th", "Playoffs · Game 3", "Final Four · Championship game"), the best-of-five series score with every game of the series, both seeds, and a neutral venue at the Final Four (seeds instead of home and away). "If necessary" games of a decided series are skipped, and the standings stay at the final regular-season table.
@@ -11,7 +11,7 @@
 - **Blueprints**, with one-click import buttons: flash the lights when your team scores, a final-score notification and a tip-off reminder.
 - New sensor attributes: `phase_code`, `series`, `team_seed`, `opponent_seed`, `neutral_site` on the game sensor; `playoff_race` and `bracket` on the standings sensor.
 
-## v0.3.0 (2026-11-27)
+## v0.3.0 (2026-11-28)
 
 ### New
 - **Stats, redesigned** into three tabs:
